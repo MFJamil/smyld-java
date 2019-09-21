@@ -3,11 +3,11 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
-		<groupId>com.smyld.app.pe</groupId>
+		<groupId>org.smyld.app.pe</groupId>
 		<artifactId>smyld-app-pe</artifactId>
 		<version>1.0-SNAPSHOT</version>
 	</parent>
-	<groupId>com.smyld.app.pe.model</groupId>
+	<groupId>org.smyld.app.pe.model</groupId>
 	<artifactId>PEModel</artifactId>
 	<version>1.0-SNAPSHOT</version>
 	<name>SMYLD Portal Engine Model</name>
@@ -25,13 +25,13 @@
 		</dependency>
 
 		<dependency>
-			<groupId>com.smyld.main</groupId>
+			<groupId>org.smyld.main</groupId>
 			<artifactId>smyld-main-api</artifactId>
 			<version>1.0-SNAPSHOT</version>
 		</dependency>
 
 		<dependency>
-			<groupId>com.smyld.main</groupId>
+			<groupId>org.smyld.main</groupId>
 			<artifactId>smyld-main-gui</artifactId>
 			<version>1.0-SNAPSHOT</version>
 		</dependency>

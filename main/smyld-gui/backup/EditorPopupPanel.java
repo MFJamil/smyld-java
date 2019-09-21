@@ -1,4 +1,4 @@
-package com.smyld.gui.edit;
+package org.smyld.gui.edit;
 
 import java.awt.AlphaComposite;
 import java.awt.BasicStroke;

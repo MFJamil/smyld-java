@@ -1,11 +1,11 @@
 <project>
 	<parent>
-		<groupId>com.smyld.app.ep</groupId>
+		<groupId>org.smyld.app.ep</groupId>
 		<artifactId>smyld-app-ep</artifactId>
 		<version>${release.version}</version>
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>com.smyld.app.ep.EntityPlot</groupId>
+	<groupId>org.smyld.app.ep.EntityPlot</groupId>
 	<artifactId>smyld-app-entityplot</artifactId>
 	<packaging>jar</packaging>
 	<version>${release.version}</version>
@@ -13,22 +13,22 @@
 	<description>This is the Entity Plot APIs </description>
 	<dependencies>
 		<dependency>
-			<groupId>com.smyld.main</groupId>
+			<groupId>org.smyld.main</groupId>
 			<artifactId>smyld-main-api</artifactId>
 			<version>${release.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>com.smyld.main</groupId>
+			<groupId>org.smyld.main</groupId>
 			<artifactId>smyld-main-gui</artifactId>
 			<version>${release.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>com.smyld.main</groupId>
+			<groupId>org.smyld.main</groupId>
 			<artifactId>smyld-main-lang</artifactId>
 			<version>${release.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>com.smyld.main</groupId>
+			<groupId>org.smyld.main</groupId>
 			<artifactId>smyld-main-db</artifactId>
 			<version>${release.version}</version>
 		</dependency>

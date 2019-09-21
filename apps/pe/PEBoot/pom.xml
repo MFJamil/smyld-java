@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <project>
   <modelVersion>4.0.0</modelVersion>
-  <groupId>com.smyld.app.pe.boot</groupId>
+  <groupId>org.smyld.app.pe.boot</groupId>
   <artifactId>pe-boot-dependencies</artifactId>
   <packaging>pom</packaging>
   <version>1.0.1</version>
@@ -44,7 +44,7 @@
 	<pluginManagement>
 		<plugins>
 			<plugin>
-				<groupId>com.smyld.app.pe.plugin</groupId>
+				<groupId>org.smyld.app.pe.plugin</groupId>
 				<artifactId>smyld-pe-maven-plugin</artifactId>
 				<version>1.0.1</version>
 				<configuration>
@@ -64,7 +64,7 @@
 					</execution>
 				</executions>
 				<configuration>
-					<archive><manifest><mainClass>com.smyld.app.pe.active.PEGuiMainClass</mainClass></manifest></archive>
+					<archive><manifest><mainClass>org.smyld.app.pe.active.PEGuiMainClass</mainClass></manifest></archive>
 					<descriptorRefs><descriptorRef>jar-with-dependencies</descriptorRef></descriptorRefs>
 					<finalName>executable</finalName>
 					<appendAssemblyId>false</appendAssemblyId>

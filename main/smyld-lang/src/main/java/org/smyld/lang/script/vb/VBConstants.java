@@ -1,0 +1,80 @@
+package org.smyld.lang.script.vb;
+
+public interface VBConstants {
+
+	public static final String VB_CODE_DIM = "dim";
+	public static final String VB_CODE_AS = "as";
+	public static final String VB_CODE_SUB = "sub";
+	public static final String VB_CODE_SUB_END = "end sub";
+	public static final String VB_CODE_BLK_END = "end";
+	public static final String VB_CODE_FUN = "function";
+	public static final String VB_CODE_FUN_END = "end function";
+	public static final String VB_CODE_FOR = "for";
+	public static final String VB_CODE_FOR_END = "next";
+	public static final String VB_CODE_DO = "do";
+	public static final String VB_CODE_LOOP = "loop";
+	public static final String VB_CODE_IF = "if";
+	public static final String VB_CODE_THEN = "then";
+	public static final String VB_CODE_ELSE = "else";
+	public static final String VB_CODE_IF_END = "end if";
+	public static final String VB_CODE_COM = "'";
+	public static final String VB_CODE_CALL = "call";
+	public static final String VB_CODE_DECLARE = "declare";
+	public static final String VB_CODE_CONSTANT = "const";
+	public static final String VB_CODE_PCONSTANT = "public const";
+	public static final String VB_CODE_EXIT_SUB = "exit sub";
+	public static final String VB_CODE_EXIT_FOR = "exit for";
+	public static final String VB_CODE_EXIT_DO = "exit do";
+	public static final String VB_CODE_EXIT_FUN = "exit function";
+	public static final String VB_CODE_GOTO = "goto";
+	public static final String VB_CODE_ON_ERR = "on error";
+	public static final String VB_CODE_OPT_EXPL = "option explicit";
+	public static final String VB_CODE_RESUME = "resume";
+	public static final String VB_CODE_PRIVATE = "private";
+	public static final String VB_CODE_SELECT = "select case";
+	public static final String VB_CODE_CASE = "case";
+	public static final String VB_CODE_SELECT_END = "end select";
+
+	public static final int CODE_TYPE_UNKNOWN = -1;
+	public static final int CODE_TYPE_EQUATION = 0;
+	public static final int CODE_TYPE_DECLARE = 1;
+	public static final int CODE_TYPE_FUNCTION = 2;
+	public static final int CODE_TYPE_FUNCTION_END = 3;
+	public static final int CODE_TYPE_PROCEDURE = 4;
+	public static final int CODE_TYPE_PROCEDURE_END = 5;
+	public static final int CODE_TYPE_IF = 6;
+	public static final int CODE_TYPE_ELSE = 7;
+	public static final int CODE_TYPE_IF_END = 8;
+	public static final int CODE_TYPE_FOR = 9;
+	public static final int CODE_TYPE_FOR_END = 10;
+	public static final int CODE_TYPE_COMMENT = 11;
+	public static final int CODE_TYPE_WHILE = 12;
+	public static final int CODE_TYPE_WHILE_END = 13;
+	public static final int CODE_TYPE_SWITCH = 14;
+	public static final int CODE_TYPE_SWITCH_END = 15;
+	public static final int CODE_TYPE_BLOCK_END = 16;
+	public static final int CODE_TYPE_CALL = 17;
+	public static final int CODE_TYPE_CONSTANT = 18;
+	public static final int CODE_TYPE_DO = 19;
+	public static final int CODE_TYPE_DO_END = 20;
+	public static final int CODE_TYPE_EXIT_SUB = 21;
+	public static final int CODE_TYPE_EXIT_FOR = 22;
+	public static final int CODE_TYPE_EXIT_DO = 23;
+	public static final int CODE_TYPE_EXIT_FUN = 24;
+	public static final int CODE_TYPE_GOTO = 25;
+	public static final int CODE_TYPE_ON_ERR = 26;
+	public static final int CODE_TYPE_OPT_EXPL = 27;
+	public static final int CODE_TYPE_RESUME = 28;
+	public static final int CODE_TYPE_LABLE = 29;
+	public static final int CODE_TYPE_PRIVATE = 30;
+	public static final int CODE_TYPE_SELECT = 31;
+	public static final int CODE_TYPE_CASE = 32;
+	public static final int CODE_TYPE_SELECT_END = 33;
+
+	public static final String VB_TYPE_INTEGER = "integer";
+	public static final String VB_TYPE_STRING = "string";
+	public static final String VB_TYPE_LONG = "long";
+	public static final String VB_TYPE_BOOLEAN = "boolean";
+	public static final String VB_TYPE_BYTE = "byte";
+
+}

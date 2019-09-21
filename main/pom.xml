@@ -4,11 +4,11 @@
                              http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
 	<parent>
-		<groupId>com.smyld</groupId>
+		<groupId>org.smyld</groupId>
 		<artifactId>smyld</artifactId>
 		<version>${release.version}</version>
 	</parent>
-    <groupId>com.smyld.main</groupId>
+    <groupId>org.smyld.main</groupId>
     <artifactId>smyld-main</artifactId>
     <packaging>pom</packaging>
     <version>${release.version}</version>

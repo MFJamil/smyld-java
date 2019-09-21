@@ -1,4 +1,4 @@
-package com.smyld.gui;
+package org.smyld.gui;
 
 import java.awt.Color;
 import java.awt.Container;
@@ -31,7 +31,7 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.text.BadLocationException;
 
-import com.smyld.gui.edit.EditorPopupPanel;
+import org.smyld.gui.edit.EditorPopupPanel;
 
 public class SMYLDTextEditor extends JTextPane {
 	SMYLDTextEditor   instance;

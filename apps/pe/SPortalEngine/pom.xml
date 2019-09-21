@@ -8,7 +8,7 @@
 		<version>2.1.5.RELEASE</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.smyld.app.pe</groupId>
+	<groupId>org.smyld.app.pe</groupId>
 	<artifactId>SPortalEngine</artifactId>
 	<version>1.0-SNAPSHOT</version>
 	<name>Spring Boot SMYLD Portal Engine</name>
@@ -32,12 +32,12 @@
 
 
 		<dependency>
-			<groupId>com.smyld.app.pe</groupId>
+			<groupId>org.smyld.app.pe</groupId>
 			<artifactId>PECore</artifactId>
 			<version>1.0-SNAPSHOT</version>
 		</dependency>
 		<dependency>
-			<groupId>com.smyld.app.pe.swing</groupId>
+			<groupId>org.smyld.app.pe.swing</groupId>
 			<artifactId>smyld-app-portalengine</artifactId>
 			<version>1.0-SNAPSHOT</version>
 		</dependency>

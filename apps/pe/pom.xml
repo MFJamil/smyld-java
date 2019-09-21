@@ -3,13 +3,13 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
                              http://maven.apache.org/maven-v4_0_0.xsd">
     <parent>
-        <groupId>com.smyld.app</groupId>
+        <groupId>org.smyld.app</groupId>
         <artifactId>smyld-app</artifactId>
         <version>${release.version}</version>
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
-    <groupId>com.smyld.app.pe</groupId>
+    <groupId>org.smyld.app.pe</groupId>
     <artifactId>smyld-app-pe</artifactId>
     <packaging>pom</packaging>
     <version>${release.version}</version>
