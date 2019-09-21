@@ -2,8 +2,8 @@ package org.smyld.app.portalengine;
 
 
 import org.smyld.gui.portal.engine.PortalManager;
-import org.smyld.gui.portal.engine.projectbuilder.MavenProjectBuilder;
-import org.smyld.gui.portal.engine.projectbuilder.ProjectBuilder;
+import org.smyld.app.pe.projectbuilder.MavenProjectBuilder;
+import org.smyld.app.pe.projectbuilder.ProjectBuilder;
 import org.apache.maven.artifact.repository.ArtifactRepository;
 import org.apache.maven.model.Dependency;
 import org.apache.maven.model.Resource;

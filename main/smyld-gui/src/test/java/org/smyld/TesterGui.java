@@ -140,7 +140,7 @@ public class TesterGui implements Serializable {
 		// doTestDockableDeskTop1();
 		// testHTMLViewer();
 		// testNewDragTool();
-		testDatePanel();
+		//testDatePanel();
 		// doTestUIDefaults();
 		// doTestPrintStreamComp();
 		//doTestLabeledComponent();

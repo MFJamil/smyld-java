@@ -2,38 +2,26 @@
 	<parent>
 		<groupId>org.smyld.app.pe</groupId>
 		<artifactId>smyld-app-pe</artifactId>
-		<version>1.0-SNAPSHOT</version>
+		<version>${release.version}</version>
 	</parent>
 
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>org.smyld.app.pe.swing</groupId>
+	<groupId>org.smyld.app.pe</groupId>
 	<artifactId>smyld-app-portalengine</artifactId>
 	<packaging>jar</packaging>
-	<version>1.0-SNAPSHOT</version>
+	<version>${release.version}</version>
 	<name>SMYLD Swing PortalEngine</name>
 	<description>This is the portal engine application for generating GUI layer </description>
-	<developers>
-		<developer>
-			<id>mjamil</id>
-			<email>jamil@mohammed-jamil.de</email>
-			<name>Mohammed Jamil</name>
-			<organization>SMYLD</organization>
-			<organizationUrl>http://www.mohammed-jamil.de/</organizationUrl>
-			<roles>
-				<role>developer</role>
-			</roles>
-		</developer>
-	</developers>
 	<dependencies>
 		<dependency>
 			<groupId>org.smyld.main</groupId>
 			<artifactId>smyld-main-lang</artifactId>
-			<version>1.0-SNAPSHOT</version>
+			<version>${release.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.smyld.main</groupId>
 			<artifactId>smyld-main-db</artifactId>
-			<version>1.0-SNAPSHOT</version>
+			<version>${release.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>junit</groupId>
@@ -44,7 +32,7 @@
 		<dependency>
 			<groupId>org.smyld.app.pe</groupId>
 			<artifactId>PECore</artifactId>
-			<version>1.0-SNAPSHOT</version>
+			<version>${release.version}</version>
 		</dependency>
         <dependency>
             <groupId>javax.inject</groupId>

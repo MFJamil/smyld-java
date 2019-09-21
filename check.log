@@ -1,0 +1,52 @@
+[[1;34mINFO[m] Scanning for projects...
+[[1;31mERROR[m] [ERROR] Some problems were encountered while processing the POMs:
+[WARNING] 'version' contains an expression but should be a constant. @ org.smyld.app.pe:smyld-app-pe:${release.version}, /media/mfjamil/Ubuntu_second/work/java/smyld-java/apps/pe/pom.xml, line 15, column 14
+[FATAL] Non-resolvable parent POM for org.smyld.app.pe.plugin:smyld-pe-maven-plugin:1.0-SNAPSHOT: Could not find artifact org.smyld.app.pe:smyld-app-pe:pom:1.0-SNAPSHOT and 'parent.relativePath' points at wrong local POM @ line 2, column 11
+[WARNING] 'version' contains an expression but should be a constant. @ org.smyld.main:smyld-main-api:${release.version}, /media/mfjamil/Ubuntu_second/work/java/smyld-java/main/smyld/pom.xml, line 14, column 11
+[WARNING] 'version' contains an expression but should be a constant. @ org.smyld.main:smyld-main:${release.version}, /media/mfjamil/Ubuntu_second/work/java/smyld-java/main/pom.xml, line 14, column 14
+[WARNING] 'build.plugins.plugin.version' for org.apache.maven.plugins:maven-gpg-plugin is missing. @ org.smyld:smyld:${release.version}, /media/mfjamil/Ubuntu_second/work/java/smyld-java/pom.xml, line 68, column 15
+[WARNING] 'version' contains an expression but should be a constant. @ org.smyld.main:smyld-main-db:${release.version}, /media/mfjamil/Ubuntu_second/work/java/smyld-java/main/smyld-db/pom.xml, line 14, column 11
+[WARNING] 'build.plugins.plugin.version' for org.apache.maven.plugins:maven-gpg-plugin is missing. @ org.smyld:smyld:${release.version}, /media/mfjamil/Ubuntu_second/work/java/smyld-java/pom.xml, line 68, column 15
+[WARNING] 'version' contains an expression but should be a constant. @ org.smyld.main:smyld-main-bw:${release.version}, /media/mfjamil/Ubuntu_second/work/java/smyld-java/main/smyld-bw/pom.xml, line 14, column 11
+[WARNING] 'build.plugins.plugin.version' for org.apache.maven.plugins:maven-gpg-plugin is missing. @ org.smyld:smyld:${release.version}, /media/mfjamil/Ubuntu_second/work/java/smyld-java/pom.xml, line 68, column 15
+[WARNING] 'version' contains an expression but should be a constant. @ org.smyld.main:smyld-main-gui:${release.version}, /media/mfjamil/Ubuntu_second/work/java/smyld-java/main/smyld-gui/pom.xml, line 14, column 11
+[WARNING] 'build.plugins.plugin.version' for org.apache.maven.plugins:maven-gpg-plugin is missing. @ org.smyld:smyld:${release.version}, /media/mfjamil/Ubuntu_second/work/java/smyld-java/pom.xml, line 68, column 15
+[WARNING] 'version' contains an expression but should be a constant. @ org.smyld.main:smyld-main-jms:${release.version}, /media/mfjamil/Ubuntu_second/work/java/smyld-java/main/smyld-jms/pom.xml, line 14, column 11
+[WARNING] 'build.plugins.plugin.version' for org.apache.maven.plugins:maven-gpg-plugin is missing. @ org.smyld:smyld:${release.version}, /media/mfjamil/Ubuntu_second/work/java/smyld-java/pom.xml, line 68, column 15
+[WARNING] 'version' contains an expression but should be a constant. @ org.smyld.main:smyld-main-lang:${release.version}, /media/mfjamil/Ubuntu_second/work/java/smyld-java/main/smyld-lang/pom.xml, line 13, column 11
+[WARNING] 'build.plugins.plugin.version' for org.apache.maven.plugins:maven-gpg-plugin is missing. @ org.smyld:smyld:${release.version}, /media/mfjamil/Ubuntu_second/work/java/smyld-java/pom.xml, line 68, column 15
+[WARNING] 'version' contains an expression but should be a constant. @ org.smyld.main:smyld-main:${release.version}, /media/mfjamil/Ubuntu_second/work/java/smyld-java/main/pom.xml, line 14, column 14
+[WARNING] 'version' contains an expression but should be a constant. @ org.smyld:smyld:${release.version}, /media/mfjamil/Ubuntu_second/work/java/smyld-java/pom.xml, line 13, column 12
+[WARNING] 'build.plugins.plugin.version' for org.apache.maven.plugins:maven-gpg-plugin is missing. @ org.smyld:smyld:${release.version}, /media/mfjamil/Ubuntu_second/work/java/smyld-java/pom.xml, line 68, column 15
+[WARNING] 'version' contains an expression but should be a constant. @ org.smyld.app.ep.EntityPlot:smyld-app-entityplot:${release.version}, /media/mfjamil/Ubuntu_second/work/java/smyld-java/apps/ep/EntityPlot/pom.xml, line 11, column 11
+[WARNING] 'version' contains an expression but should be a constant. @ org.smyld.app.ep:smyld-app-ep:${release.version}, /media/mfjamil/Ubuntu_second/work/java/smyld-java/apps/ep/pom.xml, line 15, column 14
+[WARNING] 'build.plugins.plugin.version' for org.apache.maven.plugins:maven-gpg-plugin is missing. @ org.smyld:smyld:${release.version}, /media/mfjamil/Ubuntu_second/work/java/smyld-java/pom.xml, line 68, column 15
+[WARNING] 'version' contains an expression but should be a constant. @ org.smyld.app.ep:smyld-app-ep:${release.version}, /media/mfjamil/Ubuntu_second/work/java/smyld-java/apps/ep/pom.xml, line 15, column 14
+[WARNING] 'version' contains an expression but should be a constant. @ org.smyld.app:smyld-app:${release.version}, /media/mfjamil/Ubuntu_second/work/java/smyld-java/apps/pom.xml, line 15, column 14
+[WARNING] 'build.plugins.plugin.version' for org.apache.maven.plugins:maven-gpg-plugin is missing. @ org.smyld:smyld:${release.version}, /media/mfjamil/Ubuntu_second/work/java/smyld-java/pom.xml, line 68, column 15
+[WARNING] 'version' contains an expression but should be a constant. @ org.smyld.app.pe.model:PEModel:${release.version}, /media/mfjamil/Ubuntu_second/work/java/smyld-java/apps/pe/PEModel/pom.xml, line 12, column 11
+[WARNING] 'version' contains an expression but should be a constant. @ org.smyld.app.pe:smyld-app-pe:${release.version}, /media/mfjamil/Ubuntu_second/work/java/smyld-java/apps/pe/pom.xml, line 15, column 14
+[WARNING] 'build.plugins.plugin.version' for org.apache.maven.plugins:maven-gpg-plugin is missing. @ org.smyld:smyld:${release.version}, /media/mfjamil/Ubuntu_second/work/java/smyld-java/pom.xml, line 68, column 15
+[WARNING] 'version' contains an expression but should be a constant. @ org.smyld.app.pe:PECore:${release.version}, /media/mfjamil/Ubuntu_second/work/java/smyld-java/apps/pe/PECore/pom.xml, line 12, column 11
+[WARNING] 'dependencies.dependency.version' for org.junit.jupiter:junit-jupiter:jar is either LATEST or RELEASE (both of them are being deprecated) @ org.smyld.app.pe:PECore:${release.version}, /media/mfjamil/Ubuntu_second/work/java/smyld-java/apps/pe/PECore/pom.xml, line 54, column 13
+[WARNING] 'build.plugins.plugin.version' for org.apache.maven.plugins:maven-gpg-plugin is missing. @ org.smyld:smyld:${release.version}, /media/mfjamil/Ubuntu_second/work/java/smyld-java/pom.xml, line 68, column 15
+[WARNING] 'version' contains an expression but should be a constant. @ org.smyld.app.pe.swing:smyld-app-portalengine:${release.version}, /media/mfjamil/Ubuntu_second/work/java/smyld-java/apps/pe/PortalEngine/pom.xml, line 12, column 11
+[WARNING] 'build.plugins.plugin.version' for org.apache.maven.plugins:maven-gpg-plugin is missing. @ org.smyld:smyld:${release.version}, /media/mfjamil/Ubuntu_second/work/java/smyld-java/pom.xml, line 68, column 15
+[WARNING] 'version' contains an expression but should be a constant. @ org.smyld.app.pe:smyld-app-pe:${release.version}, /media/mfjamil/Ubuntu_second/work/java/smyld-java/apps/pe/pom.xml, line 15, column 14
+[WARNING] 'build.plugins.plugin.version' for org.apache.maven.plugins:maven-gpg-plugin is missing. @ org.smyld:smyld:${release.version}, /media/mfjamil/Ubuntu_second/work/java/smyld-java/pom.xml, line 68, column 15
+[WARNING] 'version' contains an expression but should be a constant. @ org.smyld.app:smyld-app:${release.version}, /media/mfjamil/Ubuntu_second/work/java/smyld-java/apps/pom.xml, line 15, column 14
+[WARNING] 'build.plugins.plugin.version' for org.apache.maven.plugins:maven-gpg-plugin is missing. @ org.smyld:smyld:${release.version}, /media/mfjamil/Ubuntu_second/work/java/smyld-java/pom.xml, line 68, column 15
+[WARNING] 'version' contains an expression but should be a constant. @ org.smyld:smyld:${release.version}, /media/mfjamil/Ubuntu_second/work/java/smyld-java/pom.xml, line 13, column 12
+[WARNING] 'build.plugins.plugin.version' for org.apache.maven.plugins:maven-gpg-plugin is missing. @ org.smyld:smyld:${release.version}, /media/mfjamil/Ubuntu_second/work/java/smyld-java/pom.xml, line 68, column 15
+ @ 
+[[1;31mERROR[m] The build could not read 1 project -> [1m[Help 1][m
+[[1;31mERROR[m]   
+[[1;31mERROR[m]   The project org.smyld.app.pe.plugin:smyld-pe-maven-plugin:1.0-SNAPSHOT (/media/mfjamil/Ubuntu_second/work/java/smyld-java/apps/pe/PEMavenPlugin/pom.xml) has 1 error
+[[1;31mERROR[m]     Non-resolvable parent POM for org.smyld.app.pe.plugin:smyld-pe-maven-plugin:1.0-SNAPSHOT: Could not find artifact org.smyld.app.pe:smyld-app-pe:pom:1.0-SNAPSHOT and 'parent.relativePath' points at wrong local POM @ line 2, column 11 -> [1m[Help 2][m
+[[1;31mERROR[m] 
+[[1;31mERROR[m] To see the full stack trace of the errors, re-run Maven with the [1m-e[m switch.
+[[1;31mERROR[m] Re-run Maven using the [1m-X[m switch to enable full debug logging.
+[[1;31mERROR[m] 
+[[1;31mERROR[m] For more information about the errors and possible solutions, please read the following articles:
+[[1;31mERROR[m] [1m[Help 1][m http://cwiki.apache.org/confluence/display/MAVEN/ProjectBuildingException
+[[1;31mERROR[m] [1m[Help 2][m http://cwiki.apache.org/confluence/display/MAVEN/UnresolvableModelException

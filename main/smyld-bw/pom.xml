@@ -21,7 +21,7 @@
 			<version>${release.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>org.smyld</groupId>
+			<groupId>org.smyld.main</groupId>
 			<artifactId>smyld-main-db</artifactId>
 			<version>${release.version}</version>
 		</dependency>
