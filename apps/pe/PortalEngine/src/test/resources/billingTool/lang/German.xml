@@ -1,0 +1,139 @@
+<?xml version='1.0' encoding='windows-1252'?>
+<languages>
+  <language name="German"> 
+  
+  
+  <word module="menus"    id="mnu_admin"              translate="Admin" />
+  <word module="menus"    id="mnu_users"              translate="Users" />
+  <word module="menus"    id="mnu_roles"              translate="Roles" />
+  <word module="menus"    id="mnu_customerService"    translate="Customer Service" />
+  <word module="menus"    id="mnu_customer01"         translate="Aareal Bank" />
+  <word module="menus"    id="mnu_customer02"         translate="BARCLAYS" />
+  <word module="menus"    id="mnu_customer03"         translate="HELABA" />
+  <word module="menus"    id="mnu_customer04"         translate="DZ Bank" />
+  <word module="menus"    id="mnu_customer05"         translate="LIoyds TSB" />
+  <word module="menus"    id="mnu_customer06"         translate="Lehman LND" />
+  <word module="menus"    id="mnu_showConns"          translate="View Con." />
+  <!-- 
+  <word module="menus"    id="mnu_add_connection"     translate="Add Connector" />
+  <word module="menus"    id="mnu_bar_open_functions" translate="Functions" />
+  -->
+  <word module="menus"    id="mnu_open_functions"         translate="Funktionen" />
+  <word module="menus"    id="mnu_ent_edit"               translate="Edit" />
+  <word module="menus"    id="mnu_ent_prop"               translate="Properties .." />
+  <word module="menus"    id="mnu_ent_del"                translate="Delete ..." />
+  <word module="menus"    id="mnu_ent_align_top"          translate="Align Top" />
+  <word module="menus"    id="mnu_ent_align_left"         translate="Align Left" />
+  <word module="menus"    id="mnu_ent_align_right"        translate="Align Right" />
+  <word module="menus"    id="mnu_ent_align_buttom"       translate="Align Buttom" />
+  <word module="menus"    id="mnu_ent_width"              translate="Justify Width" />
+  <word module="menus"    id="mnu_ent_height"             translate="Justify Height" />
+  <word module="menus"    id="mnu_ent_align_cent_hor"     translate="Center horizontally" />
+  <word module="menus"    id="mnu_ent_align_cent_ver"     translate="Center vertically" />
+  <word module="menus"    id="mnu_ent_align_stair_right"  translate="Stair To Right" />
+  <word module="menus"    id="mnu_ent_align_stair_left"   translate="Stair To Left" />
+  <word module="menus"    id="menu_ent_resize"            translate="Resize" />
+  <word module="menus"    id="menu_ent_align"             translate="Align" />
+  <word module="menus"    id="mnu_adr_add"                translate="Add New Invoice" />
+  
+  <word module="menus"    id="mnu_ent_space_horizontal" translate="Space Horizontal" />
+  <word module="menus"    id="mnu_ent_space_vertical"   translate="Space Vertical" />
+  
+  <word module="menus"    id="mnu_user"                 translate="Users" />
+
+  <word module="actions"  id="openUserMenu"           translate="Functions" />
+  <word module="menus"    id="mnu_cust_new"           translate="New Customer" />
+  <word module="menus"    id="mnu_cust_clone"         translate="Clone Customer" />
+  <word module="menus"    id="mnu_cust_del"           translate="Delete..." />
+  <word module="menus"    id="mnu_cust_edt"           translate="Edit Customer" />
+  
+  <word module="menus"    id="mnu_user_new"           translate="New User" />
+  <word module="menus"    id="mnu_user_del"           translate="Delete User..." />
+  <word module="menus"    id="mnu_user_edt"           translate="Edit User" />
+
+  
+	
+
+
+
+
+
+  
+
+
+  <word module="menus"    id="mnu_client_service"   translate="Client Services" />
+  <word module="menus"    id="mnu_server_service"   translate="Server Services" />
+  <word module="menus"    id="mnu_copy"    translate="Copy" />
+  <word module="menus"    id="mnu_cut"     translate="Cut" />
+  <word module="menus"    id="mnu_paste"   translate="Paste" />
+  <word module="menus"    id="mnu_select_all"   translate="Select All .." />
+  <word module="menus"    id="mnu_clear"        translate="Clear ..." />
+  <word module="menus"    id="mni_settings"     translate="User Settings.." />
+    <word module="menus"    id="mnu_open_interface"     translate="Open Interface" />
+    <word module="menus"    id="mnu_file"               translate="Daten" />
+    <word module="menus"    id="mnu_formats"            translate="Formats" />
+    <word module="menus"    id="mnu_formats_design"     translate="Design" />
+    <word module="menus"    id="mnu_formats_design_new" translate="New" />
+    <word module="menus"    id="mnu_formats_design_edit" translate="Edit" />
+    <word module="menus"    id="mnu_formats_files"      translate="Data Files" />
+    <word module="menus"    id="mnu_formats_files_new"  translate="New" />
+    <word module="menus"    id="mnu_formats_files_edit" translate="Bearbeiten" />
+    <word module="menus"    id="mnu_frm_edt_files"      translate="Files" />
+    <word module="menus"    id="mnu_frm_edt_new"        translate="New ...." />
+    <word module="menus"    id="mnu_frm_edt_save"        translate="Save .." />
+    <word module="menus"    id="mnu_frm_edt_save_as"     translate="Save As .." />
+    <word module="menus"    id="mnu_frm_edt_open"        translate="Open" />
+    <word module="menus"    id="mnu_frm_edt_format"       translate="Format File" />
+    <word module="menus"    id="mnu_frm_edt_edit"              translate="Edit ..." />
+    <word module="menus"    id="mnu_frm_edt_edit_format_file"  translate="Format File" />
+    <word module="menus"    id="mnu_frm_edt_edit_data_file"    translate="Data File" />
+    <word module="menus"    id="mnu_frm_edt_exit"              translate="Beenden" />
+    
+    
+    <word module="menus"    id="mnu_frm_dsg_files"      translate="Files" />
+    <word module="menus"    id="mnu_frm_dsg_new"        translate="New ...." />
+    <word module="menus"    id="mnu_frm_dsg_save_xml"   translate="Save As XML .." />
+    <word module="menus"    id="mnu_frm_dsg_save_def"   translate="Save As DEF .." />
+    <word module="menus"    id="mnu_frm_dsg_open"        translate="Open" />
+    <word module="menus"    id="mnu_frm_dsg_format"       translate="Format File" />
+    <word module="menus"    id="mnu_frm_dsg_edit"              translate="Edit ..." />
+    <word module="menus"    id="mnu_frm_dsg_edit_format_file"  translate="Format File" />
+    <word module="menus"    id="mnu_frm_dsg_edit_data_file"    translate="Data File" />
+    <word module="menus"    id="mnu_frm_dsg_exit"              translate="Beenden" />
+        
+    
+
+    <word module="menus"    id="mnu_scramble"           translate="Scramble" />
+    <word module="menus"    id="mnu_scramble_db"        translate="Data Base" />
+    <word module="menus"    id="mnu_scramble_file"      translate="File" />
+    <word module="menus"    id="mnu_parse"              translate="Parse" />
+    <word module="menus"    id="mnu_convert"            translate="Convert" />
+    <word module="menus"    id="mnu_Def_XML_convert"    translate="Def vrs. XML" />
+    <word module="menus"    id="mnu_DB_XML_convert"     translate="DB To XML" />
+    <word module="menus"    id="mnu_db_connections"     translate="DB Connections" />
+    <word module="menus"    id="mnu_new_db_conneciton"  translate="New Connection" />
+    <word module="menus"    id="mnu_new_sc_key"         translate="New Scramble Key" />
+    <word module="menus"    id="mnu_imp_db_connection"  translate="import Connection" />
+    <word module="menus"    id="mnu_sc_keys"            translate="Scramble Keys" />
+    <word module="menus"    id="mnu_exit"               translate="Beenden" />
+    <word module="menus"    id="mnu_window"             translate="Window" />
+    <word module="menus"    id="mni_cascade"            translate="Cascade" />
+    <word module="menus"    id="mni_tilehoriz"          translate="Tile Horizontal" />
+    <word module="menus"    id="mni_tilevert"           translate="Tile Vertical" />
+    <word module="menus"    id="mni_arrangeicon"        translate="Arrange Icons" />
+    <word module="menus"    id="mnu_help"               translate="Hilfe" />
+    <word module="menus"    id="mni_showhelpcont"       translate="Show Help Contents" />
+    <word module="menus"    id="mni_aboutbankworks"     translate="Überuns .." />
+    <word module="windows"  id="MdiWindow"              translate="360t Billing Interface" />
+    
+    <word module="toolbars_tp" id="mnu_layout"             translate="do Automatic layout "/>
+    <word module="toolbars_tp" id="mnu_save"               translate="Save current layout"/>
+    <word module="toolbars_tp" id="mnu_print"              translate="Export to a PDF"/>
+    <word module="toolbars_tp" id="mnu_export_image"       translate="Export to an Image"/>
+    <word module="toolbars_tp" id="mnu_bctabular"          translate="Show Tabular info"/>
+    
+    
+    
+    <word module="PnlCustomerGeneral" id="platformName"   translate="Platform Name       " />
+  </language>
+</languages>

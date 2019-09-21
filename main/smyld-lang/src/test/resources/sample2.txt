@@ -1,0 +1,1317 @@
+Option Explicit
+'
+Declare Function CreateAuditTrail()                            																					As String
+Declare Function ValidateRecordData(intParameter As Integer, strSecondaryTable As String, strSecondaryField As String, hdlMainHandle As Integer, strMainField As String, intSecondaryErrorNo As Integer, strLiteralValue As String) 	As Integer
+Declare Function IsTableEmpty(SQLString As String, ErrMsgNo As Integer)	As Integer
+'
+Declare Sub      ErrorHandleDB(intErrorIndex As Integer, strErrorLine As String, strDBLastErrorMsg As String)
+Declare Sub      ErrorHandleSTD(intErrorIndex As Integer, strErrorLine As String, strErrorMsg As String)
+Declare Sub      ErrorHandleSEQ(intErrorIndex As Integer, strErrorLine As String)
+Declare Sub      ErrorHandleUSR(intErrorIndex As Integer)
+Declare Sub      ErrorHandle(intErrorIndex As Integer, strErrorLine As String, strErrorMsg As String, strDBLastErrorMsg As String)
+'
+Const strGeneral     As String = "Invalid transaction type!"
+Const strMustCredit	As String = "Only CREDIT transactions are allowed here."
+Const strMustDebit	As String = "Only DEBIT transactions are allowed here."
+'
+Private	hdlIntDefinition		As Integer  'Database handle for interest definition table
+Private	strInstitution			As String   'Institution
+Private	strPDate					As String   'Posting Date
+Private	strDrBase				As String   'Debit base rate
+Private	strCrBase				As String   'Credit base rate
+Private	strServCon				As String
+Private	strAccType				As String	
+Private	strAcctCurr				As String
+Private	hdlBaseInt				As Integer
+Private	intIsFocusOk			As Integer
+Private	blnReturn				As Boolean
+Private	intReturn				As Integer
+Private 	blnValid 				As Boolean
+'
+Const		RecordID					As String = "015"
+'
+'
+'
+Sub CheckTranTypes()
+   '
+   On Error GoTo CheckTranTypesError
+   '
+	'---------------------------------------------------------------------
+	'This sub checks whether DR Tran Type and Overdue Tran Type
+	'are the same. If yes disable Overdue Threshold and Overdue Value date
+	'---------------------------------------------------------------------
+	'
+	If DBGetValue(hdlIntDefinition,"INTEREST_ACCUMULATION")="002" Then       'Combined DR and Overdue Payments Interest
+		blnReturn = DBSetValue(hdlIntDefinition,"OVERDUE_THRESHOLD_VALUE","0")
+		blnReturn = DBSetValue(hdlIntDefinition,"OVERDUE_PERIODIC_REFERENCE","")
+		blnReturn = DBSetValue(hdlIntDefinition,"OVERDUE_REFERENCE_OPERATOR","")
+		blnReturn = DBSetValue(hdlIntDefinition,"OVERDUE_FIXED_PERIOD","0")
+		'
+		blnReturn = SetDisplayAttrib(43,"PR"):blnReturn = SetDisplayAttrib(44,"PR")
+		blnReturn = SetDisplayAttrib(45,"PR"):blnReturn = SetDisplayAttrib(46,"PR")
+	Else
+		blnReturn = SetDisplayAttrib(43,"DI"):blnReturn = SetDisplayAttrib(44,"DI")
+		blnReturn = SetDisplayAttrib(45,"DI"):blnReturn = SetDisplayAttrib(46,"DI")
+	End If
+   '
+ExitCheckTranTypes:
+   '
+   Exit Sub
+   '
+CheckTranTypesError:
+   '
+   Call ErrorHandle(Err, Erl, Error$, DBLastErrorMsg(0))
+	Call BWS_Success(False)
+   Resume ExitCheckTranTypes
+   '
+End Sub
+'
+'
+'
+Function Validate_Sign(strFldName As String) As String
+   '
+	'-----------------------------------------------
+	'Function that checks whether a transaction type
+	'has a Debit or a Credit sign.
+	'-----------------------------------------------
+	'
+   On Error GoTo Validate_SignError
+   '
+	If DBGetValue(hdlIntDefinition,strFldName)="000" Then
+		Validate_Sign = "F"		' F does not mean anything. It's important not to be D or C.
+	Else
+		Validate_Sign = Left(GetChoiceDisplayValue("bwt_transaction_type","index_field","destination_sign",DBGetValue(hdlIntDefinition,strFldName)),1)
+	End If
+	'
+ExitValidate_Sign:
+   '
+   Exit Function
+   '
+Validate_SignError:
+   '
+   Call ErrorHandle(Err, Erl, Error$, DBLastErrorMsg(0))
+	Call BWS_Success(False)
+   Resume ExitValidate_Sign
+   '
+End Function
+'
+'
+'
+Sub InitialTextLine()
+	'================================================================
+	'	This SUB initializes all the text lines and variables related.
+	'================================================================
+	Dim i As Integer
+	'
+	strDrBase = ""
+	strCrBase = ""
+	'
+	For i = 1 To 10 
+	   Call SetTextLine(i,"0.000000",False)
+	Next i
+	'
+End Sub
+'
+'
+Sub ValidateEffectiveDate
+   '
+   On Error GoTo ValidateEffectiveDateError
+   '
+	If Val(DateToBW3(DBGetValue(hdlIntDefinition,"EFFECTIVE_DATE"))) < Val(GetGlobalInfo(GI_PDATE)) Then
+		intReturn = BWS_Msg(MSG_OK,MSG_TYPE_ERROR,6021)
+		'The effective date must be later or equal to the posting date!
+		blnReturn = SetFocus(15)
+		Call BWS_Success(False)
+	End If
+   '
+ExitValidateEffectiveDate:
+   '
+   Exit Sub
+   '
+ValidateEffectiveDateError:
+   '
+   Call ErrorHandle(Err, Erl, Error$, DBLastErrorMsg(0))
+	Call BWS_Success(False)
+   Resume ExitValidateEffectiveDate
+   '
+End Sub
+'
+'
+Function SetBaseInt() As Boolean
+	'
+	'====================================================================================
+	' This SUB gets the base interest rate for this account type ID and account currency 
+	' and greatest base interest effective date <= interest definition effective date.
+	'====================================================================================
+	Dim	strEffectiveDate		As String
+	Dim 	strSQLStatement1		As String
+	Dim   strSQLStatement2		As String
+	'	
+	strAccType		 		= DBGetValue(HdlIntDefinition,"ACCOUNT_TYPE_ID")
+	strAcctCurr 			= DBGetValue(HdlIntDefinition,"ACCT_CURRENCY")
+	strEffectiveDate		= DBGetValue(HdlIntDefinition,"EFFECTIVE_DATE")
+	'
+	If Trim(strAccType) = "" Or Trim(strAcctCurr) = "" Or Trim(strEffectiveDate) = "" Then
+		SetBaseInt = False
+		Exit Function
+	End If
+	'
+	'-------------------------------------------------------------------------------------------------------------------------------
+	' Open cbr_base_interest and get the base interest rate with the account type id 
+	' and account currency and (maximum cbr_base_interest.effective date <= cbr_interest_definition.effective date (GI_PDATE + 1)) 
+	'--------------------------------------------------------------------------------------------------------------------------------
+	strSQLStatement1 = "SELECT MAX(EFFECTIVE_DATE) FROM cbr_base_interest WHERE ACCOUNT_TYPE_ID = '" & strAccType & "' " &_
+							 "AND ACCT_CURRENCY = '" & strAcctCurr & "' AND EFFECTIVE_DATE <= '" & strEffectiveDate & "' " &_
+							 "AND INSTITUTION_NUMBER = '" & strInstitution & "'"
+	'
+	strSQLStatement2 = "SELECT BASE_CR_INTEREST,BASE_DR_INTEREST FROM cbr_base_interest " &_
+							 "WHERE ACCOUNT_TYPE_ID = '" & strAccType & "' " &_
+							 "AND ACCT_CURRENCY = '" & strAcctCurr & "' " &_
+							 "AND EFFECTIVE_DATE = (" & strSQLStatement1 & ") " &_
+							 "AND INSTITUTION_NUMBER = '" & strInstitution & "'"
+	'
+	hdlBaseInt = DBOpen(strSQLStatement2,True)
+	'
+	If DBIsEOF(hdlBaseInt) And DBIsBOF(hdlBaseInt) Then
+		'------------------------------------------
+		'If base interest table is empty then exit
+		'------------------------------------------
+		Call InitialTextLine()
+ 		intReturn = BWS_Msg(MSG_OK,MSG_TYPE_ERROR,6163)  
+		'No Base interest definition found for the specified Account type ID and account currency combination!
+		'Please validate the selected Account type & currency combination or set up a new Base interest record!
+		SetBaseInt = False
+		Call BWS_Success(False)
+	Else
+		'------------------------ 
+		'Get the base interests
+		'------------------------
+		strCrBase = DBGetValue(hdlBaseInt,"BASE_CR_INTEREST")	
+		strDrBase = DBGetValue(hdlBaseInt,"BASE_DR_INTEREST")	
+		'
+		'--------------------------------------------------------------
+		'Set the Debit and Credit base interest rate to the textline
+		'--------------------------------------------------------------
+		Call SetTextLine(1,strDrBase,False)
+		Call SetTextLine(2,strCrBase,False)
+		SetBaseInt = True
+		'
+	End If
+	'
+	blnReturn = DBClose(hdlBaseInt)
+	'
+End Function
+'
+'
+'
+Sub CalcInterest (FldNo As Integer, strBaseRate As String, strFieldSpread As String, strOp As String, Check As Boolean)
+	'====================================================================
+	' This SUB calculates the interest and display to its relative field.
+	'====================================================================
+	Dim dblNumb   		As Double
+	Dim strSign   		As String
+	Dim dblInterest	As Double
+	Dim intReturn 		As Integer	
+	'
+	'---------------------------------------------------------
+	'IF not base interest was found, no further processing
+	'---------------------------------------------------------
+ 	If Trim(strBaseRate) = "" Then
+		Exit Sub
+	End If
+	'
+	dblNumb = DBGetValue(HdlIntDefinition, strFieldSpread)
+	strSign = DBGetValue(HdlIntDefinition, strOp)
+	'
+	If strSign = "001" Then			' 001 = plus
+		dblInterest = CDbl(Val(Trim(strBaseRate))) + CDbl(Val(Trim(dblNumb)))
+	   Call SetTextLine(FldNo,Format(CStr(dblInterest),"#0.000000"),False)
+		'
+	ElseIf strSign = "002" Then 	'002 = minus
+		dblInterest = CDbl(Val(Trim(strBaseRate))) - CDbl(Val(Trim(dblNumb)))
+  		Call SetTextLine(FldNo,Format(CStr(dblInterest),"#0.000000"),False)
+		'
+	ElseIf strSign = "010" Then	'010 = multiply
+		dblInterest = CDbl(Val(Trim(strBaseRate))) * CDbl(Val(Trim(dblNumb))) 
+	   Call SetTextLine(FldNo,Format(CStr(dblInterest),"#0.000000"),False)
+		'
+	ElseIf strSign = "011" Then	'011 = constant
+		dblInterest = CDbl(Val(Trim(dblNumb))) 
+	   Call SetTextLine(FldNo,Format(CStr(dblInterest),"#0.000000"),False) 
+	End If	
+	'
+End Sub
+'
+'
+'
+Sub SetText()
+	'============================================
+	' This SUB sets values to all the text lines.
+	'============================================
+	Dim blnReturnSetBaseInt	As Boolean
+	'
+	blnReturnSetBaseInt = SetBaseInt()
+	'
+	If blnReturnSetBaseInt Then
+		Call CalcInterest(03,strDrBase,"DR_CASH_SPREAD","OPERATOR_DR_CASH",True)
+		Call CalcInterest(04,strDrBase,"DR_RETAIL_SPREAD","OPERATOR_DR_RETAIL",True)
+		Call CalcInterest(05,strDrBase,"DR_INTEREST_SPREAD","OPERATOR_DR_INTEREST",True)
+		Call CalcInterest(06,strDrBase,"DR_CHARGES_SPREAD","OPERATOR_DR_CHARGES",True)
+		Call CalcInterest(07,strCrBase,"CR_PAYMENTS_SPREAD","OPERATOR_CR_PAYMENTS",True)
+		Call CalcInterest(08,strCrBase,"CR_REFUNDS_SPREAD","OPERATOR_CR_REFUNDS",True)
+		Call CalcInterest(09,strCrBase,"CR_INTEREST_SPREAD","OPERATOR_CR_INTEREST",True)
+		Call CalcInterest(10,strCrBase,"CR_BONUS_SPREAD","OPERATOR_CR_BONUS",True)
+	End If
+	'
+End Sub
+'
+'
+'
+Sub CheckCombination(intField As Integer,blnValid As Boolean)
+	'
+	'========================================================================================
+	'Checks if the combination of account type ID and acct currency exist in 
+	'CBR_CONTRACT_ACCT_TYPES for the specified SERVICE_CONTRACT_ID.
+	'=========================================================================================
+	'
+   On Error GoTo CheckCombinationError
+	'
+	blnValid  = True
+	'
+	strServCon 	= DBGetValue(hdlIntDefinition,"SERVICE_CONTRACT_ID")
+	strAccType 	= DBGetValue(hdlIntDefinition,"ACCOUNT_TYPE_ID")
+	strAcctCurr = DBGetValue(hdlIntDefinition,"ACCT_CURRENCY")
+	'
+	If Trim(strAccType) <> "" And Trim(strAcctCurr) <> "" Then
+
+		If IsTableEmpty("SELECT ACCOUNT_TYPE_ID FROM CBR_CONTRACT_ACCT_TYPES WHERE SERVICE_CONTRACT_ID = '"&_ 
+			strServCon & "' AND ACCOUNT_TYPE_ID = '" & strAccType & "' AND ACCT_CURRENCY = '" &_
+			strAcctCurr &"' AND INSTITUTION_NUMBER ='" &	strInstitution & "'", 0) = 1 Then
+			'
+			'Account type ID and account currency combination do not exist in CBR_CONTRACT_ACCT_TYPES
+			'for the specified Service contract ID!
+			intReturn = BWS_Msg(MSG_OK,MSG_TYPE_ERROR,6117)
+			If intField = 25 Then intField = 1 Else intfield = 25 
+			intIsFocusOk = intField
+			blnreturn = SetFocus(intField)
+			blnValid = False
+			Call BWS_Success(False)
+		End If
+	End If
+	'
+ExitCheckCombination:
+   '
+   Exit Sub
+   '
+CheckCombinationError:
+   '
+   Call ErrorHandle(Err, Erl, Error$, DBLastErrorMsg(0))
+	Call BWS_Success(False)
+   Resume ExitCheckCombination
+   '
+End Sub
+'
+'
+'
+Sub CheckTierLevel
+	'
+	'=========================================================================================
+	'This sub checks if the chosen tier level exists for the service contract, account type & 
+	'currency and the client tariff - if the selected tier level is not the default one
+	'=========================================================================================
+	'
+   On Error GoTo CheckTierLevelError
+	'
+	Dim strTariff		As String
+	Dim strTierLevel	As String
+	'
+	strServCon 	= DBGetValue(hdlIntDefinition,"SERVICE_CONTRACT_ID")
+	strAccType 	= DBGetValue(hdlIntDefinition,"ACCOUNT_TYPE_ID")
+	strAcctCurr = DBGetValue(hdlIntDefinition,"ACCT_CURRENCY")
+	strTariff 	= DBGetValue(hdlIntDefinition,"CONDITION_SET")
+	strTierLevel = DBGetValue(hdlIntDefinition,"INTEREST_TIER_LEVEL")
+	'
+	If Trim(strTierLevel) <> "000" Then
+		If IsTableEmpty("SELECT INTEREST_TIER_LEVEL FROM CBR_INTEREST_TIER WHERE SERVICE_CONTRACT_ID = '" &_
+			strServCon & "' AND ACCOUNT_TYPE_ID = '" & strAccType & "' AND ACCT_CURRENCY = '" &_
+			strAcctCurr & "' AND CONDITION_SET = '" & strTariff & "' AND INSTITUTION_NUMBER = '" &_
+			strInstitution &"'" & " AND INTEREST_TIER_LEVEL = '" & strTierLevel & "'", 0) = 1 Then
+			'
+			intReturn = BWS_Msg(MSG_OK,MSG_TYPE_ERROR,6070)
+			'The Tier level is not defined in the CBR_INTEREST_TIER table for the selected
+			'combination of Service contract ID, Account type & currency and Client tariff!
+			Call BWS_Success(False)
+		End If
+	End If	
+   '
+ExitCheckTierLevel:
+   '
+   Exit Sub
+   '
+CheckTierLevelError:
+   '
+   Call ErrorHandle(Err, Erl, Error$, DBLastErrorMsg(0))
+	Call BWS_Success(False)
+   Resume ExitCheckTierLevel
+   '
+End Sub
+'
+'
+'
+Sub PreProc
+	'
+	On Error GoTo PreProcError
+	'
+	hdlIntDefinition = GetMainHandle()
+	'
+	If Chain_IsActive() Then
+		Call ShowDBEmptyMsg(False)
+	End If
+	'
+	If ValidateRecordData(1,"cbr_service_contract","service_contract_id",0,"",6017,"") <> 0 Then	
+		'No Service contract definitions found in database!
+		'Please set up Service contract definitions first!
+		Call InitialTextLine()
+	Else
+		'
+		If ValidateRecordData(1,"cbr_contract_acct_types","account_type_id",0,"",6036,"") <> 0 Then
+			'No Contract account type definitions found in the database!
+			'Please set up the Contract account type definitions first!
+			Call InitialTextLine()
+		Else
+			'
+			If ValidateRecordData(1,"cbr_base_interest","account_type_id",0,"",6059,"") <> 0 Then
+				'No Account base interest definitions found in the database!
+				'Please set up the Account base interest definitions first!
+				Call InitialTextLine()
+			Else
+				strInstitution = GetGlobalInfo(GI_ISSUER_ID)
+				strPDate	= GetGlobalInfo(GI_PDATE)
+			   Call InitialTextLine()
+			End If
+   	End If
+	End If
+	'
+PreProcExit:
+	'
+	Exit Sub
+	'
+PreProcError:
+	'
+	Call ErrorHandle(Err,Erl,Error$,DBLastErrorMsg(0))
+	Call BWS_Success(False)
+	Resume PreProcExit
+	'
+End Sub
+'
+'
+Sub ChainPreProc
+	'
+	On Error GoTo chainPreProcERROR
+	'
+	Call ShowDBEmptyMsg(False)
+	Call Chain_SetMustUpdate(5,False)
+	'
+	hdlIntDefinition = GetMainHandle()
+	'
+ChainPreProcEXIT:    
+	'
+	Exit Sub
+	'
+ChainPreProcERROR:
+	'
+  	Call ErrorHandle(Err,Erl,Error$,DBLastErrorMsg(0))
+	Call BWS_Success(False)
+	Resume ChainPreProcEXIT
+	'
+End Sub	'chainPreProc
+'
+'
+'
+Sub LostFocus01	'Account Currency
+	'
+	On Error GoTo LostFocus01Error
+	'
+	If (LastInvalidField() <> 0 And LastInvalidField() <> 1) Or _
+		(intIsFocusOk <> 0 And intIsFocusOk <> 1) Then
+		Exit Sub
+	End If
+	'
+	intIsFocusOk = 0
+	'
+	Call CheckCombination(1,blnValid)
+	'
+	If blnValid = True Then
+		Call SetText()
+		blnReturn = DBSetValue(hdlIntDefinition,"ROUNDING_EXPONENT", _
+						GetChoiceDisplayValue("bwt_currency","iso_code","exponent",DBGetValue(hdlIntDefinition,"ACCT_CURRENCY")))
+		blnReturn = SetDisplayAttrib(48,"DI")
+	End If
+	'
+LostFocus01Exit:
+	'
+	Exit Sub
+	'
+LostFocus01Error:
+	'
+	Call ErrorHandle(Err,Erl,Error$,DBLastErrorMsg(0))
+	Call BWS_Success(False)
+	Resume LostFocus01Exit
+	'
+End Sub
+'
+'
+'
+Sub LostFocus03	'Condition Set
+   '
+   On Error GoTo LostFocus03Error
+   '
+	If (LastInvalidField() <> 0 And LastInvalidField() <> 3) Or _
+		(intIsFocusOk <> 0 And intIsFocusOk <> 3) Then
+		Exit Sub
+	End If
+	'
+	intIsFocusOk = 0
+	'
+	Call CheckCombination(25,blnValid)
+	Call CheckTierLevel()
+	'
+	Call SetText()
+   '
+ExitLostFocus03:
+   '
+   Exit Sub
+   '
+LostFocus03Error:
+   '
+   Call ErrorHandle(Err, Erl, Error$, DBLastErrorMsg(0))
+	Call BWS_Success(False)
+   Resume ExitLostFocus03
+   '
+End Sub
+'
+'
+'
+Sub LostFocus04	'CR_INTEREST_SPREAD
+	'
+	On Error GoTo LostFocus04Error
+	'
+	If Not (DBIsFieldDirty(HdlIntDefinition, "CR_INTEREST_SPREAD")) Then
+	 	Exit Sub
+   End If
+	'
+	Call CalcInterest(9,strCrBase,"CR_INTEREST_SPREAD","OPERATOR_CR_INTEREST",True)
+	'
+LostFocus04Exit:
+	'
+	Exit Sub
+	'
+LostFocus04Error:
+	'
+	Call ErrorHandle(Err,Erl,Error$,DBLastErrorMsg(0))	
+	Call BWS_Success(False)
+	Resume LostFocus04Exit
+	'
+End Sub
+'
+'
+Sub LostFocus05	'DR_CASH_SPREAD
+	'
+	On Error GoTo LostFocus05Error
+	'
+	Dim intReturn As Integer
+	'
+	intReturn =	DBIsFieldDirty(HdlIntDefinition, "DR_CASH_SPREAD")
+	'
+	If Not (DBIsFieldDirty(HdlIntDefinition, "DR_CASH_SPREAD")) Then
+	 	Exit Sub
+	End If
+	'
+	Call CalcInterest(3,strDrBase,"DR_CASH_SPREAD","OPERATOR_DR_CASH",True)
+	'
+LostFocus05Exit:
+	'
+	Exit Sub
+	'
+LostFocus05Error:
+	'
+	Call ErrorHandle(Err,Erl,Error$,DBLastErrorMsg(0))
+	Call BWS_Success(False)
+	Resume LostFocus05Exit
+	'
+End Sub
+'
+'
+Sub LostFocus06	'DR_RETAIL_SPREAD
+	'
+	On Error GoTo LostFocus06Error
+	'	
+	If Not (DBIsFieldDirty(HdlIntDefinition, "DR_RETAIL_SPREAD")) Then
+	 	Exit Sub
+	End If
+	'
+	Call CalcInterest(4,strDrBase,"DR_RETAIL_SPREAD","OPERATOR_DR_RETAIL",True)
+	'
+LostFocus06Exit:
+	'
+	Exit Sub
+	'
+LostFocus06Error:
+	'
+	Call ErrorHandle(Err,Erl,Error$,DBLastErrorMsg(0))
+	Call BWS_Success(False)
+	Resume LostFocus06Exit
+	'
+End Sub
+'
+'
+Sub LostFocus07	'DR_INTEREST_SPREAD
+	'
+	On Error GoTo LostFocus07Error
+	'	
+	If Not (DBIsFieldDirty(HdlIntDefinition, "DR_INTEREST_SPREAD")) Then
+	 	Exit Sub
+	End If
+	'
+	Call CalcInterest(5,strDrBase,"DR_INTEREST_SPREAD","OPERATOR_DR_INTEREST",True)
+	'
+LostFocus07Exit:
+	'
+	Exit Sub
+	'
+LostFocus07Error:
+	'
+	Call ErrorHandle(Err,Erl,Error$,DBLastErrorMsg(0))
+	Call BWS_Success(False)
+	Resume LostFocus07Exit
+	'
+End Sub
+'
+'
+Sub LostFocus08	'DR_CHARGES_SPREAD
+	'
+	On Error GoTo LostFocus08Error
+	'
+	If Not (DBIsFieldDirty(HdlIntDefinition, "DR_CHARGES_SPREAD")) Then
+	 	Exit Sub
+	End If
+	'
+	Call CalcInterest(6,strDrBase,"DR_CHARGES_SPREAD","OPERATOR_DR_CHARGES",True)
+	'
+LostFocus08Exit:
+	'
+	Exit Sub
+	'
+LostFocus08Error:
+	'
+	Call ErrorHandle(Err,Erl,Error$,DBLastErrorMsg(0))
+	Call BWS_Success(False)
+	Resume LostFocus08Exit
+	'
+End Sub
+'
+'
+'
+Sub LostFocus11	'CR_PAYMENTS_SPREAD
+	'
+	On Error GoTo LostFocus11Error
+	'
+	If Not (DBIsFieldDirty(HdlIntDefinition, "CR_PAYMENTS_SPREAD")) Then
+	 	Exit Sub
+	End If
+	'
+	Call CalcInterest(7,strCrBase,"CR_PAYMENTS_SPREAD","OPERATOR_CR_PAYMENTS",True)
+	'
+LostFocus11Exit:
+	'
+	Exit Sub
+	'
+LostFocus11Error:
+	'
+	Call ErrorHandle(Err,Erl,Error$,DBLastErrorMsg(0))
+	Call BWS_Success(False)
+	Resume LostFocus11Exit
+	'
+End Sub
+'
+'
+'
+Sub LostFocus12	'CR_REFUNDS_SPREAD
+	'
+	On Error GoTo LostFocus12Error
+	'
+	If Not (DBIsFieldDirty(HdlIntDefinition, "CR_REFUNDS_SPREAD")) Then
+	 	Exit Sub
+	End If
+	'
+	Call CalcInterest(8,strCrBase,"CR_REFUNDS_SPREAD","OPERATOR_CR_REFUNDS",True)
+	'
+LostFocus12Exit:
+	'
+	Exit Sub
+	'
+LostFocus12Error:
+	'
+	Call ErrorHandle(Err,Erl,Error$,DBLastErrorMsg(0))
+	Call BWS_Success(False)
+	Resume LostFocus12Exit
+	'
+End Sub
+'
+'
+Sub LostFocus15	'Effective date
+	'
+	On Error GoTo LostFocus15Error
+	'	
+	If (LastInvalidField() <> 0 And LastInvalidField() <> 15) Or _
+		(intIsFocusOk <> 0 And intIsFocusOk <> 15) Then
+		Exit Sub
+	End If
+	'
+	intIsFocusOk = 0
+	'
+	Call SetText()
+	'
+LostFocus15Exit:
+	'
+	Exit Sub
+	'
+LostFocus15Error:
+	'
+	Call ErrorHandle(Err,Erl,Error$,DBLastErrorMsg(0))
+	Call BWS_Success(False)
+	Resume LostFocus15Exit
+	'
+End Sub
+'
+'
+'
+Sub LostFocus16	'OPERATOR_DR_CASH
+	'
+	On Error GoTo LostFocus16Error
+	'
+	If Not (DBIsFieldDirty(HdlIntDefinition, "OPERATOR_DR_CASH")) Then
+	 	Exit Sub
+	End If
+	'
+	Call CalcInterest(3,strDrBase,"DR_CASH_SPREAD","OPERATOR_DR_CASH",True)
+	'
+LostFocus16Exit:
+	'
+	Exit Sub
+	'
+LostFocus16Error:
+	'
+	Call ErrorHandle(Err,Erl,Error$,DBLastErrorMsg(0))
+	Call BWS_Success(False)
+	Resume LostFocus16Exit
+	'
+End Sub
+'
+'
+Sub LostFocus17	'OPERATOR_DR_RETAIL
+	'
+	On Error GoTo LostFocus17Error
+	'
+	If Not (DBIsFieldDirty(HdlIntDefinition, "OPERATOR_DR_RETAIL")) Then
+	 	Exit Sub
+	End If
+	'
+	Call CalcInterest(4,strDrBase,"DR_RETAIL_SPREAD","OPERATOR_DR_RETAIL",True)
+	'
+LostFocus17Exit:
+	'
+	Exit Sub
+	'
+LostFocus17Error:
+	'
+	Call ErrorHandle(Err,Erl,Error$,DBLastErrorMsg(0))
+	Call BWS_Success(False)
+	Resume LostFocus17Exit
+	'
+End Sub
+'
+'
+Sub LostFocus18	'OPERATOR_CR_INTEREST
+	'
+	On Error GoTo LostFocus18Error
+	'
+	If Not (DBIsFieldDirty(HdlIntDefinition, "OPERATOR_CR_INTEREST")) Then
+	 	Exit Sub
+	End If
+	'
+	Call CalcInterest(9,strCrBase,"CR_INTEREST_SPREAD","OPERATOR_CR_INTEREST",True)
+	'
+LostFocus18Exit:
+	'
+	Exit Sub
+	'
+LostFocus18Error:
+	'
+	Call ErrorHandle(Err,Erl,Error$,DBLastErrorMsg(0))
+	Call BWS_Success(False)
+	Resume LostFocus18Exit
+	'
+End Sub
+'
+'
+'
+Sub LostFocus19	'OPERATOR_DR_INTEREST
+	'
+	On Error GoTo LostFocus19Error
+	'
+	If Not (DBIsFieldDirty(HdlIntDefinition, "OPERATOR_DR_INTEREST")) Then
+	 	Exit Sub
+	End If
+	'
+	Call CalcInterest(5,strDrBase,"DR_INTEREST_SPREAD","OPERATOR_DR_INTEREST",True)
+	'
+LostFocus19Exit:
+	'
+	Exit Sub
+	'
+LostFocus19Error:
+	'
+	Call ErrorHandle(Err,Erl,Error$,DBLastErrorMsg(0))
+	Call BWS_Success(False)
+	Resume LostFocus19Exit
+	'
+End Sub
+'
+'
+Sub LostFocus20	'OPERATOR_CR_PAYMENTS
+	'
+	On Error GoTo LostFocus20Error
+	'
+	If Not (DBIsFieldDirty(HdlIntDefinition, "OPERATOR_CR_PAYMENTS")) Then
+	 	Exit Sub
+	End If
+	'
+	'Set operator sign of Operator CR Refunds, Interest and Bonus same as Operator CR Payments.
+	'
+	blnReturn = DBSetValue(hdlIntDefinition,"OPERATOR_CR_REFUNDS",DBGetValue(HdlIntDefinition,"OPERATOR_CR_PAYMENTS"))
+	blnReturn = DBSetValue(hdlIntDefinition,"OPERATOR_CR_INTEREST",DBGetValue(HdlIntDefinition,"OPERATOR_CR_PAYMENTS"))
+	blnReturn = DBSetValue(hdlIntDefinition,"OPERATOR_CR_BONUS",DBGetValue(HdlIntDefinition,"OPERATOR_CR_PAYMENTS"))
+	'
+	Call CalcInterest(7,strCrBase,"CR_PAYMENTS_SPREAD","OPERATOR_CR_PAYMENTS",True)
+	Call CalcInterest(8,strCrBase,"CR_REFUNDS_SPREAD","OPERATOR_CR_REFUNDS",True)
+	Call CalcInterest(9,strCrBase,"CR_INTEREST_SPREAD","OPERATOR_CR_INTEREST",True)
+	Call CalcInterest(10,strCrBase,"CR_BONUS_SPREAD","OPERATOR_CR_BONUS",True)
+	'
+LostFocus20Exit:
+	'
+	Exit Sub
+	'
+LostFocus20Error:
+	'
+	Call ErrorHandle(Err,Erl,Error$,DBLastErrorMsg(0))
+	Call BWS_Success(False)
+	Resume LostFocus20Exit
+	'
+End Sub
+'
+'
+Sub LostFocus22	'Service contract ID
+	'
+	'---------------------------------------
+	'Check if the service contract ID exists 
+	'in the CBR Service Contract table
+	'---------------------------------------
+	On Error GoTo LostFocus22Error
+	'
+	If (LastInvalidField() <> 0 And LastInvalidField() <> 22) Or _
+		(intIsFocusOK <> 0 And intIsFocusOK <> 22) Then
+		Exit Sub
+	End If
+	'
+	intIsFocusOK = 0
+	'
+	If ValidateRecordData(2,"cbr_service_contract","service_contract_id",HdlIntDefinition,"service_contract_id",6115,"") <> 0 Then
+		'Service contract ID does not exist in the CBR_SERVICE_CONTRACT table!
+		'Please enter an existing Service contract ID!
+		intIsFocusOk = 22
+		blnReturn = SetFocus(22)
+		Call BWS_Success(False)
+	End If	
+	'
+LostFocus22Exit:
+	'
+	Exit Sub
+	'
+LostFocus22Error:
+	'
+	Call ErrorHandle(Err,Erl,Error$,DBLastErrorMsg(0))
+	Call BWS_Success(False)
+	Resume LostFocus22Exit
+	'
+End Sub
+'
+'
+'
+Sub LostFocus25	'Account type ID
+	'
+	'------------------------------------
+	'Check if the account type ID exists 
+	'in the cbr contract acct types table
+	'------------------------------------
+	On Error GoTo LostFocus25Error
+	'
+	If (LastInvalidField() <> 0 And LastInvalidField() <> 25) Or _
+	   (intIsFocusOK <> 0 And intIsFocusOK <> 25) Then
+		Exit Sub
+	End If
+	'
+	intIsFocusOK = 0
+	'
+	Call CheckCombination(25,blnValid)
+	'
+	If blnValid = True Then
+		Call	SetText()
+	End If
+	'
+LostFocus25Exit:
+	'
+	Exit Sub
+	'
+LostFocus25Error:
+	'
+	Call ErrorHandle(Err,Erl,Error$,DBLastErrorMsg(0))
+	Call BWS_Success(False)
+	Resume LostFocus25Exit
+	'
+End Sub
+'
+'
+'
+Sub LostFocus26
+   '
+   On Error GoTo LostFocus26Error
+   '
+	If (LastInvalidField() <> 0 And LastInvalidField() <> 26) Or _
+		(intIsFocusOk <> 0 And intIsFocusOk <> 26) Then
+		Exit Sub
+	End If
+	'
+	intIsFocusOk = 0
+	'
+	Call CheckTierLevel()
+   '
+ExitLostFocus26:
+   '
+   Exit Sub
+   '
+LostFocus26Error:
+   '
+   Call ErrorHandle(Err, Erl, Error$, DBLastErrorMsg(0))
+   Resume ExitLostFocus26
+   '
+End Sub
+'
+'
+Sub LostFocus27	'CR_BONUS_SPREAD
+	'
+	On Error GoTo LostFocus27Error
+	'
+	If Not (DBIsFieldDirty(HdlIntDefinition, "CR_BONUS_SPREAD")) Then
+	 	Exit Sub
+	End If
+	'
+	Call CalcInterest(10,strCrBase,"CR_BONUS_SPREAD","OPERATOR_CR_BONUS",True)
+	'
+LostFocus27Exit:
+	'
+	Exit Sub
+	'
+LostFocus27Error:
+	'
+	Call ErrorHandle(Err,Erl,Error$,DBLastErrorMsg(0))
+	Call BWS_Success(False)
+	Resume LostFocus27Exit
+	'
+End Sub
+'
+'
+Sub LostFocus28	'OPERATOR_DR_CHARGES
+	'
+	On Error GoTo LostFocus28Error
+	'
+	If Not (DBIsFieldDirty(HdlIntDefinition, "OPERATOR_DR_CHARGES")) Then
+	 	Exit Sub
+	End If
+	'
+	Call CalcInterest(6,strDrBase,"DR_CHARGES_SPREAD","OPERATOR_DR_CHARGES",True)
+	'
+LostFocus28Exit:
+	'
+	Exit Sub
+	'
+LostFocus28Error:
+	'
+	Call ErrorHandle(Err,Erl,Error$,DBLastErrorMsg(0))
+	Call BWS_Success(False)
+	Resume LostFocus28Exit
+	'
+End Sub
+'
+'
+Sub LostFocus29	'OPERATOR_CR_REFUNDS
+	'
+	On Error GoTo LostFocus29Error
+	'
+	If Not (DBIsFieldDirty(HdlIntDefinition, "OPERATOR_CR_REFUNDS")) Then
+	 	Exit Sub
+	End If
+	'
+	Call CalcInterest(8,strCrBase,"CR_REFUNDS_SPREAD","OPERATOR_CR_REFUNDS",True)
+	'
+LostFocus29Exit:
+	'
+	Exit Sub
+	'
+LostFocus29Error:
+	'
+	Call ErrorHandle(Err,Erl,Error$,DBLastErrorMsg(0))
+	Call BWS_Success(False)
+	Resume LostFocus29Exit
+	'
+End Sub
+'
+'
+Sub LostFocus30	'OPERATOR_CR_BONUS
+	'
+	On Error GoTo LostFocus30Error
+	'
+	If Not (DBIsFieldDirty(HdlIntDefinition, "OPERATOR_CR_BONUS")) Then
+	 	Exit Sub
+	End If
+	'
+	Call CalcInterest(10,strCrBase,"CR_BONUS_SPREAD","OPERATOR_CR_BONUS",True)
+	'
+LostFocus30Exit:
+	'
+	Exit Sub
+	'
+LostFocus30Error:
+	'
+	Call ErrorHandle(Err,Erl,Error$,DBLastErrorMsg(0))
+	Call BWS_Success(False)
+	Resume LostFocus30Exit
+	'
+End Sub
+'
+'
+'
+Sub LostFocus34
+   '
+   On Error GoTo LostFocus34Error
+   '
+	If Validate_Sign("DR_TRAN_TYPE")<>"D" Then
+		blnReturn = BWS_Msg(MSG_OK,MSG_TYPE_ERROR,9998,strGeneral & Chr(13) & Chr(10) & strMustDebit)
+		blnReturn = SetFocus(34)
+		Call BWS_Success(False)
+	Else
+		Call CheckTranTypes
+	End If
+   '
+ExitLostFocus34:
+   '
+   Exit Sub
+   '
+LostFocus34Error:
+   '
+   Call ErrorHandle(Err, Erl, Error$, DBLastErrorMsg(0))
+	Call BWS_Success(False)
+   Resume ExitLostFocus34
+   '
+End Sub
+'
+'
+'
+Sub LostFocus35
+   '
+   On Error GoTo LostFocus35Error
+   '
+	If Validate_Sign("CR_TRAN_TYPE")<>"C" Then
+		blnReturn = BWS_Msg(MSG_OK,MSG_TYPE_ERROR,9998,strGeneral & Chr(13) & Chr(10) & strMustCredit)
+		blnReturn = SetFocus(35)
+		Call BWS_Success(False)
+	End If
+   '
+ExitLostFocus35:
+   '
+   Exit Sub
+   '
+LostFocus35Error:
+   '
+   Call ErrorHandle(Err, Erl, Error$, DBLastErrorMsg(0))
+	Call BWS_Success(False)
+   Resume ExitLostFocus35
+   '
+End Sub
+'
+'
+'
+Sub LostFocus36
+   '
+   On Error GoTo LostFocus36Error
+   '
+	If Validate_Sign("OVERDUE_TRAN_TYPE")<>"D" Then
+		blnReturn = BWS_Msg(MSG_OK,MSG_TYPE_ERROR,9998,strGeneral & Chr(13) & Chr(10) & strMustDebit)
+		blnReturn = SetFocus(36)
+		Call BWS_Success(False)
+	End If
+   '
+ExitLostFocus36:
+   '
+   Exit Sub
+   '
+LostFocus36Error:
+   '
+   Call ErrorHandle(Err, Erl, Error$, DBLastErrorMsg(0))
+	Call BWS_Success(False)
+   Resume ExitLostFocus36
+   '
+End Sub
+'
+'
+'
+Sub LostFocus47
+   '
+   On Error GoTo LostFocus47Error
+   '
+	Call CheckTranTypes
+   '
+ExitLostFocus47:
+   '
+   Exit Sub
+   '
+LostFocus47Error:
+   '
+   Call ErrorHandle(Err, Erl, Error$, DBLastErrorMsg(0))
+	Call BWS_Success(False)
+   Resume ExitLostFocus47
+   '
+End Sub
+'
+'
+'
+Sub LostFocus48
+   '
+   On Error GoTo LostFocus48Error
+   '
+	If (LastInvalidField() <> 0 And LastInvalidField() <> 48) Or _
+	   (intIsFocusOK <> 0 And intIsFocusOK <> 48) Then
+		Exit Sub
+	End If
+	'
+	intIsFocusOK = 0
+	'
+	If Val(DBGetValue(hdlIntDefinition,"ROUNDING_EXPONENT"))> _
+		Val(GetChoiceDisplayValue("bwt_currency","iso_code","exponent",DBGetValue(hdlIntDefinition,"ACCT_CURRENCY"))) Then
+		'
+		intReturn = BWS_Msg(MSG_OK,MSG_TYPE_ERROR,9998,"Exponent must be less than or equal to the currency exponent")
+		Call BWS_Success(False)
+		blnReturn = SetFocus(48)
+		intIsFocusOK = 48
+		'
+	End If
+   '
+ExitLostFocus48:
+   '
+   Exit Sub
+   '
+LostFocus48Error:
+   '
+   Call ErrorHandle(Err, Erl, Error$, DBLastErrorMsg(0))
+	Call BWS_Success(False)
+   Resume ExitLostFocus48
+   '
+End Sub
+'
+'
+'
+Sub AmendProc
+   '
+	On Error GoTo AmendProcError
+	'
+	intIsFocusOK=0
+   '
+	If Val(DateToBW3(DBGetValue(hdlIntDefinition,"EFFECTIVE_DATE"))) < Val(strPDate) Then
+		'
+		'Amend not allowed!
+		'Amending is only possible if the effective date is later than or equal to the posting date!
+		intReturn = BWS_Msg(MSG_OK,MSG_TYPE_ERROR,6033)
+		Call BWS_Success(False)
+	Else
+		Call CheckTranTypes
+	End If
+	'
+ExitAmendProc:
+   '
+   Exit Sub
+   '
+AmendProcError:
+   '
+   Call ErrorHandle(Err, Erl, Error$, DBLastErrorMsg(0))
+	Call BWS_Success(False)
+   Resume ExitAmendProc
+   '
+End Sub
+'
+'
+Sub AddNewProc
+	'
+   On Error GoTo AddNewProcERROR
+	'
+	intIsFocusOK=0
+	'
+	Call InitialTextLine()
+	'
+   If Chain_IsActive() Then
+		blnReturn = DBSetValue(hdlIntDefinition, "SERVICE_CONTRACT_ID", Chain_DBGetValue(1,"SERVICE_CONTRACT_ID"))  
+	   blnReturn = DBSetValue(hdlIntDefinition, "ACCOUNT_TYPE_ID", Chain_DBGetValue(1,"ACCOUNT_TYPE_ID"))  
+	   blnReturn = DBSetValue(hdlIntDefinition, "ACCT_CURRENCY", Chain_DBGetValue(1,"ACCT_CURRENCY"))  
+	   blnReturn = DBSetValue(hdlIntDefinition, "EFFECTIVE_DATE",DateAddDays(strPDate,1,0))  
+		'
+		blnReturn = SetDisplayAttrib(01,"PR")
+	   blnReturn = SetDisplayAttrib(22,"PR")
+	   blnReturn = SetDisplayAttrib(25,"PR")
+		blnReturn = SetDisplayAttrib(48,"DI")
+		'
+		blnReturn = DBSetValue(hdlIntDefinition,"ROUNDING_EXPONENT", _
+						GetChoiceDisplayValue("bwt_currency","iso_code","exponent",DBGetValue(hdlIntDefinition,"ACCT_CURRENCY")))
+		'
+		Call SetText()
+	Else
+	   blnReturn = DBSetValue(hdlIntDefinition, "EFFECTIVE_DATE",DateAddDays(strPDate,1,0))  
+		blnReturn = SetDisplayAttrib(48,"PR")
+	End If
+	'	
+ADDNewProcEXIT:  
+	'
+	Exit Sub
+	'
+AddNewProcERROR:
+	'
+	Call ErrorHandle(Err, Erl, Error$, DBLastErrorMsg(0))
+	Call BWS_Success(False)
+	Resume ADDNewProcEXIT
+	'
+End Sub ' AddNewProc
+'
+'
+'
+Sub UpdateAmendProc
+   '
+   On Error GoTo UpdateAmendProcError
+   '
+	blnReturn = DBSetValue(HdlIntDefinition,"AUDIT_TRAIL", CreateAuditTrail)
+	Call LostFocus48
+   '
+	If Chain_IsActive() Then
+		blnReturn = Chain_DBCommit()
+		blnReturn = Chain_DBStartTrans()
+	End If
+   '
+ExitUpdateAmendProc:
+   '
+   Exit Sub
+   '
+UpdateAmendProcError:
+   '
+   Call ErrorHandle(Err, Erl, Error$, DBLastErrorMsg(0))
+	Call BWS_Success(False)
+   Resume ExitUpdateAmendProc
+   '
+End Sub
+'
+'
+'
+Sub UpdateNewProc
+	'
+	On Error GoTo UpdateNewProcERROR
+	'
+	Call ValidateEffectiveDate()
+	Call CheckTierLevel()
+	'
+	If (LastInvalidField() <> 0 Or intIsFocusOk <> 0) Then
+		Exit Sub
+	End If
+	'
+	intIsFocusOK = 0
+	'
+	'-------------------------------------------------------------------------------
+	'If success retrieving the base interest, set text line else update not allowed.
+	'-------------------------------------------------------------------------------
+	If Not SetBaseInt() Then
+		Call InitialTextLine()
+		intIsFocusOK = 25
+		blnReturn = SetFocus(25)	' Set focus to field effective date
+		Call BWS_Success(False)
+	Else
+		'
+		'---------------------------------------
+		'Set audit trail and record id number.
+		'---------------------------------------
+		Call LostFocus48
+		blnReturn = DBSetValue(HdlIntDefinition,"AUDIT_TRAIL", CreateAuditTrail)
+		blnReturn = DBSetValue(HdlIntDefinition,"RECORD_ID_NUMBER", BWS_CreateSeqNumber(RecordID,1))
+		'
+		If Chain_IsActive() Then
+			blnReturn = Chain_DBCommit()
+			blnReturn = Chain_DBStartTrans()
+		End If
+	End If
+   '
+UpdateNewProcEXIT:
+	'
+	Exit Sub
+	'
+UpdateNewProcERROR:
+	'
+	Call ErrorHandle(Err,Erl,Error$,DBLastErrorMsg(0))
+	Call BWS_Success(False)
+	Resume UpdateNewProcEXIT
+	'		
+End Sub
+'
+'
+'
+Sub RefreshDisplayProc
+   '
+   On Error GoTo RefreshDisplayProcError
+   '
+	hdlIntDefinition = GetMainHandle()
+	Call SetText()
+   '
+ExitRefreshDisplayProc:
+   '
+   Exit Sub
+   '
+RefreshDisplayProcError:
+   '
+   Call ErrorHandle(Err, Erl, Error$, DBLastErrorMsg(0))
+   Resume ExitRefreshDisplayProc
+   '
+End Sub
+'
+'
+'
+Sub PostProc
+   '
+	On Error GoTo PostProcError
+   '
+	If Chain_IsActive() Then
+		blnReturn = Chain_DBCommit()
+	End If
+	'
+ExitPostProc:
+   '
+   Exit Sub
+   '
+PostProcError:
+	'
+   Call ErrorHandle(Err, Erl, Error$, DBLastErrorMsg(0))
+   Resume ExitPostProc
+	'
+End Sub

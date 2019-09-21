@@ -1,0 +1,25 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+                             http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>com.smyld</groupId>
+		<artifactId>smyld</artifactId>
+		<version>1.0-SNAPSHOT</version>
+	</parent>
+    <groupId>com.smyld.main</groupId>
+    <artifactId>smyld-main</artifactId>
+    <packaging>pom</packaging>
+    <version>1.0-SNAPSHOT</version>
+    <name>Main SMYLD Package</name>
+    <modules>
+        <module>smyld</module>
+        <module>smyld-db</module>
+        <module>smyld-bw</module>
+        <module>smyld-gui</module>
+        <module>smyld-jms</module>
+        <module>smyld-lang</module>
+    </modules>
+
+ </project>

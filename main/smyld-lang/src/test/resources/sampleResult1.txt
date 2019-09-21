@@ -1,0 +1,158 @@
+if ismissing(intcomparemode) then
+if getglobalinfo(gi_installation_number)= "0007" or getglobalinfo(gi_installation_number)= "0008" or getglobalinfo(gi_installation_number)= "0011" or getglobalinfo(gi_installation_number)= "0012" then
+if getglobalinfo(gi_installation_number)=inst_hsbc_malta then
+if trim(dbgetvalue(hdlhandle,"card_number"))<>"" and trim(dbgetvalue(hdlhandle,"retrieval_reference"))<>"" then
+if getglobalinfo(gi_installation_number)=inst_hsbc_malta then
+if getglobalinfo(gi_installation_number)=inst_hsbc_malta then
+if trim(dbgetvalue(hdlhandle,"card_number"))<>"" and trim(dbgetvalue(hdlhandle,"auth_code"))<>"" and trim(right(dbgetvalue(hdlhandle,"transaction_date"),4))<>"" then
+if getglobalinfo(gi_installation_number)=inst_hsbc_malta then
+if getglobalinfo(gi_installation_number)=inst_hsbc_malta then
+if getglobalinfo(gi_installation_number)=inst_hsbc_malta then
+if trim(dbgetvalue(hdlhandle,"card_number"))<>"" and trim(right(dbgetvalue(hdlhandle,"transaction_date"),4))<>"" and trim(strtrantime)<>"" then
+if getglobalinfo(gi_installation_number)=inst_hsbc_malta then
+if getglobalinfo(gi_installation_number)=inst_hsbc_malta then
+if getglobalinfo(gi_installation_number)=inst_hsbc_malta then
+if trim(strstring1)<>"" then
+if trim(strstring2)<>"" then
+if trim(strselect)<>"" then
+if trim(strstring3)<>"" then
+if trim(strselect)<>"" then
+if strselect <> "" then
+if not dbiseof(hdlauth) then
+if dbgetvalue(hdlsundry,"pos_entry_mode")="81" then
+if dbgetvalue(hdlsundry,"pos_entry_mode")="90" then
+if dbgetvalue(hdlauth,"cvc_invalid")="y" then
+if blninetmembers = true then
+if  strterminalattendanceindicator = ""  or strcardpresenceindicatorterm   = ""  or strinputcapabilityindicator    = ""  or strposentrymode                = ""  then
+if trim(getchoicedisplayvalue("bwt_fraud_reason","index_field","groups",strsundryreason))="z" then
+if val(strinetmember) = -1 then
+if chain_isactive then
+if chain_isactive then
+if strsundrystatus = "008" or strsundrystatus = "007" or strsundrystatus = "012" then
+if dbgetvalue(hdlsundry,"sundry_status")="002" then
+if dbgetvalue(hdlsundry,"transfer_flag")="001" then
+if trim(dbgetvalue(hdlsundry,"counterfeit_code"))<>"" then
+if dbgetvalue(hdlsundry,"tran_currency") = dbgetvalue(hdlsundry,"settlement_currency") then
+if trim(strprocclass) <> "" and instr("ecrd,echa,edcm",strprocclass) = 0 then
+if val(dbgetvalue(hdlsundry,"destination_account"))=0 then
+if acctcheck(hdlsundry,"an",6,"destination_account","client_number","group_number","service_contract_id","account_type_id","acct_currency",27,28,29,30,31,32)=0 then
+if val(dbgetvalue(hdlsundry,"client_number"))=0 then
+if acctcheck(hdlsundry,"cn",6,"destination_account","client_number","group_number","service_contract_id","account_type_id","acct_currency",27,28,29,30,31,32)=0 then
+if acctcheck(hdlsundry,"gn",6,"destination_account","client_number","group_number","service_contract_id","account_type_id","acct_currency",27,28,29,30,31,32)=0 then
+if strposentry<>"" then
+if not(strposentry="00" or strposentry="01" or strposentry="90" or strposentry="02" or strposentry="05" or strposentry="81") then
+if strauthcode<>"" then
+if val(dbsqlstatfunc("select count(*) from bwt_safe_euro_auth_resp_code where " & "safe_value = '" & strauthcode & "'"))=0 then
+if instr("0129",strterminal)=0 then
+if instr("012349",strpresind)=0 then
+if instr("01234*",strcatlevel)=0 then
+if instr("129",strpos)=0 then
+if not (strecommerce="*" or strecommerce="91" or strecommerce="21" or strecommerce="11" or strecommerce="12") then
+if trim(dbgetvalue(hdlsundry,"cvc_invalid"))<>"" then
+if trim(dbgetvalue(hdlsundry,"cvc_invalid"))<>"1" and trim(dbgetvalue(hdlsundry,"cvc_invalid"))<>"*" then
+if trim(dbgetvalue(hdlsundry,"sundry_reason"))="" then exit sub
+if dbgetvalue(hdlsundry,"sundry_reason") <> "304" then
+if strfraudtype = "016" then
+if strfraudtype = "018" then blnreturn = setdisplayattrib(25,"di")
+if trim(dbgetvalue(hdlsundry,"sub_fraud_type"))<>"" then
+if acctcheck(hdlsundry,"cnview",6,"destination_account","client_number","group_number","service_contract_id","account_type_id","acct_currency",27,28,29,30,31,32)=0 then
+if strtranslip = "00000000000" then
+if dbiseof(hdltranslip) and dbisbof(hdltranslip) then
+if (dbgetvalue(hdltranslip,"transaction_class") <> "002" and dbgetvalue(hdltranslip,"transaction_class") <> "011") then
+if transcateg = "001" then
+if transsource<>"037" and transsource<>"036" then
+if not dbiseof(hdlorigslip) then
+if transdest<>"" then
+if not dbiseof(hdlsrdc) then
+if hdltranslip <> hdlorigslip then blnreturn = dbclose(hdlorigslip)
+if transcateg = "031" then
+if dbiseof(hdlsrdc) then
+if transcateg = "001" then
+if trim(transdate) <> "" and right(transdate,4) <> "0000" then
+if dbgetvalue(hdlsundry,"sundry_type") = "018" then
+if dbisbof(hdlrelchargeback) and dbiseof(hdlrelchargeback) then
+if instr("ecrd,echa,edcm",strprocclass) > 0 then
+if not dbiseof(hdlonus) then
+if instr("ecrd,echa,edcm",strprocclass) > 0 then
+if transcateg <> "001" or strtranstatus = "011" then
+if val(trim(dbgetvalue(hdlsundry,"client_number")))=0 then
+if hdltranslip <> hdlorigslip then blnreturn = dbclose(hdlorigslip)
+if acctcheck(hdlsundry,"ad",6,"destination_account","client_number","group_number","service_contract_id","account_type_id","acct_currency",27,28,29,30,31,32)=0 then
+if chain_isactive then
+if acctcheck(hdlsundry,"ad",6,"destination_account","client_number","group_number","service_contract_id","account_type_id","acct_currency",27,28,29,30,31,32)=0 then
+if dbgetvalue(hdlsundry,"sundry_status")="002" then
+if dbgetvalue(hdlintdefinition,"interest_accumulation")="002" then       'combined dr and overdue payments interest
+if dbgetvalue(hdlintdefinition,strfldname)="000" then
+if val(datetobw3(dbgetvalue(hdlintdefinition,"effective_date"))) < val(getglobalinfo(gi_pdate)) then
+if trim(stracctype) = "" or trim(stracctcurr) = "" or trim(streffectivedate) = "" then
+if dbiseof(hdlbaseint) and dbisbof(hdlbaseint) then
+if trim(strbaserate) = "" then
+if strsign = "001" then			' 001 = plus
+if blnreturnsetbaseint then
+if trim(stracctype) <> "" and trim(stracctcurr) <> "" then
+if istableempty("select account_type_id from cbr_contract_acct_types where service_contract_id = '"&strservcon & "' and account_type_id = '" & stracctype & "' 
+ acct_currency = '" &stracctcurr &"' and institution_number ='" &	strinstitution & "'", 0) = 1 then
+if intfield = 25 then intfield = 1 else intfield = 25
+if trim(strtierlevel) <> "000" then
+if istableempty("select interest_tier_level from cbr_interest_tier where service_contract_id = '" &strservcon & "' and account_type_id = '" & stracctype & "' and acct_currency = '" &stracctcurr & "' and condition_set = '" & strtariff & "' and institution_number = '" &strinstitution &"'" & " and interest_tier_level = '" & strtierlevel & "'", 0) = 1 then
+if chain_isactive() then
+if validaterecorddata(1,"cbr_service_contract","service_contract_id",0,"",6017,"") <> 0 then
+if validaterecorddata(1,"cbr_contract_acct_types","account_type_id",0,"",6036,"") <> 0 then
+if validaterecorddata(1,"cbr_base_interest","account_type_id",0,"",6059,"") <> 0 then
+if (lastinvalidfield() <> 0 and lastinvalidfield() <> 1) or (intisfocusok <> 0 and intisfocusok <> 1) then
+if blnvalid = true then
+if (lastinvalidfield() <> 0 and lastinvalidfield() <> 3) or (intisfocusok <> 0 and intisfocusok <> 3) then
+if not (dbisfielddirty(hdlintdefinition, "cr_interest_spread")) then
+if not (dbisfielddirty(hdlintdefinition, "dr_cash_spread")) then
+if not (dbisfielddirty(hdlintdefinition, "dr_retail_spread")) then
+if not (dbisfielddirty(hdlintdefinition, "dr_interest_spread")) then
+if not (dbisfielddirty(hdlintdefinition, "dr_charges_spread")) then
+if not (dbisfielddirty(hdlintdefinition, "cr_payments_spread")) then
+if not (dbisfielddirty(hdlintdefinition, "cr_refunds_spread")) then
+if (lastinvalidfield() <> 0 and lastinvalidfield() <> 15) or (intisfocusok <> 0 and intisfocusok <> 15) then
+if not (dbisfielddirty(hdlintdefinition, "operator_dr_cash")) then
+if not (dbisfielddirty(hdlintdefinition, "operator_dr_retail")) then
+if not (dbisfielddirty(hdlintdefinition, "operator_cr_interest")) then
+if not (dbisfielddirty(hdlintdefinition, "operator_dr_interest")) then
+if not (dbisfielddirty(hdlintdefinition, "operator_cr_payments")) then
+if (lastinvalidfield() <> 0 and lastinvalidfield() <> 22) or (intisfocusok <> 0 and intisfocusok <> 22) then
+if validaterecorddata(2,"cbr_service_contract","service_contract_id",hdlintdefinition,"service_contract_id",6115,"") <> 0 then
+if (lastinvalidfield() <> 0 and lastinvalidfield() <> 25) or (intisfocusok <> 0 and intisfocusok <> 25) then
+if blnvalid = true then
+if (lastinvalidfield() <> 0 and lastinvalidfield() <> 26) or (intisfocusok <> 0 and intisfocusok <> 26) then
+if not (dbisfielddirty(hdlintdefinition, "cr_bonus_spread")) then
+if not (dbisfielddirty(hdlintdefinition, "operator_dr_charges")) then
+if not (dbisfielddirty(hdlintdefinition, "operator_cr_refunds")) then
+if not (dbisfielddirty(hdlintdefinition, "operator_cr_bonus")) then
+if validate_sign("dr_tran_type")<>"d" then
+if validate_sign("cr_tran_type")<>"c" then
+if validate_sign("overdue_tran_type")<>"d" then
+if (lastinvalidfield() <> 0 and lastinvalidfield() <> 48) or (intisfocusok <> 0 and intisfocusok <> 48) then
+if val(dbgetvalue(hdlintdefinition,"rounding_exponent"))> val(getchoicedisplayvalue("bwt_currency","iso_code","exponent",dbgetvalue(hdlintdefinition,"acct_currency"))) then
+if val(datetobw3(dbgetvalue(hdlintdefinition,"effective_date"))) < val(strpdate) then
+if chain_isactive() then
+if chain_isactive() then
+if (lastinvalidfield() <> 0 or intisfocusok <> 0) then
+if not setbaseint() then
+if chain_isactive() then
+if chain_isactive() then
+if dbgetvalue(hdlapplservice,"service_assigned_" & intfieldno)="001" then
+if strclienttariff <> "" and strclienttariff <> "000" then   '000 = n/a
+if dbsqlstatfunc(strsql) = "" then
+if chain_isactive then
+if (lastinvalidfield() <> 0 and lastinvalidfield() <> 01) or (intisfocusok <> 0 and intisfocusok <> 01) then
+if val(strapplnumber) = 0 then
+if dbiseof(hdlappldetail) then
+if instr("051|052|053",strrecordtype) > 0 then
+if instr("006|002|001|007|008",strapplstatus) > 0 then
+if ((strclientlevel = "") or (strclientlevel = "001")) or (strrecordtype = "073") then	'member client or move hierarchy
+if intrecords > max_rows then
+if dbgetvalue(hdlassgndserv,"service_availability") = "002" then
+if dbgetvalue(hdlassgndserv,"service_category") = "002" then	'acquiring
+if intrecords = 0 then
+if chain_isactive then
+if instr("001|002|006|007|008", strapplstatus) = 0 then
+if chain_isactive then
+if clienttarifflostfocus then
+if clienttarifflostfocus then
+if strserviceid <> "" then

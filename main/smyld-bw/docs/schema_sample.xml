@@ -1,0 +1,189 @@
+<application>
+  <sources>
+    <xml>
+      <source id="tuxedoInterface">
+        <srcFile>D:/projects/clientProjects/BSF/Tuxido/Docs/bsf_p021.xml</srcFile>
+        <target>TuxedoConstants</target>
+        <target>MyConstants</target>
+      </source>
+    </xml>
+    <db>
+      <source id="smylbwLocal">	
+        <dbconnection>
+          <host>localhost</host>
+          <name>smylbw</name>
+          <port>1521</port>
+          <username>bw3</username>
+          <userpass>bw3data</userpass>
+        </dbconnection>
+        <tables>
+          <schema name="bw3">
+            <table>XFC_TRANSACTION_DATA</table>
+          </schema>
+        </tables>
+        <target>RBDBName</target>
+      </source>
+      <source id="testSql">	
+        <dbconnection>
+          <host>localhost</host>
+          <vendor>mysql</vendor>
+          <name>test</name>
+          <port>9100</port>
+          <username>root</username>
+          <userpass>123</userpass>
+        </dbconnection>
+        <tables>
+          <schema name="root">
+            <table>cases</table>
+          </schema>
+        </tables>
+        <target>RBDBName</target>
+      </source>
+
+      <source id="omnitestNet">	
+        <dbconnection>
+          <host>192.168.12.103</host>
+          <name>omnitest</name>
+          <port>1521</port>
+          <username>bw3</username>
+          <userpass>bw3data</userpass>
+        </dbconnection>
+        <tables>
+          <schema name="bw3">
+            <table>INT_NON_FIN_AUTH</table>
+            <table>INT_SHCLOG_REJECT</table>
+            <table>SYS_DOMESTIC_BIN_TABLE</table>		
+            <table>RCN_TRANSACTIONS</table>	
+            <table>RCN_FILE_LOG_DETAILS</table>	
+            <table>RCN_PROCESS_FILE_LOG</table>
+            <table>HVE_TEMP_POS_RECON_TRAN</table>	
+            <table>HVE_TEMP_REPLENISHMENT</table> 	  
+          </schema>
+          <schema name="sys">
+            <table>LOGMNR_BUILDLOG</table>
+            <table>ALL_ALL_TABLES</table>
+          </schema>
+
+          
+        </tables>
+        <target>RBDBName</target>
+        <target>TuxedoConstants</target>
+      </source>
+    </db>
+  </sources>      
+  <alias>
+    <nameseparator>_</nameseparator>
+    <prefix>
+      <column>COL</column>
+      <table>TABLE</table>
+      <tag>XML_TAG</tag>
+      <attribute>XML_ATT</attribute>
+    </prefix>
+    <shortings>
+      <shorting><word>ACQUIRER</word><short>ACQ</short></shorting> 
+      <shorting><word>ADDENDUM</word><short>ADD</short></shorting>
+      <shorting><word>ADDITIONAL</word><short>ADI</short></shorting>
+      <shorting><word>ADDRESS</word><short>ADR</short></shorting>
+      <shorting><word>AMOUNT</word><short>AMT</short></shorting>
+      <shorting><word>APPLICATION</word><short>APP</short></shorting>
+      <shorting><word>AUTHORIZATION</word><short>AUTH</short></shorting> 
+      <shorting><word>BUSINESS</word><short>BUSS</short></shorting>
+      <shorting><word>CATEGORY</word><short>CATG</short></shorting>
+      <shorting><word>CANCELLED</word><short>CNC</short></shorting>
+      <shorting><word>CAPABILITY</word><short>CAPA</short></shorting>
+      <shorting><word>CAPTUR</word><short>CAPT</short></shorting>
+      <shorting><word>CHANNEL</word><short>CHNL</short></shorting>
+      <shorting><word>CHARGES</word><short>CHG</short></shorting>
+      <shorting><word>CLASS</word><short>CLS</short></shorting>
+      <shorting><word>CLIENT</word><short>CLNT</short></shorting>
+      <shorting><word>COMMODITY</word><short>COMD</short></shorting>
+      <shorting><word>COMPLETE</word><short>CMPL</short></shorting>
+      <shorting><word>CONTRACT</word><short>CNTR</short></shorting>
+      <shorting><word>CONVERSION</word><short>CONV</short></shorting>
+      <shorting><word>COUNTRY</word><short>CTRY</short></shorting>
+      <shorting><word>CRYPTOGRAM</word><short>CRYPT</short></shorting>
+      <shorting><word>CURRENCY</word><short>CUR</short></shorting>
+      <shorting><word>CUSTOMER</word><short>CUS</short></shorting>
+      <shorting><word>DESCRIPTION</word><short>DESC</short></shorting>
+      <shorting><word>DESTINATION</word><short>DEST</short></shorting>
+      <shorting><word>DETAILS</word><short>DTL</short></shorting>
+      <shorting><word>DOCUMENT</word><short>DOC</short></shorting>
+      <shorting><word>DOMESTIC</word><short>DMST</short></shorting>
+      <shorting><word>DUPLICATE</word><short>DUP</short></shorting>
+      <shorting><word>ESTABLISHMENT</word><short>EST</short></shorting>
+      <shorting><word>EXPIRATION</word><short>EXP</short></shorting>
+      <shorting><word>EXTERNAL</word><short>EXT</short></shorting>
+      <shorting><word>EXTRA</word><short>EXR</short></shorting>
+      <shorting><word>EXPONENT</word><short>EXPN</short></shorting>
+      <shorting><word>FIELD</word><short>FLD</short></shorting>
+      <shorting><word>FORMAT</word><short>FRMT</short></shorting>
+      <shorting><word>FUNCTION</word><short>FNC</short></shorting>
+      <shorting><word>GROUP</word><short>GRP</short></shorting>
+      <shorting><word>INSTITUTION</word><short>INST</short></shorting>
+      <shorting><word>INDEX</word><short>IDX</short></shorting>
+      <shorting><word>INDICATOR</word><short>IND</short></shorting>
+      <shorting><word>ISSUER</word><short>ISS</short></shorting>
+      <shorting><word>INFORMATION</word><short>INFO</short></shorting>
+      <shorting><word>INTERCHANGE</word><short>INTR</short></shorting>
+      <shorting><word>LINKS</word><short>LNK</short></shorting>
+      <shorting><word>LIST</word><short>LST</short></shorting>
+      <shorting><word>LOCATION</word><short>LOC</short></shorting>
+      <shorting><word>MERCHANT</word><short>MERCH</short></shorting>
+      <shorting><word>MESSAGE</word><short>MSG</short></shorting>
+      <shorting><word>METHOD</word><short>METH</short></shorting>
+      <shorting><word>NUMBER</word><short>NUM</short></shorting>
+      <shorting><word>OCCURRENCE</word><short>OCC</short></shorting>
+      <shorting><word>OFFICER</word><short>OFC</short></shorting>
+      <shorting><word>ORGANIZATION</word><short>ORGA</short></shorting>
+      <shorting><word>ORIGINAL</word><short>ORG</short></shorting>
+      <shorting><word>PACKAGE</word><short>PKG</short></shorting>
+      <shorting><word>PARAMETER</word><short>PARM</short></shorting>
+      <shorting><word>PAYMENT</word><short>PAY</short></shorting>
+      <shorting><word>PROCEDURE</word><short>PRO</short></shorting>
+      <shorting><word>PROCESS</word><short>PRC</short></shorting>
+      <shorting><word>RECON</word><short>RCN</short></shorting>
+      <shorting><word>RECORD</word><short>REC</short></shorting>
+      <shorting><word>REFERENCE</word><short>REF</short></shorting>
+      <shorting><word>REGION</word><short>RGN</short></shorting>
+      <shorting><word>REJECTED</word><short>REJ</short></shorting>
+      <shorting><word>REPLENISHMENT</word><short>RPL</short></shorting>
+      <shorting><word>REVERSAL</word><short>REV</short></shorting>
+      <shorting><word>SELECTION</word><short>SEL</short></shorting>
+      <shorting><word>SEQUENCE</word><short>SEQ</short></shorting>
+      <shorting><word>SERVICE</word><short>SRV</short></shorting>
+      <shorting><word>SETTLEMENT</word><short>SETL</short></shorting>
+      <shorting><word>SOURCE</word><short>SRC</short></shorting>
+      <shorting><word>STATUS</word><short>STA</short></shorting>
+      <shorting><word>SUBFIELD</word><short>SFLD</short></shorting>
+      <shorting><word>SYSTEM</word><short>SYS</short></shorting>
+      <shorting><word>TELEPHONE</word><short>TEL</short></shorting>
+      <shorting><word>TEMP</word><short>TMP</short></shorting>
+      <shorting><word>TERMINAL</word><short>TERM</short></shorting>
+      <shorting><word>TRANSACTION</word><short>TRN</short></shorting>
+      <shorting><word>TRANSACTIONS</word><short>TRNS</short></shorting>
+      <shorting><word>USER</word><short>USR</short></shorting>
+      <shorting><word>VERSION</word><short>VER</short></shorting>
+      
+    </shortings>      
+  </alias>    
+  <build>
+    <classes>
+      <class id="BWDBName">
+        <name>BWDBName</name>
+        <package></package>
+        <path>D:/temp/src</path>
+      </class>
+      <class id="TuxedoConstants">
+        <name>Constants</name>
+        <package>com.smyl.apps.tuxedo</package>
+        <path>D:/temp/src</path>
+      </class>
+      <class id="MyConstants">
+        <name>NewConstants</name>
+        <package>com.smyl.test</package>
+        <path>D:/temp/src</path>
+      </class>
+
+    </classes>
+  </build>
+</application>

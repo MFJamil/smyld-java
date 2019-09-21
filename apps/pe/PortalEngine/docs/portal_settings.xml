@@ -1,0 +1,56 @@
+<engine>
+	<!--  
+	<log jarduplicate="false">
+		<name>mgui.txt</name>
+		<path>/home/jamil/workspace/PortalEngine/docs</path>
+	</log>
+	-->
+	<compile>
+		<!-- 
+			<application>
+			<name>HVEConsole</name>
+			<source>D:/projects/otherProjects/ProcessConsole/sources/SMYL_HVE_CONSOLE.xml</source>
+			</application>
+			
+			
+			<application>
+			<name>SMYL Formats Console</name>
+			<source>D:/projects/JDev/TestApplications/SMYLFormatsConsole/sources/SMYL_FORMATS_CONSOLE.xml</source>
+			</application>
+		
+
+		<application>
+			<name>SMYL Interface Simulator</name>
+			<source>/home/jamil/workspace/SMYLInterfaceSimulator/sources/SMYL_INTERFACE_SIMULATOR.xml</source>
+		</application>
+
+-->
+		<application>
+			<name>SMYL Interface Simulator</name>
+			<source>/home/jamil/workspace/tools-billing-interface/sources/Three60t_Billing_Interface.xml</source>
+		</application>
+
+		<!--
+			<application>
+			<name>SMYL Formats Console</name>
+			<source>D:/projects/JDev/TestApplications/SMYLFormatsConsole/sources/SMYL_FORMATS_CONSOLE_CUSTOMER_SCRAMBLE.xml</source>
+			</application>
+		-->
+
+		<!---->
+		<!--
+			<application>
+			<name>SMYL MGUI</name>
+			<source>D:/projects/JDev/TestApplications/SMYLMGUI/sources/SMYL_MGUI.xml</source>
+			</application>
+		-->
+	</compile>
+	<build>
+		<libraries>
+			<library id="SMYLPortalEngine.jar">/home/jamil/workspace/PortalEngine/deploy/PORTAL_ENGINE.jar</library>
+			<library id="SMYL_GUI.jar">/home/jamil/workspace/SMYLGUI/deploy/SMYL_GUI.jar</library>
+			<library id="SMYL_LANG.jar">/home/jamil/workspace/SMYLLANG/deploy/SMYL_LANG.jar</library>
+			<library id="SMYL.jar">/home/jamil/workspace/SMYL/deploy/SMYL.jar</library>
+		</libraries>
+	</build>
+</engine>

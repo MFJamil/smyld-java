@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project>
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>com.smyld.app.pe.boot</groupId>
+		<artifactId>pe-boot-dependencies</artifactId>
+		<version>1.0-SNAPSHOT</version>
+	</parent>
+	<groupId>${groupId}</groupId>
+	<artifactId>${artifactId}</artifactId>
+	<packaging>jar</packaging>
+	<version>${version}</version>
+	<name>Portal Engine Sample</name>
+	<description>Portal Engine Sample</description>
+	<build>
+	<plugins>
+		<plugin>
+			<groupId>com.smyld.app.pe.plugin</groupId>
+			<artifactId>smyld-pe-maven-plugin</artifactId>
+		</plugin>
+		<plugin><artifactId>maven-assembly-plugin</artifactId></plugin>
+	</plugins>
+	</build>
+</project>

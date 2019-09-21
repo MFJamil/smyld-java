@@ -1,0 +1,135 @@
+<?xml version='1.0' encoding='windows-1252'?>
+<application type="MDI" onstartup="com.client.app.TestAppMainClass" >
+  <log>
+    <name>application.log</name>
+    <path>deploy</path>
+  </log>
+  <appearance>
+    <LookAndFeel>com.jgoodies.plaf.plastic.PlasticXPLookAndFeel</LookAndFeel>
+  </appearance>
+  <link>
+    <appmanager>com.client.app.TestAppMainClass</appmanager>
+  </link>
+  <build>
+    <home>target</home>
+    <source>target/generated-sources/pe/</source>
+    <classes>target/classes/pe/</classes>
+    <mainClass>com.smyld.app.sample</mainClass>
+    <componenttype>swing</componenttype>
+    <toolkit>swing</toolkit>
+    <LookAndFeel>com.jgoodies.plaf.plastic.PlasticXPLookAndFeel</LookAndFeel>
+    <images>
+      <dir src="D:/cvs_home/FrontEnd/src/com/rs2/bw/db"/>
+      <image src="D:/temp/myphoto.jpg"/>
+    </images>
+    <libraries>
+      <library id="APP.jar">target/deploy/Application.jar</library>
+      <library id="laf1.jar">src/test/resources/libs/laf/goodies/looks-2.2.1.jar</library>
+      <library id="laf2.jar">src/test/resources/libs/laf/tattoo/jtatoo-1.0.jar</library>
+    </libraries>
+    <languages srctype="xml">
+      <language name="German"  src="D:/portal/Projects/sources/testproject/English.xml" targetName="English.xml"/>
+      <language name="English" src="D:/portal/Projects/sources/testproject/English.xml" targetName="English.xml"/>
+    </languages>
+    <settingsfile srctype="xml">
+      <name>appSettings</name>
+      <path>target/deploy</path>
+    </settingsfile>
+    <targetjar>
+      <name>Application</name>
+      <path>target/deploy</path>
+    </targetjar>
+  </build>
+  <windows>
+    <window onstartup="init" id="MdiWindow" type="mdi" icon="logo.gif" width="600" height="400" package="com.rs2.app.bw.mgui.windows" label="Accountancy">
+      <menubar id="mainMenu" type="classic"/>
+    </window>
+    <window label="Testing Panel" id="OpenFileWindow" type="internal" icon="closefile.gif" width="600" height="450" package="com.rs2.app.bw.mgui.windows">
+      <menubar id="acctMenu" type="classic" linkhandler="self"/>
+	<body id="acctPanel" type="panel" linklistenerto="window">WindowPanel</body>  
+    </window>
+    <window id="HelpWindow" label="Help Window" type="internal" width="200" height="100" package="com.rs2.app.bw.mgui.windows">
+    	<menubar id="mainMenu" type="classic"/>
+    </window>
+    <window id="AboutWindow" width="200" height="100" package="com.rs2.app.bw.mgui.windows">
+    </window>
+    <window id="yusraWindow" type="internal" width="500" height="300" package="com.rs2.app.bw.mgui.windows" label="Hello there can you see me ?">
+    </window>
+  </windows>
+  <actions>
+    <action id="runGameSpider"   command="runApplication" label="Spider Soliter"      param  = "c:/windows/system32/spider"/>
+    <action id="runGameFreeCell" command="runApplication" label="Free Cell"           param  = "c:/windows/system32/freecell"/>
+    <action id="runGameMine"     command="runApplication" label="Mine Sweeper"        param  = "c:/windows/system32/winmine"/>
+    <action id="runCalculator"   command="runApplication" label="Calculator"          param  = "c:/windows/system32/calc"/>
+    <action id="runNotepad"      command="runApplication" label="Notepad"             param  = "notepad"/>
+    <action id="openFile"        command="openWindow"     label="Open File"           target = "OpenFileWindow"/>
+    <action id="exitApp"         command="runApplication" label="End Application"     param  = "c:/windows/System32/services.msc"/>
+    <action id="exitWindows"     command="runApplication" label="Shut down computer"  param  = "c:/windows/System32/shutdown"/>
+    <action id="logoutSystem"    command="runApplication" label="Log out computer"    param  = "c:/windows/System32/logoff"/>
+    <action id="openHelp"        command="openWindow"     label="Help ...."           target = "HelpWindow"/>
+    <action id="insertAccount"   command="assingToApplication"     label="Insert new Account"  target = "OpenFileWindow"/>
+    <action id="deleteAccount"   command="assingToApplication"     label="Delete an Account"   target = "OpenFileWindow"/>
+    <action id="openAbout"       command="runApplication" label="About Portal Engine" param  = '\"C:/Programme/Internet Explorer/iexplore\" \"www.mohammedfj.java-fan.com\"'/>
+  </actions>
+  <menus>
+    <menubar id="acctMenu">
+    	<menu id="Accounts">
+		<menu id="newAccount" action="insertAccount"/>
+		<menu id="delAccount" action="deleteAccount"/>
+	</menu>	
+    </menubar>		
+    <menubar id="mainMenu">
+      <menu id="files">
+        <menu id="fileMenu" action="openFile" />
+        <menu id="exitMenu" action="exitApp" icon="item_mnu.jpg"/>
+        <menu type="separator"/>
+        <menu id="logoff" action="logoutSystem" />
+        <menu id="exitSystem" action="exitWindows" />
+      </menu>
+      <menu id="Games">
+        <menu id="spider" action="runGameSpider" />
+        <menu id="mine" action="runGameMine" />
+        <menu id="freecell" action="runGameFreeCell" />
+      </menu>
+      <menu id="Accessories">
+        <menu id="calc" action="runCalculator" />
+        <menu id="notepad" action="runNotepad" />
+      </menu>
+      <menu id="window">
+        <menu id="helpMenu" action="openHelp" icon="item_exe.jpg"/>
+        <menu id="aboutMenu" action="openAbout"/>
+      </menu>
+    </menubar>
+  </menus>
+  <toolbars>
+    <toolbar id="mainToolbar">
+      <menu target="fileMenu" icon="openFile.gif"/>
+      <menu id="tlbExitSystem" icon="exit.gif" action="exitWindows"/>
+      
+    </toolbar>
+  </toolbars>
+  <panels>
+    <panel id="WindowPanel" layout="border" package="com.rs2.app.bw.mgui.panels">
+      <split id="mainSplitter" orient="vertical" position="Center">
+        <panel id="pnlExplorer" layout="rc" position="left">
+          <textField   id="AccountNo1"       scope="public"  row="1" col="10" height="1" width="20" default="Hi From Generator" onlostfocus="accountNoLostFocus" />
+          <textField   id="AccountName1"     scope="public"  row="2" col="10" height="1" width="20" ongotfocus="accountNameFocus"/>
+          <listField   id="AccountType1"     scope="private" row="3" col="10" height="1" width="20"/>
+        </panel>
+        <scrollpane id="scrlPane1" position="right">
+          <panel id="pnlAccount" border="1" name="AccountFrame" layout="rc" position="center">
+            <textField   id="AccountNo"       scope="public"  row="1" col="10" height="1" width="20" default="Hi From Generator" onlostfocus="accountNoLostFocus" />
+            <textField   id="AccountName"     scope="public"  row="2" col="10" height="1" width="20" ongotfocus="accountNameFocus"/>
+            <listField   id="AccountType"     scope="private" row="3" col="10" height="1" width="20"/>
+            <listField   id="accountCategory" scope="public"  row="4" col="10" height="1" width="20"/>
+            <checkbox    id="print"           scope="public"  row="5" col="10" height="1" width="20" label="Print"  selected="true" onclick="checkBox"/>
+            <radiobutton id="single"          scope="public"  row="6" col="10" height="1" width="10" label="Single" selected="false" onclick="radioButton"/>
+            <button      id="SendInfo"        scope="public"  row="7" col="10" height="1" width="8"  label="Send"   onclick="okPressed" />
+            <button      id="Cancel"          scope="public"  row="7" col="22" height="1" width="8"  label="Cancel" onclick="cancelPressed" />
+            <button      id="addItemBtn"      scope="public"  row="6" col="22" height="1" width="8"  label="AddItem" onclick="addItem" />  
+          </panel>
+        </scrollpane>
+      </split>
+    </panel>
+  </panels>
+</application>

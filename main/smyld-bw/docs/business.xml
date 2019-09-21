@@ -1,0 +1,90 @@
+<?xml version='1.0' encoding='windows-1252'?>
+<business>
+   
+  <busobj name="isMcc" return="Boolean">
+    <params>
+      <param name="mcc"         type="int"   />
+      <param name="cardOrg"     type="String"/>
+    </params>
+    
+    
+    <swtich field="mcc">
+      
+    </swtich>
+  </busobj>
+  <busobj name="setVisaXchngTariff2" return="String">
+    <params>
+      <param name="areaOfEvent"  type="int"/>
+      <param name="merchCountry" type="int"/>
+      <param name="tranType"     type="String"/>
+      <param name="cardBrand"    type="String"/>
+      <param name="mcc"          type="int"   />
+    </params>
+    
+    <swtich field="areaOfEvent">
+      <case value="700-799" type="int">
+        <swtich field="merchCountry">
+          <case value="280">
+            <swtich field="tranType">
+              <case value="005,006,008,011,012,014">    
+                <swtich field="cardBrand">
+                  <case value="005,068,031,062,052,066">    
+                    <call busobj="isMCC" params="mcc,'003'" result="true">
+                      907
+                    </call>
+                    
+                  </case>
+                  <case value="030,029,028"> 
+                    908
+                  </case>
+                  <case value="007"> 
+                    910
+                  </case>
+                </swtich>
+              </case>
+            </swtich>
+          </case>
+          <case value="826">
+          </case>
+          <case value="756">
+          </case>
+          <case value="208,578,300">
+          </case>
+          <case value="620">
+          </case>
+          <case value="724">
+          </case>
+          <case value="124">
+          </case>
+          <case value="056">
+          </case>
+          <case value="040">
+          </case>
+          <case value="036">
+          </case>
+          <case value="344">
+          </case>
+           <case value="616,705,440,348,196,203,233,428">
+          </case>
+          <case value="792">
+          </case>
+          <case value="702">
+            
+          </case>
+          <case value="392">
+          </case>
+         
+        </swtich>
+      </case>
+      <case value="201,210">  
+      </case>
+      <case value="202">  
+      </case>
+      <case value="211">  
+      </case>
+      <case value="206">  
+      </case>
+  
+    </swtich>
+  </busobj>
+</business>

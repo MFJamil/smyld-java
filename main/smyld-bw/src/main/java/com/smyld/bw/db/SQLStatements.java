@@ -1,0 +1,807 @@
+package com.smyld.bw.db;
+
+import com.smyld.db.SQL;
+
+/**
+ * This class will hold all the sql statements which concerns the access to the
+ * data base used for Bank works (regardless of the data base engine)
+ */
+public class SQLStatements implements SQL, DBName, JavaDBValue {
+
+	/*
+	 * ====================================================================================
+	 * ==========================SELECT STATEMENTS
+	 * BLOCK==================================
+	 * ===================================================================================
+	 */
+
+	/**
+	 * This sql will select all the records of the iso 8583 format fields
+	 */
+	public static final String SEL_iso_8583_fields_ALL_RECORDS = SELA
+			+ TABLE_ISO_8583_FIELDS + WHR + TABLE_ISO_8583_FIELDS + DOT
+			+ COL_ISO_8583_FORMATS_ID + EQM + AND + TABLE_ISO_8583_FIELDS + DOT
+			+ COL_ISO_8583_FIELDS_PARENT_ID + EQM;
+
+	/**
+	 * This sql will select all the records of the iso 8583 format sub fields of
+	 * the gievn field name (as parameter )
+	 */
+
+	public static final String SEL_iso_8583_fields_SUBFIELDS = SEL_iso_8583_fields_ALL_RECORDS
+			+ ORD + COL_ISO_8583_FIELDS_SFLD_ORDER;
+	public static final String SEL_iso_8583_formats_ALL_RECORDS = SELA
+			+ TABLE_ISO_8583_FORMATS;
+
+	/**
+	 * This sql will select all the records of the iso 8583 bitmaps table for
+	 * the supplied file usage and format of course
+	 */
+	public static final String SEL_iso_8583_bitmaps_ALL_RECORDS = SELA
+			+ TABLE_ISO_8583_BITMAPS + WHR + TABLE_ISO_8583_BITMAPS + DOT
+			+ COL_ISO_8583_FORMATS_ID + EQM + AND + TABLE_ISO_8583_BITMAPS
+			+ DOT + COL_ISO_8583_FILE_USAGE_ID + EQM;
+
+	/**
+	 * This sql will select all the records of the iso 8583 structurs table
+	 * coresponding to the supplied message ID, file usage and format of course.
+	 */
+	public static final String SEL_iso_8583_structurs_MSG_STRUCT = SEL
+			+ TABLE_ISO_8583_STRUCTURS + DOT + COL_ISO_8583_FIELDS_ID + COM
+			+ COL_ISO_8583_FIELD_TYPES_ID + COM
+			+ COL_ISO_8583_STRUCTURS_FLD_USAGE + FRM + TABLE_ISO_8583_STRUCTURS
+			+ COM + TABLE_ISO_8583_FIELDS + WHR + TABLE_ISO_8583_STRUCTURS
+			+ DOT + COL_ISO_8583_FIELDS_ID + EQ + TABLE_ISO_8583_FIELDS + DOT
+			+ COL_ISO_8583_FIELDS_ID + AND + TABLE_ISO_8583_STRUCTURS + DOT
+			+ COL_ISO_8583_FORMATS_ID + EQM + AND + TABLE_ISO_8583_STRUCTURS
+			+ DOT + COL_ISO_8583_FILE_USAGE_ID + EQM + AND
+			+ TABLE_ISO_8583_STRUCTURS + DOT + COL_ISO_8583_BITMAPS_MSG_ID
+			+ EQM + ORD + TABLE_ISO_8583_STRUCTURS + DOT
+			+ COL_ISO_8583_STRUCTURS_FLD_ORDER;
+	/**
+	 * This sql will select the count of all the records of the iso 8583
+	 * structurs table coresponding to the supplied message ID, file usage and
+	 * format of course.
+	 */
+	public static final String SEL_iso_8583_structurs_MSG_STRUCT_COUNT = SELCA
+			+ TABLE_ISO_8583_STRUCTURS + WHR + TABLE_ISO_8583_STRUCTURS + DOT
+			+ COL_ISO_8583_FORMATS_ID + EQM + AND + TABLE_ISO_8583_STRUCTURS
+			+ DOT + COL_ISO_8583_FILE_USAGE_ID + EQM + AND
+			+ TABLE_ISO_8583_STRUCTURS + DOT + COL_ISO_8583_BITMAPS_MSG_ID
+			+ EQM;
+
+	public static final String SEL_cbr_channel_def_ALL_RECORDs = SELA
+			+ TABLE_CBR_CHANNEL_DEF;
+	public static final String SEL_int_proc_log_SINGLE_RECORDs = SELA
+			+ TABLE_INT_PROC_LOG + WHR + TABLE_INT_PROC_LOG + DOT
+			+ COL_INT_PROC_LOG_PRC_NUM + EQM;
+	public static final String SEL_sys_inst_license_INSTALLATION_CHECK = SEL
+			+ DIST + COL_SYS_INST_INSTALLATION_NUM + FRM
+			+ TABLE_SYS_INST_LICENCE;
+
+	public static final String SEL_int_file_log_details_CHECK_FILE_ID_PROCESS_NO = SELA
+			+ TABLE_INT_FILE_LOG_DETAILS
+			+ WHR
+			+ COL_INT_FILE_LOG_FILE_ID
+			+ EQM
+			+ AND + COL_INT_FILE_LOG_PRC_NAME + EQM;
+
+	/* @TODO : (1.00.008) adding the check for the file status */
+	public static final String SEL_int_file_log_details_FILE_CHECK = SELA
+			+ TABLE_INT_FILE_LOG_DETAILS + WHR + COL_INT_FILE_LOG_INST_NUM
+			+ EQM + AND + COL_INT_FILE_LOG_FILE_ID + EQM + AND
+			+ COL_INT_FILE_LOG_ORG_FILE_NAME + LIKE + QUM + AND
+			+ COL_INT_FILE_LOG_PRC_NAME + EQM + AND
+			+ COL_INT_FILE_LOG_PRC_STATUS + NEQ + SQ + DBValue.STA_PROC_ERROR
+			+ SQ + AND + COL_INT_FILE_LOG_PRC_STATUS + NEQ + SQ
+			+ DBValue.STA_PROC_CANCELLED + SQ;
+
+	public static final String SEL_part_file_log_details_FILE_CHECK = SELA
+			+ TABLE_INT_FILE_LOG_DETAILS + WHR + COL_INT_FILE_LOG_INST_NUM
+			+ EQM + AND + COL_INT_FILE_LOG_FILE_ID + EQM + AND
+			+ COL_INT_FILE_LOG_ORG_FILE_NAME + LIKE + QUM + AND
+			+ COL_INT_FILE_LOG_PRC_NAME + EQM + AND
+			+ COL_INT_FILE_LOG_PRC_STATUS + NEQ + SQ + DBValue.STA_PROC_ERROR
+			+ SQ;
+
+	public static final String SEL_cis_client_details_OUT_REF_CHECK = SEL
+			+ COL_CIS_CLIENT_DETAILS_CLNT_NUM + COM
+			+ COL_CIS_CLIENT_DETAILS_CLNT_REGION + COM
+			+ COL_CIS_CLIENT_DETAILS_CLNT_STATE + COM
+			+ COL_CIS_CLIENT_DETAILS_BUSS_CLS + COM
+			+ COL_CIS_CLIENT_DETAILS_CLNT_CTRY + COM
+			+ COL_CIS_CLIENT_DETAILS_CLNT_CITY + COM
+			+ COL_CIS_CLIENT_DETAILS_CLNT_STA + COM + COL_CIS_CLNT_DTL_RCC
+			+ COM + COL_CIS_CLNT_DTL_POST_CODE + COM
+			+ COL_CIS_CLNT_DTL_TRADE_NAME + COM + COL_CIS_CLNT_DTL_SRV_TEL_NUM
+			+ FRM + TABLE_CIS_CLIENT_DETAILS + WHR
+			+ COL_CIS_CLIENT_DETAILS_INST_NUM + EQM + AND
+			+ COL_CIS_CLIENT_DETAILS_OUR_REF + EQM + ORD
+			+ COL_CIS_CLIENT_DETAILS_CLNT_STA;
+
+	public static final String SEL_cis_client_details_ref_ALL_REF_CHECK = // OM
+																			// 1.4.89
+	SEL + TABLE_CIS_CLIENT_DETAILS + DOT + COL_CIS_CLIENT_DETAILS_CLNT_NUM
+			+ COM + COL_CIS_CLIENT_DETAILS_CLNT_REGION + COM
+			+ COL_CIS_CLIENT_DETAILS_CLNT_STATE + COM
+			+ COL_CIS_CLIENT_DETAILS_BUSS_CLS + COM
+			+ COL_CIS_CLIENT_DETAILS_CLNT_CTRY + COM
+			+ COL_CIS_CLIENT_DETAILS_CLNT_CITY + COM
+			+ COL_CIS_CLIENT_DETAILS_CLNT_STA + COM + COL_CIS_CLNT_DTL_RCC
+			+ COM + COL_CIS_CLNT_DTL_POST_CODE + COM
+			+ COL_CIS_CLNT_DTL_TRADE_NAME + COM + COL_CIS_CLNT_REF_CLNT_REF_NUM
+			+ COM + COL_CIS_CLNT_DTL_SRV_TEL_NUM + COM
+			+ COL_CIS_CLNT_DTL_COMPANY_NAME + FRM + TABLE_CIS_CLIENT_DETAILS
+			+ COM + TABLE_CIS_CLNT_REF + WHR + TABLE_CIS_CLIENT_DETAILS + DOT
+			+ COL_CIS_CLIENT_DETAILS_INST_NUM + EQM + AND + PO
+			+ TABLE_CIS_CLIENT_DETAILS + DOT + COL_CIS_CLIENT_DETAILS_OUR_REF
+			+ EQM + OR + TABLE_CIS_CLIENT_DETAILS + DOT
+			+ COL_CIS_CLNT_DTL_RGS_NUM + EQM + PC +
+
+			AND + TABLE_CIS_CLNT_REF + DOT + COL_CIS_CLNT_REF_CLNT_NUM + OUTJ
+			+ EQ + TABLE_CIS_CLIENT_DETAILS + DOT
+			+ COL_CIS_CLIENT_DETAILS_CLNT_NUM + AND + TABLE_CIS_CLNT_REF + DOT
+			+ COL_CIS_CLNT_REF_INST_NUM + OUTJ + EQ + TABLE_CIS_CLIENT_DETAILS
+			+ DOT + COL_CIS_CLIENT_DETAILS_INST_NUM + AND + TABLE_CIS_CLNT_REF
+			+ DOT + COL_CIS_CLNT_REF_CLNT_REF_TYPE + OUTJ + EQM + ORD
+			+ COL_CIS_CLIENT_DETAILS_CLNT_STA;
+	public static final String SEL_cis_client_details_ref_REG_NO_CHECK = // OM
+																			// 1.4.89
+	SEL + TABLE_CIS_CLIENT_DETAILS + DOT + COL_CIS_CLIENT_DETAILS_CLNT_NUM
+			+ COM + COL_CIS_CLIENT_DETAILS_CLNT_REGION + COM
+			+ COL_CIS_CLIENT_DETAILS_CLNT_STATE + COM
+			+ COL_CIS_CLIENT_DETAILS_BUSS_CLS + COM
+			+ COL_CIS_CLIENT_DETAILS_CLNT_CTRY + COM
+			+ COL_CIS_CLIENT_DETAILS_CLNT_CITY + COM
+			+ COL_CIS_CLIENT_DETAILS_CLNT_STA + COM + COL_CIS_CLNT_DTL_RCC
+			+ COM + COL_CIS_CLNT_DTL_POST_CODE + COM
+			+ COL_CIS_CLNT_DTL_TRADE_NAME + COM + COL_CIS_CLNT_REF_CLNT_REF_NUM
+			+ COM + COL_CIS_CLNT_DTL_SRV_TEL_NUM + COM
+			+ COL_CIS_CLNT_DTL_COMPANY_NAME + FRM + TABLE_CIS_CLIENT_DETAILS
+			+ COM + TABLE_CIS_CLNT_REF + WHR + TABLE_CIS_CLIENT_DETAILS + DOT
+			+ COL_CIS_CLIENT_DETAILS_INST_NUM + EQM + AND
+			+ TABLE_CIS_CLIENT_DETAILS + DOT + COL_CIS_CLNT_DTL_RGS_NUM + EQM
+			+ AND + TABLE_CIS_CLNT_REF + DOT + COL_CIS_CLNT_REF_CLNT_NUM + OUTJ
+			+ EQ + TABLE_CIS_CLIENT_DETAILS + DOT
+			+ COL_CIS_CLIENT_DETAILS_CLNT_NUM + AND + TABLE_CIS_CLNT_REF + DOT
+			+ COL_CIS_CLNT_REF_INST_NUM + OUTJ + EQ + TABLE_CIS_CLIENT_DETAILS
+			+ DOT + COL_CIS_CLIENT_DETAILS_INST_NUM + AND + TABLE_CIS_CLNT_REF
+			+ DOT + COL_CIS_CLNT_REF_CLNT_REF_TYPE + OUTJ + EQM + ORD
+			+ COL_CIS_CLIENT_DETAILS_CLNT_STA;
+
+	public static final String SEL_cis_client_details_ref_OUR_REF_CHECK = // OM
+																			// 1.4.89
+	SEL + TABLE_CIS_CLIENT_DETAILS + DOT + COL_CIS_CLIENT_DETAILS_CLNT_NUM
+			+ COM + COL_CIS_CLIENT_DETAILS_CLNT_REGION + COM
+			+ COL_CIS_CLIENT_DETAILS_CLNT_STATE + COM
+			+ COL_CIS_CLIENT_DETAILS_BUSS_CLS + COM
+			+ COL_CIS_CLIENT_DETAILS_CLNT_CTRY + COM
+			+ COL_CIS_CLIENT_DETAILS_CLNT_CITY + COM
+			+ COL_CIS_CLIENT_DETAILS_CLNT_STA + COM + COL_CIS_CLNT_DTL_RCC
+			+ COM + COL_CIS_CLNT_DTL_POST_CODE + COM
+			+ COL_CIS_CLNT_DTL_TRADE_NAME + COM + COL_CIS_CLNT_REF_CLNT_REF_NUM
+			+ COM + COL_CIS_CLNT_DTL_SRV_TEL_NUM + COM
+			+ COL_CIS_CLNT_DTL_COMPANY_NAME + FRM + TABLE_CIS_CLIENT_DETAILS
+			+ COM + TABLE_CIS_CLNT_REF + WHR + TABLE_CIS_CLIENT_DETAILS + DOT
+			+ COL_CIS_CLIENT_DETAILS_INST_NUM + EQM + AND
+			+ TABLE_CIS_CLIENT_DETAILS + DOT + COL_CIS_CLIENT_DETAILS_OUR_REF
+			+ EQM + AND + TABLE_CIS_CLNT_REF + DOT + COL_CIS_CLNT_REF_CLNT_NUM
+			+ OUTJ + EQ + TABLE_CIS_CLIENT_DETAILS + DOT
+			+ COL_CIS_CLIENT_DETAILS_CLNT_NUM + AND + TABLE_CIS_CLNT_REF + DOT
+			+ COL_CIS_CLNT_REF_INST_NUM + OUTJ + EQ + TABLE_CIS_CLIENT_DETAILS
+			+ DOT + COL_CIS_CLIENT_DETAILS_INST_NUM + AND + TABLE_CIS_CLNT_REF
+			+ DOT + COL_CIS_CLNT_REF_CLNT_REF_TYPE + OUTJ + EQM + ORD
+			+ COL_CIS_CLIENT_DETAILS_CLNT_STA;
+
+	public static final String SEL_bwt_transaction_types_ALL_RECORDS = SELA
+			+ TABLE_BWT_TRANSACTION_TYPE;
+	public static final String SEL_bwt_iso_bus_cls_SINGLE_RECORDS = SEL
+			+ COL_BWT_ISO_BUS_CLS_ISO_CODE + FRM + TABLE_BWT_ISO_BUS_CLS + WHR
+			+ COL_BWT_ISO_BUS_CLS_IDX_FLD + EQM;
+	public static final String SEL_bwt_iso_bus_cls_ALL_RECORDS = SEL
+			+ COL_BWT_ISO_BUS_CLS_ISO_CODE + COM + COL_BWT_ISO_BUS_CLS_IDX_FLD
+			+ FRM + TABLE_BWT_ISO_BUS_CLS;
+	public static final String SEL_bwt_exr_chg_car_rental_ALL_RECORDS = SEL
+			+ COL_BWT_EXR_CHG_AUTO_RENTAL_IDX_FLD + COM
+			+ COL_BWT_EXR_CHG_AUTO_RENTAL_VISA_CODE + COM
+			+ COL_BWT_EXR_CHG_AUTO_RENTAL_INET_CODE + FRM
+			+ TABLE_BWT_EXR_CHG_AUTO_RENTAL;
+	public static final String SEL_bwt_exr_chg_lodging_ALL_RECORDS = SEL
+			+ COL_BWT_EXR_CHG_LODGING_IDX_FLD + COM
+			+ COL_BWT_EXR_CHG_LODGING_VISA_CODE + COM
+			+ COL_BWT_EXR_CHG_LODGING_INET_CODE + FRM
+			+ TABLE_BWT_EXR_CHG_LODGING;
+	public static final String SEL_bwt_country_ALL_RECORDS = SELA
+			+ TABLE_BWT_CTRY;
+	public static final String SEL_bwt_country_state_ALL_RECORDS = SEL
+			+ COL_BWT_CTRY_STATE_IDX_FLD + COM + COL_BWT_CTRY_STATE_CTRY_CODE
+			+ COM + COL_BWT_CTRY_STATE_STATE_CODE + FRM + TABLE_BWT_CTRY_STATE;
+	public static final String SEL_sys_country_region_ALL_RECORDS = SEL
+			+ COL_SYS_CTRY_RGN_RGN + COM + COL_SYS_CTRY_RGN_CTRY + COM
+			+ COL_SYS_CTRY_RGN_INST_NUM + FRM + TABLE_SYS_CTRY_RGN;
+	public static final String SEL_bwt_regions_ALL_RECORDS = SEL + DIST
+			+ COL_BWT_RGN_IDX_FLD + COM + COL_BWT_RGN_RGN + COM
+			+ COL_BWT_RGN_LANG + FRM + TABLE_BWT_RGN;
+
+	public static final String SEL_gui_mdi_menu_ALL_RECORDS = SELA
+			+ TABLE_GUI_MDI_MENU + ORD + COL_GUI_MDI_MENU_ORDER_NO;
+	public static final String SEL_gui_lang_source_ALL_RECORDS = SELA
+			+ TABLE_GUI_LANG_SOURCE + WHR + COL_GUI_LANG_SOURCE_LANG + EQM;
+	public static final String SEL_gui_msk_menu_ALL_RECORDS = SELA
+			+ TABLE_GUI_MSK_MENU + ORD + COL_GUI_MSK_MENU_ID;
+	public static final String SEL_gui_popup_menus_ALL_RECORDS = SELA
+			+ TABLE_GUI_POPUP_MENUS + ORD + COL_GUI_POPUP_MENU_POPUP_ID + COM
+			+ COL_GUI_POPUP_MENU_ORDER_NO;
+	public static final String SEL_cht_process_name_LANG_RECORDS = SEL
+			+ COL_CHT_PRC_NAME_ID + COM + COL_CHT_PRC_NAME_TEXT + FRM
+			+ TABLE_CHT_PRC_NAME + WHR + COL_CHT_PRC_NAME_LANG + EQM;
+	public static final String SEL_cht_process_group_LANG_RECORDS = SEL
+			+ COL_CHT_PRC_GRP_ID + COM + COL_CHT_PRC_GRP_TEXT + FRM
+			+ TABLE_CHT_PRC_GRP + WHR + COL_CHT_PRC_GRP_LANG + EQM;
+
+	public static final String SEL_cis_interchange_details_COUNT_RECORDS = SELCA
+			+ TABLE_CIS_INTR_DTL
+			+ WHR
+			+ COL_CIS_INTR_DTL_INST_NUM
+			+ EQM
+			+ AND
+			+ COL_CIS_INTR_DTL_CARD_ORGA
+			+ EQM
+			+ AND
+			+ COL_CIS_INTR_DTL_CLNT_RGN + EQM;
+
+	public static final String SEL_cis_interchange_details_ALL_RECORDS = SEL
+			+ COL_CIS_INTR_DTL_INST_NUM + COM + COL_CIS_INTR_DTL_CARD_ORGA
+			+ COM + COL_CIS_INTR_DTL_CLNT_RGN + FRM + TABLE_CIS_INTR_DTL + ORD
+			+ COL_CIS_INTR_DTL_INST_NUM + COM + COL_CIS_INTR_DTL_CARD_ORGA
+			+ COM + COL_CIS_INTR_DTL_CLNT_RGN;
+
+	public static final String SEL_cis_interchange_details_CHECK_CLIENT_FOR_MS_EURO = SELA
+			+ TABLE_CIS_INTR_DTL
+			+ WHR
+			+ COL_CIS_INTR_DTL_INST_NUM
+			+ EQM
+			+ AND
+			+ COL_CIS_INTR_DTL_CARD_ORGA
+			+ IN
+			+ PO
+			+ SQ
+			+ ORG_EUROPAY
+			+ SQ
+			+ COM
+			+ SQ
+			+ ORG_MASTERCARD
+			+ SQ
+			+ PC
+			+ AND
+			+ TO_CHAR
+			+ PO
+			+ TO_NUMBER
+			+ PO
+			+ TRIM
+			+ PO
+			+ COL_CIS_INTR_DTL_ORGA_ID
+			+ PC
+			+ PC
+			+ PC + EQM;
+	/*
+	 * select member_id from cis_interchange_details where institution_number =
+	 * '00000013' and TO_CHAR(TO_NUMBER(TRIM(ORGANIZATION_ID)))='6379' and
+	 * (card_organization in('001','002'))
+	 * 
+	 * 
+	 */
+
+	// "select institution_number,institution_name from SYS_INSTITUTION_LICENCE"
+	public static final String SEL_sys_inst_licence_ALL_RECORDS = SEL
+			+ COL_SYS_INST_INST_NUM + COM + COL_SYS_INST_INST_NAME + FRM
+			+ TABLE_SYS_INST_LICENCE;
+	// "Select USERID, PASS_WORD from sys_user_information"
+	public static final String SEL_sys_user_info_ALL_RECORDS = SELA
+			+ TABLE_SYS_USR_INFO;
+	public static final String SEL_sys_user_info_SINGLE_RECORD = SELA
+			+ TABLE_SYS_USR_INFO + WHR + COL_SYS_USR_INFO_ID + EQM;
+	// "select ID, TEXT from gui_lang_source where language= ? AND
+	// module='CONSOLE_GUI'"
+	public static final String SEL_gui_lang_source_GUILABELS = SEL
+			+ COL_GUI_LANG_SOURCE_ID + COM + COL_GUI_LANG_SOURCE_TEXT + FRM
+			+ TABLE_GUI_LANG_SOURCE + WHR + COL_GUI_LANG_SOURCE_LANG + EQM
+			+ AND + COL_GUI_LANG_SOURCE_MODULE + EQM;
+
+	// "Select CONFIG_VALUE from SYS_CONFIGURATION where CONFIG_KEYWORD =
+	// 'AllowedIps'"
+	public static final String SEL_sys_configuration_INST_IN_SECTION_RECORDS = SEL
+			+ DIST
+			+ COL_SYS_CONFIG_INSTNR
+			+ FRM
+			+ TABLE_SYS_CONFIG
+			+ WHR
+			+ COL_SYS_CONFIG_SECTION + EQM;
+
+	public static final String SEL_sys_configuration_INST_SECTION_RECORDS = SEL
+			+ COL_SYS_CONFIG_KEYWORD + COM + COL_SYS_CONFIG_VALUE + FRM
+			+ TABLE_SYS_CONFIG + WHR + COL_SYS_CONFIG_SECTION + EQM + AND
+			+ COL_SYS_CONFIG_INSTNR + EQM;
+
+	public static final String SEL_sys_configuration_SECTION_RECORDS = SEL
+			+ COL_SYS_CONFIG_KEYWORD + COM + COL_SYS_CONFIG_VALUE + FRM
+			+ TABLE_SYS_CONFIG + WHR + COL_SYS_CONFIG_SECTION + EQM;
+	public static final String SEL_sys_process_setup_SINGLE_RECORD = SEL
+			+ COL_SYS_PRC_USR_SETUP_FILE_PATH + COM
+			+ COL_SYS_PRC_USR_SETUP_FILE_MASK + COM
+			+ COL_SYS_PRC_USR_SETUP_FILE_MOVE_PATH + COM
+			+ COL_SYS_PRC_USR_SETUP_FILE_RENAME_MASK + FRM
+			+ TABLE_SYS_PRC_USR_SETUP + WHR + COL_SYS_PRC_USR_SETUP_PRC_NAME
+			+ EQM + AND + COL_SYS_PRC_USR_SETUP_INST_NAME + EQM;
+	public static final String SEL_int_process_params_MULTI_RECORD = SEL
+			+ TABLE_INT_PRC_PARMS + DOT + COL_INT_PRC_PARMS_PARM_VALUE + FRM
+			+ TABLE_INT_PRC_PARMS + WHR + TABLE_INT_PRC_PARMS + DOT
+			+ COL_INT_PRC_PARMS_PARM_TYPE + EQ + SQ + DBValue.PRC_PARM_TYPE_IN
+			+ SQ + AND + TABLE_INT_PRC_PARMS + DOT + COL_INT_PRC_PARMS_PRC_NUM
+			+ EQM;
+
+	public static final String SEL_bwt_currency_MULTI_RECORD = SEL + DIST
+			+ COL_BWT_CUR_ISO_CODE + COM + COL_BWT_CUR_SWIFT_CODE + COM
+			+ COL_BWT_CUR_LOCAL_CODE + COM + COL_BWT_CUR_NAME + COM
+			+ COL_BWT_CUR_EXPN + COM + COL_BWT_CUR_CALC_BASE + COM
+			+ COL_BWT_CUR_SYMBOL + COM + COL_BWT_CUR_SORT_FLD + FRM
+			+ TABLE_BWT_CUR + WHR + COL_BWT_CUR_LANG + EQ + SQ
+			+ DBValue.LANG_USA + SQ;
+	public static final String SEL_cht_chargeback_reason_ALL_RECORDS = SELA
+			+ TABLE_CHT_CHGB_RSN;
+
+	public static final String SEL_cbr_service_contract_CLEINT_LINKs_PART_1 = SEL
+			+ INST_1 + DOT + ALL + COM + INST_2 + DOT + COL_CBR_SVR_CNTR_TYPE;
+	public static final String SEL_cbr_service_contract_CLEINT_LINKs_PART_2 = FRM
+			+ TABLE_CBR_SVR_CNTR
+			+ SP
+			+ INST_2
+			+ COM
+			+ TABLE_CIS_CLNT_LNK
+			+ SP
+			+ INST_1;
+	public static final String SEL_cbr_service_contract_CLEINT_LINKs_PART_3 = WHR
+			+ INST_2
+			+ DOT
+			+ COL_CBR_SVR_CNTR_INST_NUM
+			+ EQ
+			+ INST_1
+			+ DOT
+			+ COL_CIS_CLNT_LNK_INST_NUM
+			+ AND
+			+ INST_2
+			+ DOT
+			+ COL_CBR_SVR_CNTR_ID
+			+ EQ
+			+ INST_1
+			+ DOT
+			+ COL_CIS_CLNT_LNK_SRV_CNTR_ID
+			+ AND
+			+ INST_2
+			+ DOT
+			+ COL_CBR_SVR_CNTR_TYPE
+			+ EQM
+			+ AND
+			+ INST_1
+			+ DOT
+			+ COL_CIS_CLNT_LNK_CLNT_NUM
+			+ EQM
+			+ AND
+			+ INST_1
+			+ DOT
+			+ COL_CIS_CLNT_LNK_INST_NUM
+			+ EQM
+			+ AND
+			+ INST_1
+			+ DOT
+			+ COL_CIS_CLNT_LNK_CLNT_LEVEL
+			+ EQ
+			+ SQ
+			+ LEVL_MEMBER
+			+ SQ
+			+ AND
+			+ INST_1
+			+ DOT
+			+ COL_CIS_CLNT_LNK_CNTR_STATUS
+			+ GR
+			+ SQ
+			+ STA_CUST_NOT_ACTIVE
+			+ SQ
+			+ AND
+			+ INST_1
+			+ DOT
+			+ COL_CIS_CLNT_LNK_EFFECTIVE_DATE
+			+ EQ
+			+ PO
+			+ SEL
+			+ MAXO
+			+ COL_CIS_CLNT_LNK_EFFECTIVE_DATE
+			+ PC
+			+ FRM
+			+ TABLE_CBR_SVR_CNTR
+			+ SP
+			+ INST_3
+			+ COM
+			+ TABLE_CIS_CLNT_LNK
+			+ SP
+			+ INST_4
+			+ WHR
+			+ INST_3
+			+ DOT
+			+ COL_CBR_SVR_CNTR_INST_NUM
+			+ EQ
+			+ INST_4
+			+ DOT
+			+ COL_CIS_CLNT_LNK_INST_NUM
+			+ AND
+			+ INST_3
+			+ DOT
+			+ COL_CBR_SVR_CNTR_ID
+			+ EQ
+			+ INST_4
+			+ DOT
+			+ COL_CIS_CLNT_LNK_SRV_CNTR_ID
+			+ AND
+			+ INST_3
+			+ DOT
+			+ COL_CBR_SVR_CNTR_TYPE
+			+ EQM
+			+ AND
+			+ INST_4
+			+ DOT
+			+ COL_CIS_CLNT_LNK_CLNT_NUM
+			+ EQM
+			+ AND
+			+ INST_4
+			+ DOT
+			+ COL_CIS_CLNT_LNK_INST_NUM
+			+ EQM
+			+ AND
+			+ INST_4
+			+ DOT
+			+ COL_CIS_CLNT_LNK_CLNT_LEVEL
+			+ EQ
+			+ SQ
+			+ LEVL_MEMBER
+			+ SQ
+			+ AND
+			+ INST_4
+			+ DOT
+			+ COL_CIS_CLNT_LNK_CNTR_STATUS
+			+ GR
+			+ SQ
+			+ STA_CUST_NOT_ACTIVE
+			+ SQ
+			+ AND
+			+ INST_4
+			+ DOT
+			+ COL_CIS_CLNT_LNK_EFFECTIVE_DATE + SME + QUM;
+	public static final String SEL_cbr_service_contract_CLEINT_LINKs_PART_4 = AND
+			+ INST_5
+			+ DOT
+			+ COL_CIS_CLNT_LNK_INST_NUM
+			+ CONCAT
+			+ SQ
+			+ SQ
+			+ EQ
+			+ INST_1
+			+ DOT
+			+ COL_CIS_CLNT_LNK_INST_NUM
+			+ AND
+			+ INST_5
+			+ DOT
+			+ COL_CIS_CLNT_LNK_GRP_NUM
+			+ EQ
+			+ INST_1
+			+ DOT
+			+ COL_CIS_CLNT_LNK_GRP_NUM
+			+ AND
+			+ INST_5
+			+ DOT
+			+ COL_CIS_CLNT_LNK_PARENT_CLNT_NUM
+			+ CONCAT
+			+ SQ
+			+ SQ
+			+ EQ
+			+ INST_1
+			+ DOT
+			+ COL_CIS_CLNT_LNK_INST_NUM
+			+ AND
+			+ INST_5
+			+ DOT
+			+ COL_CIS_CLNT_LNK_SRV_CNTR_ID
+			+ EQ
+			+ INST_1
+			+ DOT
+			+ COL_CIS_CLNT_LNK_SRV_CNTR_ID
+			+ AND
+			+ INST_5
+			+ DOT
+			+ COL_CIS_CLNT_LNK_EFFECTIVE_DATE
+			+ EQ
+			+ PO
+			+ SEL
+			+ MAXO
+			+ COL_CIS_CLNT_LNK_EFFECTIVE_DATE
+			+ PC
+			+ FRM
+			+ TABLE_CIS_CLNT_LNK
+			+ WHR
+			+ COL_CIS_CLNT_LNK_INST_NUM
+			+ EQ
+			+ INST_5
+			+ DOT
+			+ COL_CIS_CLNT_LNK_INST_NUM
+			+ AND
+			+ COL_CIS_CLNT_LNK_CLNT_NUM
+			+ EQ
+			+ INST_5
+			+ DOT
+			+ COL_CIS_CLNT_LNK_CLNT_NUM
+			+ AND
+			+ COL_CIS_CLNT_LNK_GRP_NUM
+			+ EQ
+			+ INST_5
+			+ DOT
+			+ COL_CIS_CLNT_LNK_GRP_NUM
+			+ AND
+			+ COL_CIS_CLNT_LNK_SRV_CNTR_ID
+			+ EQ
+			+ INST_5
+			+ DOT
+			+ COL_CIS_CLNT_LNK_SRV_CNTR_ID
+			+ AND
+			+ COL_CIS_CLNT_LNK_CLNT_LEVEL
+			+ EQ
+			+ INST_5
+			+ DOT
+			+ COL_CIS_CLNT_LNK_CLNT_LEVEL
+			+ AND
+			+ COL_CIS_CLNT_LNK_EFFECTIVE_DATE + SME + QUM + PC;
+	public static final String SEL_cbr_service_contract_SINGLE_RECORD = SELA
+			+ FRM + TABLE_CBR_SVR_CNTR + WHR + COL_CBR_SVR_CNTR_INST_NUM + EQM
+			+ AND + COL_CBR_SVR_CNTR_ID + EQM;
+	public static final String SEL_sys_all_tables_SINGLE_FIELD = SEL + INST_1
+			+ DOT + COL_SYS_ALL_TABLES_TABLE_NAME + FRM + TABLE_SYS_ALL_TABLES
+			+ SP + INST_1 + COM + TABLE_SYS_USER_TAB_COLS + SP + INST_2 + WHR
+			+ INST_1 + DOT + COL_SYS_ALL_TABLES_TABLE_NAME + EQ + INST_2 + DOT
+			+ COL_SYS_ALL_TABLES_TABLE_NAME + AND + INST_2 + DOT
+			+ COL_SYS_USER_TAB_COLS_COL_NAME + EQM;
+
+	public static final String SEL_sys_domestic_bin_table_BIN_FOR_ALL_RECORDS = SELA
+			+ TABLE_SYS_DOMESTIC_BIN_TABLE;
+
+	public static final String SEL_sys_domestic_bin_table_AREA_MEMBER_RECORDS = SELA
+			+ TABLE_SYS_DOMESTIC_BIN_TABLE
+			+ WHR
+			+ COL_SYS_DOMESTIC_BIN_TABLE_AREA_OF_EVENT + EQM;
+
+	/*
+	 * 
+	 * SYS_PROCEDURE_PARAMETER.PACKAGE_NAME = 'EXTERNAL_PROCESS' and
+	 * SYS_PROCEDURE_PARAMETER.PROCEDURE_NAME = 'RUN_EXTERNAL' and
+	 * SYS_PROCEDURE_PARAMETER.PARAMETER_NUMBER = int_process_paramPARAM_NUMBER
+	 * and int_process_paramprocess_number = '00000000001' and
+	 * int_process_paramparam_type = 'IN'
+	 */
+	/*
+	 * ====================================================================================
+	 * ==========================INSERT STATEMENTS
+	 * BLOCK==================================
+	 * ===================================================================================
+	 */
+	public static final String INS_int_proc_msg_log_NEW_RECORD = INS
+			+ TABLE_INT_PROC_MSG_LOG + PO + COL_INT_PROC_MSG_LOG_MSG_NUM + COM
+			+ COL_INT_PROC_MSG_LOG_PRC_NUM + COM
+			+ COL_INT_PROC_MSG_LOG_INST_NUM + COM
+			+ COL_INT_PROC_MSG_LOG_FILE_NUM + COM
+			+ COL_INT_PROC_MSG_LOG_TRN_SLIP + COM
+			+ COL_INT_PROC_MSG_LOG_SYS_DATE + COM
+			+ COL_INT_PROC_MSG_LOG_SYS_TIME + COM
+			+ COL_INT_PROC_MSG_LOG_PRC_MSG_TYPE + COM
+			+ COL_INT_PROC_MSG_LOG_MSG_CODE + COM
+			+ COL_INT_PROC_MSG_LOG_MSG_PARM_1 + COM
+			+ COL_INT_PROC_MSG_LOG_MSG_PARM_2 + COM
+			+ COL_INT_PROC_MSG_LOG_MSG_PARM_3 + COM
+			+ COL_INT_PROC_MSG_LOG_MSG_PARM_4 + COM
+			+ COL_INT_PROC_MSG_LOG_MSG_PARM_5 + COM
+			+ COL_INT_PROC_MSG_LOG_MSG_PARM_6 + COM
+			+ COL_INT_PROC_MSG_LOG_MSG_PARM_7 + COM
+			+ COL_INT_PROC_MSG_LOG_MSG_PARM_8 + COM
+			+ COL_INT_PROC_MSG_LOG_MSG_PARM_9 + COM
+			+ COL_INT_PROC_MSG_LOG_MSG_PARM_10 + COM
+			+ COL_INT_PROC_MSG_LOG_MSG_PARM_11 + COM
+			+ COL_INT_PROC_MSG_LOG_MSG_PARM_12 + COM
+			+ COL_INT_PROC_MSG_LOG_MSG_PARM_13 + COM
+			+ COL_INT_PROC_MSG_LOG_MSG_PARM_14 + COM
+			+ COL_INT_PROC_MSG_LOG_MSG_PARM_15 + COM
+			+ COL_INT_PROC_MSG_LOG_MSG_PARM_16 + COM
+			+ COL_INT_PROC_MSG_LOG_MSG_OCC + COM
+			+ COL_INT_PROC_MSG_LOG_PRC_MSG_SRC + COM
+			+ COL_INT_PROC_MSG_LOG_EXT_CODE + COM
+			+ COL_INT_PROC_MSG_LOG_ADI_TEXT + COM
+			+ COL_INT_PROC_MSG_LOG_FNC_NAME + PC + VAO + QUM + COM + QUM + COM
+			+ QUM + COM + QUM + COM + QUM + COM + QUM + COM + QUM + COM + QUM
+			+ COM + QUM + COM + QUM + COM + QUM + COM + QUM + COM + QUM + COM
+			+ QUM + COM + QUM + COM + QUM + COM + QUM + COM + QUM + COM + QUM
+			+ COM + QUM + COM + QUM + COM + QUM + COM + QUM + COM + QUM + COM
+			+ QUM + COM + QUM + COM + QUM + COM + QUM + COM + QUM + COM + QUM
+			+ PC;
+
+	public static final String INS_int_file_log_NEW_RECORD = INS
+			+ TABLE_INT_FILE_LOG_DETAILS + PO + COL_INT_FILE_LOG_REC_DATE + COM
+			+ COL_INT_FILE_LOG_AUDIT_TRAIL + COM
+			+ COL_INT_FILE_LOG_CLEARING_CHANNEL + COM
+			+ COL_INT_FILE_LOG_FILE_TYPE + COM + COL_INT_FILE_LOG_FILE_ID + COM
+			+ COL_INT_FILE_LOG_INST_NUM + COM + COL_INT_FILE_LOG_FILE_NUM + COM
+			+ COL_INT_FILE_LOG_ORG_FILE_NAME + COM + COL_INT_FILE_LOG_FILE_DATE
+			+ COM + COL_INT_FILE_LOG_START_TIME + COM
+			+ COL_INT_FILE_LOG_PRC_STATUS + COM + COL_INT_FILE_LOG_PRC_NAME
+			+ COM + COL_INT_FILE_LOG_TRAN_DATA_LOC + COM
+			+ COL_INT_FILE_LOG_USE_TEMP_TRAN_TABLE + COM
+			+ COL_INT_FILE_LOG_PHASE_2_CMPL + COM
+			+ COL_INT_FILE_LOG_PHASE_3_CMPL + COM
+			+ COL_INT_FILE_LOG_PHASE_4_CMPL + COM
+			+ COL_INT_FILE_LOG_POSTING_SRC_CMPL + COM
+			+ COL_INT_FILE_LOG_POSTING_DEST_CMPL + COM
+			+ COL_INT_FILE_LOG_PHASE_COPY_CMPL + COM
+			+ COL_INT_FILE_LOG_GL_OUTPUT_CMPL + PC +
+
+			VAO + QUM + COM + QUM + COM + QUM + COM + QUM + COM + QUM + COM
+			+ QUM + COM + QUM + COM + QUM + COM + QUM + COM + QUM + COM + QUM
+			+ COM + QUM + COM + QUM + COM + QUM + COM + QUM + COM + QUM + COM
+			+ QUM + COM + QUM + COM + QUM + COM + QUM + COM + QUM + PC;
+
+	public static final String INS_sys_mds_bin_table_NEW_RECORD = INS
+			+ TABLE_SYS_MDS_BIN_TABLE + PO
+			+ COL_SYS_MDS_BIN_TABLE_END_BIN_VALUE + COM
+			+ COL_SYS_MDS_BIN_TABLE_START_BIN_VALUE + COM
+			+ COL_SYS_MDS_BIN_TABLE_SEL_KEY + COM
+			+ COL_SYS_MDS_BIN_TABLE_CARD_LENGTH + COM
+			+ COL_SYS_MDS_BIN_TABLE_BIN_LENGTH + COM
+			+ COL_SYS_MDS_BIN_TABLE_USAGE_DOMAIN + COM
+			+ COL_SYS_MDS_BIN_TABLE_PROCESSING_CLS + COM
+			+ COL_SYS_MDS_BIN_TABLE_AREA_OF_EVENT + COM
+			+ COL_SYS_MDS_BIN_TABLE_SRV_TYPE + COM
+			+ COL_SYS_MDS_BIN_TABLE_CARD_BRAND + COM
+			+ COL_SYS_MDS_BIN_TABLE_CARD_ORGA + COM
+			+ COL_SYS_MDS_BIN_TABLE_MEMBER_ID + COM
+			+ COL_SYS_MDS_BIN_TABLE_TERM_CATG + COM
+			+ COL_SYS_MDS_BIN_TABLE_CTRY_CODE + COM
+			+ COL_SYS_MDS_BIN_TABLE_CIRRUS_FLAG + COM
+			+ COL_SYS_MDS_BIN_TABLE_MASTERCARD_FLAG + COM
+			+ COL_SYS_MDS_BIN_TABLE_PLUS_FLAG + COM
+			+ COL_SYS_MDS_BIN_TABLE_VISA_FLAG + COM
+			+ COL_SYS_MDS_BIN_TABLE_MAESTRO_FLAG + COM
+			+ COL_SYS_MDS_BIN_TABLE_MASTER_MONEY_FLAG + COM
+			+ COL_SYS_MDS_BIN_TABLE_MASTER_BANKING_FLAG + COM
+			+ COL_SYS_MDS_BIN_TABLE_STAND_IN_FLAG + COM
+			+ COL_SYS_MDS_BIN_TABLE_AMERICAN_EXPRESS_FLAG + COM
+			+ COL_SYS_MDS_BIN_TABLE_MASTER_CASH_FLAG + COM
+			+ COL_SYS_MDS_BIN_TABLE_VISA_CASH_FLAG + COM
+			+ COL_SYS_MDS_BIN_TABLE_PROCESSOR_ID + PC + VAO + QUM + COM + QUM
+			+ COM + QUM + COM + QUM + COM + QUM + COM + QUM + COM + QUM + COM
+			+ QUM + COM + QUM + COM + QUM + COM + QUM + COM + QUM + COM + QUM
+			+ COM + QUM + COM + QUM + COM + QUM + COM + QUM + COM + QUM + COM
+			+ QUM + COM + QUM + COM + QUM + COM + QUM + COM + QUM + COM + QUM
+			+ COM + QUM + COM + QUM + PC;
+
+	public static final String INS_part_file_log_NEW_RECORD = PO
+			+ COL_INT_FILE_LOG_REC_DATE + COM + COL_INT_FILE_LOG_AUDIT_TRAIL
+			+ COM + COL_INT_FILE_LOG_CLEARING_CHANNEL + COM
+			+ COL_INT_FILE_LOG_FILE_TYPE + COM + COL_INT_FILE_LOG_FILE_ID + COM
+			+ COL_INT_FILE_LOG_INST_NUM + COM + COL_INT_FILE_LOG_FILE_NUM + COM
+			+ COL_INT_FILE_LOG_ORG_FILE_NAME + COM + COL_INT_FILE_LOG_FILE_DATE
+			+ COM + COL_INT_FILE_LOG_START_TIME + COM
+			+ COL_INT_FILE_LOG_PRC_STATUS + COM + COL_INT_FILE_LOG_PRC_NAME
+			+ COM + COL_INT_FILE_LOG_TRAN_DATA_LOC + COM
+			+ COL_INT_FILE_LOG_USE_TEMP_TRAN_TABLE + PC + VAO + QUM + COM + QUM
+			+ COM + QUM + COM + QUM + COM + QUM + COM + QUM + COM + QUM + COM
+			+ QUM + COM + QUM + COM + QUM + COM + QUM + COM + QUM + COM + QUM
+			+ COM + QUM + PC;
+
+	public static final String INS_int_proc_file_log_NEW_RECORD = INS
+			+ TABLE_INT_PROCESS_FILE_LOG + PO + COL_INT_PROC_FILE_PRC_NUM + COM
+			+ COL_INT_PROC_FILE_INST_NUM + COM + COL_INT_PROC_FILE_FILE_NUM
+			+ PC + VAO + QUM + COM + QUM + COM + QUM + PC;
+	public static final String INS_int_non_fin_NEW_RECORD = INS
+			+ TABLE_INT_NON_FIN_AUTH
+			+ PO
+			+ COL_INT_NON_FIN_AUTH_INST_NUM
+			+ COM
+			+ COL_INT_NON_FIN_AUTH_REC_DATE
+			+ COM
+			+ COL_INT_NON_FIN_AUTH_FILE_NUM
+			+ COM
+			+ COL_INT_NON_FIN_AUTH_TRN_ID
+			+ COM
+			+ // Automatically filled
+			COL_INT_NON_FIN_AUTH_MSGTYPE + COM + COL_INT_NON_FIN_AUTH_PCODE
+			+ COM + COL_INT_NON_FIN_AUTH_CARD_NUM + COM
+			+ COL_INT_NON_FIN_AUTH_AMT + COM + COL_INT_NON_FIN_AUTH_CUR + COM
+			+ COL_INT_NON_FIN_AUTH_AVAL_BALANCE + COM
+			+ COL_INT_NON_FIN_AUTH_ISS + COM + COL_INT_NON_FIN_AUTH_ACQ + COM
+			+ COL_INT_NON_FIN_AUTH_TRN_DATE + COM
+			+ COL_INT_NON_FIN_AUTH_TRN_TIME + COM + COL_INT_NON_FIN_AUTH_TRACE
+			+ COM + COL_INT_NON_FIN_AUTH_TXNSRC + COM
+			+ COL_INT_NON_FIN_AUTH_TXNDEST + COM + COL_INT_NON_FIN_AUTH_FILLER3
+			+ COM + COL_INT_NON_FIN_AUTH_TERM_ID + COM
+			+ COL_INT_NON_FIN_AUTH_RETRIEVAL_REF + COM
+			+ COL_INT_NON_FIN_AUTH_ACC_NUM + COM + COL_INT_NON_FIN_AUTH_TRN_CLS
+			+ COM + COL_INT_NON_FIN_AUTH_TRN_CATG + COM
+			+ COL_INT_NON_FIN_AUTH_TRN_TYPE + COM
+			+ COL_INT_NON_FIN_AUTH_TRN_SRC + COM
+			+ COL_INT_NON_FIN_AUTH_TRN_DEST + COM
+			+ COL_INT_NON_FIN_AUTH_BUSS_CLS + COM
+			+ COL_INT_NON_FIN_AUTH_CLNT_NUM + COM
+			+ COL_INT_NON_FIN_AUTH_GRP_NUM + COM
+			+ COL_INT_NON_FIN_AUTH_SRV_CNTR_ID + COM
+			+ COL_INT_NON_FIN_AUTH_ACCT_NUM + COM
+			+ COL_INT_NON_FIN_AUTH_AUTHORIZED_BY + PC + VAO + QUM + COM + QUM
+			+ COM + QUM + COM + QUM + COM + QUM + COM + QUM + COM + QUM + COM
+			+ QUM + COM + QUM + COM + QUM + COM + QUM + COM + QUM + COM + QUM
+			+ COM + QUM + COM + QUM + COM + QUM + COM + QUM + COM + QUM + COM
+			+ QUM + COM + QUM + COM + QUM + COM + QUM + COM + QUM + COM + QUM
+			+ COM + QUM + COM + QUM + COM + QUM + COM + QUM + COM + QUM + COM
+			+ QUM + COM + QUM + COM + QUM + PC;
+
+	public static final String INS_part_proc_file_log_NEW_RECORD = PO
+			+ COL_INT_PROC_FILE_PRC_NUM + COM + COL_INT_PROC_FILE_INST_NUM
+			+ COM + COL_INT_PROC_FILE_FILE_NUM + PC + VAO + QUM + COM + QUM
+			+ COM + QUM + PC;
+
+	/*
+	 * ====================================================================================
+	 * ==========================UPDATE STATEMENTS
+	 * BLOCK==================================
+	 * ===================================================================================
+	 */
+
+	public static final String UPD_int_proc_log_TRANSACTION_NO = UPD
+			+ TABLE_INT_PROC_LOG + SET + COL_INT_PROC_LOG_NUM_OF_TRNS + EQM
+			+ WHR + TABLE_INT_PROC_LOG + DOT + COL_INT_PROC_LOG_PRC_NUM + EQM;
+
+	public static final String UPD_int_proc_log_PROCESSING_STATUS = UPD
+			+ TABLE_INT_PROC_LOG + SET + COL_INT_PROC_LOG_PRC_STATUS + EQM
+			+ WHR + TABLE_INT_PROC_LOG + DOT + COL_INT_PROC_LOG_PRC_NUM + EQM;
+
+	public static final String UPD_int_file_log_details_PRC_STATUS = UPD
+			+ TABLE_INT_FILE_LOG_DETAILS + SET + COL_INT_FILE_LOG_PRC_STATUS
+			+ EQM + WHR + COL_INT_FILE_LOG_FILE_NUM + EQM + AND
+			+ COL_INT_FILE_LOG_INST_NUM + EQM;
+	public static final String UPD_int_file_log_details_PROC_TRANS_STATUS = UPD
+			+ TABLE_INT_FILE_LOG_DETAILS + SET + COL_INT_FILE_LOG_PRC_TRNS
+			+ EQM + COM + COL_INT_FILE_LOG_PRC_STATUS + EQM +
+
+			WHR + COL_INT_FILE_LOG_FILE_NUM + EQM + AND
+			+ COL_INT_FILE_LOG_INST_NUM + EQM;
+
+	public static final String UPD_card_number = UPD
+			+ TABLE_INT_FILE_LOG_DETAILS + SET + COL_SVC_CLNT_CARDS_CARD_NUM
+			+ EQM;
+	/*
+	 * ====================================================================================
+	 * ==========================DELETE STATEMENTS
+	 * BLOCK==================================
+	 * ===================================================================================
+	 */
+
+	public static final String DEL_int_file_log_details_SINGLE_RECORD = DEL
+			+ TABLE_INT_FILE_LOG_DETAILS + WHR + COL_INT_FILE_LOG_INST_NUM
+			+ EQM + AND + COL_INT_FILE_LOG_FILE_NUM + EQM;
+	public static final String DEL_int_process_file_log_SINGLE_RECORD = DEL
+			+ TABLE_INT_PROCESS_FILE_LOG + WHR + COL_INT_PROC_FILE_INST_NUM
+			+ EQM + AND + COL_INT_PROC_FILE_FILE_NUM + EQM;
+
+	public static final String DEL_int_process_params_SINGLE_PROCESS = DEL
+			+ TABLE_INT_PRC_PARMS + WHR + COL_INT_PRC_PARMS_PRC_NUM + EQM + AND
+			+ COL_INT_PRC_PARMS_PARM_TYPE + EQ + SQ + DBValue.PRC_PARM_TYPE_OUT
+			+ SQ;
+
+	public static final String DEL_sys_mds_bin_table_SINGLE_RECORD = DEL
+			+ TABLE_SYS_MDS_BIN_TABLE + WHR
+			+ COL_SYS_MDS_BIN_TABLE_START_BIN_VALUE + EQM + AND
+			+ COL_SYS_MDS_BIN_TABLE_END_BIN_VALUE + EQM + AND
+			+ COL_SYS_MDS_BIN_TABLE_TERM_CATG + EQM;
+
+}

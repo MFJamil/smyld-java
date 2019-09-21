@@ -1,0 +1,1609 @@
+'Processing code
+'
+Option Explicit
+'
+Declare Function CreateAuditTrail() As String
+Declare Function GenerateSlipNo(strRecordDate As String) As String
+Declare Function GenerateSundryRef(hdlHandle As Integer,strMask As String) As String
+Declare Function AcctCheck(hdlTableHandle As Integer,strMode As String,intTxtFieldNo As Integer,strDestAcct As String,   strClNo As String,   strGroupNo As String,   strScid As String,   strAcctType As String,   strAcctCurr As String, _
+						         intFlDestAcct As Integer,intFlClNo As Integer,intFlGroupNo As Integer,intFlScid As Integer,intFlAcctType As Integer,intFlAcctCurr As Integer) As Integer
+Declare Function Get_ConfigString(strSectName As String, strKeyName As String, strIniName As String) As String
+Declare Function GetPrivateProfileString Lib "Kernel32" Alias "GetPrivateProfileStringA" (ByVal lpSectName As String, ByVal lpKeyName As Any, ByVal lpDefault As String, ByVal lpReturnedString As String, ByVal nSize As Integer, ByVal lpFileName As String) As Integer
+
+Declare Function LeftPad(strText As String, intLength As Integer, strPadChar As String) As String
+'
+Declare Sub GetMemberAndClass(hdlOrigSlip  	As Integer, _
+			 						  strMemberID 	  	As String, _
+							 		  strProcClass 	As String, _
+							 		  intFldProcClass As Integer)		
+'
+Declare Sub ValidateMemberID(strMemberID     As String,  _
+									  intFldMemberID  As Integer, _
+									  intTxtMember    As Integer, _
+									  intTxtICA	 	   As Integer, _
+									  blnInput		   As Boolean, _
+									  blnLostFocus	   As Boolean, _	
+									  optional strCardOrgan)
+'
+Declare Sub CheckDefaults(hdlTableHandle As Integer,strAcctNumber As String,strSundryType As String, _
+				strCategory As String,strDestination As String,strTranType As String,blnTransfer As Boolean,blnReversal As Boolean,intStartFld As Integer)
+Declare Sub LostTransferFlag(hdlTableHandle As Integer,intStartFld As Integer,intTextLine As Integer)
+'
+Declare Sub	  ErrorHandleDB(intErrorIndex  As Integer, strErrorLine As String, strDBLastErrorMsg As String)
+Declare Sub	  ErrorHandleSTD(intErrorIndex As Integer, strErrorLine As String, strErrorMsg As String)
+Declare Sub	  ErrorHandleSEQ(intErrorIndex As Integer, strErrorLine As String)
+Declare Sub	  ErrorHandleUSR(intErrorIndex As Integer)
+Declare Sub	  ErrorHandle(intErrorIndex    As Integer, strErrorLine As String, strErrorMsg As String, strDBLastErrorMsg As String)
+'
+Private hdlSundry			As Integer
+Private intReturn			As Integer
+Private blnReturn			As Boolean
+Private strTranSlip		As	String
+Private Transcateg		As	String
+Private strDestSettle	As	String
+Private strsrcsetl		As	String
+Private strTranStatus	As String
+Private TransDest			As String
+Private strAcqBin			As String
+Private strSource			As String
+Private strSelect			As String
+Private intIsFocusOK		As Integer
+Private blnInetMembers 	As Boolean
+'
+Const INST_HSBC_MALTA    As String = "0028"
+'
+'
+Function ReplaceString(strInput As String, strChar As String, strReplaceString As String, _
+                       Optional intCompareMode) As String
+   '
+   'Note: if intCompareMode is left out, the default is 0 (i.e. case SENSITIVE comparison)
+   '
+   'Use constants: CASE_SENSITIVE, CASE_INSENSITIVE
+   '
+   Dim strTemp         As String
+   Dim strString       As String
+   Dim intPosition     As Integer
+   Dim intLength       As Integer
+   Dim intStart        As Integer
+   '
+   If IsMissing(intCompareMode) Then
+       intCompareMode = CASE_SENSITIVE
+   End If
+   '
+   intLength = Len(strChar)
+   strString = strInput
+   intStart = 1
+   intPosition = Instr(intStart, strString, strChar, intCompareMode)
+   '
+   Do While intPosition > 0
+       '
+       strString = Left(strString, intPosition - 1) & _
+                  strReplaceString & _
+                  Mid(strString, intPosition + intLength)
+       '
+       intStart = intPosition + Len(strReplaceString)
+       '
+       intPosition = Instr(intStart, strString, strChar, intCompareMode)
+       '
+	Loop
+   '
+   ReplaceString = strString
+   '
+End Function
+'
+'
+'
+Sub FillAuthFields(hdlHandle As Integer)
+	'
+	On Error GoTo FillAuthFieldsError
+	'
+	Dim strstring1	  As String
+	Dim strstring2	  As String
+	Dim strstring3	  As String
+	Dim strTranTime  As String
+	Dim strSelect    As String
+	Dim hdlAuth		  As Integer
+	Dim strTableName As String
+	Dim strTDate  	  As String
+	Dim strTTime 	  As String
+	Dim strADate	  As String	
+	'
+	strTableName = "COS_LOGGING_EURO "
+	strTDate  = "TRAN_DATE "
+	strTTime  = "TRAN_TIME "
+	strADate = "AUTH_DATE"
+	'
+	If GetGlobalInfo(GI_INSTALLATION_NUMBER)= "0007" Or _
+		GetGlobalInfo(GI_INSTALLATION_NUMBER)= "0008" Or _
+		GetGlobalInfo(GI_INSTALLATION_NUMBER)= "0011" Or _ 
+		GetGlobalInfo(GI_INSTALLATION_NUMBER)= "0012" Then
+		'
+		strTableName = "COS_CHANNEL_LOG "
+		strTDate  = "TRANSACTION_DATE "
+		strTTime  = "TRANSACTION_TIME "
+		strADate  = "RECORD_DATE"
+		'
+	End If
+	'
+	If GetGlobalInfo(GI_INSTALLATION_NUMBER)=INST_HSBC_MALTA Then
+		'In COS_BPR_DATE we have only one field that is storing
+		'both the date and time in format: 10/05/2001 16:20:12
+		'
+		'Therefor we need split this information in date and BW time.
+		strTableName = "COS_BPR_DATA "
+		'
+		'Convert dd/mm/yyyy in to mmdd
+		strTDate = "SUBSTR(TRANSACTION_DATE,4,2)||SUBSTR(TRANSACTION_DATE,1,2)"
+		'
+		'Read the time portion from transaction date.
+		strTTime = "SUBSTR(TRANSACTION_DATE,12,19)"
+	End If
+	'
+	'------------------------------------------------------------------------
+	'SQL 1 is valid only if Card Number and Retrieval reference are not empty
+	'------------------------------------------------------------------------
+	If Trim(DBGetValue(hdlHandle,"CARD_NUMBER"))<>"" And _
+		Trim(DBGetValue(hdlHandle,"RETRIEVAL_REFERENCE"))<>"" Then
+		'
+		strstring1="SELECT '1' AS LOOKUP_TYPE,RESPONSE_CODE,ECOM_SECURITY_LEVEL," &_
+							  		 "CVC_INVALID,POS_DATA,MESSAGE_TYPE,"
+		'					  	
+		If GetGlobalInfo(GI_INSTALLATION_NUMBER)=INST_HSBC_MALTA Then
+			strString1 = strString1 & "MERCHANT_ID AS CARD_ACCEPTOR_ID,POS_ENTRY AS POS_CONDITION "
+		Else
+			strString1 = strString1 & "CARD_ACCEPTOR_ID,POS_CONDITION "
+		End If
+		'
+		strString1 = strString1 & "FROM " & strTableName &_
+									 	  "WHERE CARD_NUMBER = '" & Trim(DBGetValue(hdlHandle,"CARD_NUMBER")) & "' " &_
+									 	  "AND MESSAGE_TYPE IN('0110','0120','0121')"
+		'
+		If GetGlobalInfo(GI_INSTALLATION_NUMBER)=INST_HSBC_MALTA Then
+			strString1 = strString1 & " AND BPR_TYPE_NAME IN ('BPR_EPS_ISS','BPR_EPS_ACQ') " & _
+											  " AND RETRIEVAL_REFERENCE = '" & Trim(DBGetValue(hdlHandle,"RETRIEVAL_REFERENCE")) & "' " 
+		Else
+			strString1 = strString1 & "AND RETRIEVAL_REF = '" & Trim(DBGetValue(hdlHandle,"RETRIEVAL_REFERENCE")) & "' "
+		End If
+		'
+	Else
+		strstring1=""
+	End If
+	'
+	'---------------------------------------------------------------------------------
+	'SQL 2 is valid only if Card Number,Auth Code and RIGHT(tran_date,4) are not empty
+	'---------------------------------------------------------------------------------
+	If Trim(DBGetValue(hdlHandle,"CARD_NUMBER"))<>"" And _
+		Trim(DBGetValue(hdlHandle,"AUTH_CODE"))<>"" And _
+		Trim(Right(DBGetValue(hdlHandle,"TRANSACTION_DATE"),4))<>"" Then
+		'
+		strstring2="SELECT '2' AS LOOKUP_TYPE,RESPONSE_CODE,ECOM_SECURITY_LEVEL," &_
+								    "CVC_INVALID,POS_DATA,MESSAGE_TYPE," 
+		'
+		If GetGlobalInfo(GI_INSTALLATION_NUMBER)=INST_HSBC_MALTA Then
+			strString2 = strString2 & "MERCHANT_ID AS CARD_ACCEPTOR_ID,POS_ENTRY AS POS_CONDITION "
+		Else
+			strString2 = strString2 & "CARD_ACCEPTOR_ID,POS_CONDITION "
+		End If
+		'
+		strString2= strString2 & "FROM " & strTableName &_
+									 	 "WHERE CARD_NUMBER='" & Trim(DBGetValue(hdlHandle,"CARD_NUMBER")) & "' " &_
+									 	 "AND AUTH_CODE  ='" & Trim(DBGetValue(hdlHandle,"AUTH_CODE")) & "' " &_
+									 	 "AND (" & strTDate & "='" & Right(DBGetValue(hdlHandle,"TRANSACTION_DATE"),4) & "' " 
+		'
+		If GetGlobalInfo(GI_INSTALLATION_NUMBER)=INST_HSBC_MALTA Then
+			strString2=strString2 & "OR SUBSTR(RECORD_DATE,7,4)||SUBSTR(RECORD_DATE,4,2)||SUBSTR(RECORD_DATE,1,2)='" & Trim(DBGetValue(hdlHandle,"TRANSACTION_DATE")) & "') " 
+		Else
+			strString2=strString2 & "OR " & strADate & "='" & Trim(DBGetValue(hdlHandle,"TRANSACTION_DATE")) & "') "
+		End If
+		'
+		strString2 = strString2 & "AND MESSAGE_TYPE IN ('0110','0120','0121')"
+		'
+		If GetGlobalInfo(GI_INSTALLATION_NUMBER)=INST_HSBC_MALTA Then
+			strString2 = strString2 & " AND BPR_TYPE_NAME IN ('BPR_EPS_ISS','BPR_EPS_ACQ')"
+		End If
+		'
+	Else
+		strstring2=""
+	End If
+	'
+	'----------------------------------------------------------------------------------------
+	'SQL 3 is valid only if Card Number,RIGHT(tran_date,4) and transaction time are not empty
+	'----------------------------------------------------------------------------------------
+	strTranTime= ReplaceString(DBGetValue(hdlHandle,"TIME_TRANSACTION"),":","")
+	'
+	If Trim(DBGetValue(hdlHandle,"CARD_NUMBER"))<>"" And _
+		Trim(Right(DBGetValue(hdlHandle,"TRANSACTION_DATE"),4))<>"" And _
+		Trim(strTranTime)<>"" Then
+		'	
+		strstring3="SELECT '3' AS LOOKUP_TYPE,RESPONSE_CODE,ECOM_SECURITY_LEVEL," &_
+								    "CVC_INVALID,POS_DATA,MESSAGE_TYPE," 
+		'
+		If GetGlobalInfo(GI_INSTALLATION_NUMBER)=INST_HSBC_MALTA Then
+			strString3 = strString3 & "MERCHANT_ID AS CARD_ACCEPTOR_ID,POS_ENTRY AS POS_CONDITION "
+		Else
+			strString3 = strString3 & "CARD_ACCEPTOR_ID,POS_CONDITION "
+		End If
+		'
+		strString3 = strString3 & "FROM " & strTableName &_
+									 	  "WHERE CARD_NUMBER ='" & Trim(DBGetValue(hdlHandle,"CARD_NUMBER")) & "' " &_
+									 	  "AND (" & strTDate & "='" & Right(DBGetValue(hdlHandle,"TRANSACTION_DATE"),4) & "' " 
+		'
+		If GetGlobalInfo(GI_INSTALLATION_NUMBER)=INST_HSBC_MALTA Then
+			strString3=strString3 & "OR SUBSTR(RECORD_DATE,7,4)||SUBSTR(RECORD_DATE,4,2)||SUBSTR(RECORD_DATE,1,2)='" & Trim(DBGetValue(hdlHandle,"TRANSACTION_DATE")) & "') " 
+		Else
+			strString3=strString3 & "OR " & strADate & " ='" & Trim(DBGetValue(hdlHandle,"TRANSACTION_DATE")) & "') "
+		End If
+		'
+		strString3 = strString3 & "AND " & strTTime & "='" & Trim(strTranTime) & "' " &_
+									 	  "AND MESSAGE_TYPE IN ('0110','0120','0121')"
+		'
+		If GetGlobalInfo(GI_INSTALLATION_NUMBER)=INST_HSBC_MALTA Then
+			strString3 = strString3 & " AND BPR_TYPE_NAME IN ('BPR_EPS_ISS','BPR_EPS_ACQ')"
+		End If
+	Else
+		strstring3=""
+	End If
+	'	
+	'------------------
+	'Build final string
+	'------------------
+	'
+	strSelect=""
+	'
+	If Trim(strString1)<>"" Then
+		strSelect=strSelect & strString1
+	End If
+	'
+	If Trim(strString2)<>"" Then
+		If Trim(strSelect)<>"" Then
+			strSelect=strSelect & " UNION ALL " & strString2
+		Else
+			strSelect=strSelect & strString2
+		End If
+	End If
+	'
+	If Trim(strString3)<>"" Then
+		If Trim(strSelect)<>"" Then
+			strSelect=strSelect & " UNION ALL " & strString3
+		Else
+			strSelect=strSelect & strString3
+		End If
+	End If
+	'
+	If strSelect <> "" Then
+		strSelect=strSelect & " ORDER BY LOOKUP_TYPE,MESSAGE_TYPE"
+		'
+		'--------------
+		'Default fields
+		'--------------
+		hdlAuth=DBOpen(strSelect,True)
+		'
+		If Not DBIsEOF(hdlAuth) Then
+			blnReturn = DBSetValue(hdlSundry,"MERCHANT_ID",              DBGetValue(hdlAuth,"CARD_ACCEPTOR_ID"))
+			blnReturn = DBSetValue(hdlSundry,"TERMINAL_ATTENDANCE",  Mid(DBGetValue(hdlAuth,"POS_DATA"),1,1))
+			blnReturn = DBSetValue(hdlSundry,"CARDHOLDER_PRESENCE",  Mid(DBGetValue(hdlAuth,"POS_DATA"),4,1))
+			blnReturn = DBSetValue(hdlSundry,"CAT_LEVEL",            Mid(DBGetValue(hdlAuth,"POS_DATA"),10,1))
+			blnReturn = DBSetValue(hdlSundry,"POS_INPUT_CAPABILITY", Mid(DBGetValue(hdlAuth,"POS_DATA"),11,1))
+			blnReturn = DBSetValue(hdlSundry,"POS_ENTRY_MODE",       Mid(DBGetValue(hdlAuth,"POS_CONDITION"),1,2))
+			blnReturn = DBSetValue(hdlSundry,"AUTH_RESPONSE_CODE",   GetChoiceDisplayValue("BWT_SAFE_EURO_AUTH_RESP_CODE","index_field","safe_value","0" & Trim(DBGetValue(hdlAuth,"RESPONSE_CODE"))))
+			'
+			'-------------------
+			'ECOM Security Level
+			'-------------------
+			If DBGetValue(hdlSundry,"POS_ENTRY_MODE")="81" Then
+				blnReturn = DBSetValue(hdlSundry,"ECOM_SECURITY_LEVEL", Left(DBGetValue(hdlAuth,"ECOM_SECURITY_LEVEL"),2))
+			Else
+				blnReturn = DBSetValue(hdlSundry,"ECOM_SECURITY_LEVEL","  ")
+			End If
+			'
+			'-----------
+			'CVC Invalid
+			'-----------
+			If DBGetValue(hdlSundry,"POS_ENTRY_MODE")="90" Then
+				If DBGetValue(hdlAuth,"CVC_INVALID")="Y" Then
+					blnReturn = DBSetValue(hdlSundry,"CVC_INVALID","1")
+				Else
+					blnReturn = DBSetValue(hdlSundry,"CVC_INVALID","*")
+				End If
+			Else
+				blnReturn = DBSetValue(hdlSundry,"CVC_INVALID","*")
+			End If
+		End If
+		'
+	End If
+	'
+	blnReturn = DBClose(hdlAuth)
+	'
+ExitFillAuthFields:
+	'
+	Exit Sub
+	'
+FillAuthFieldsError:
+	'
+   Call ErrorHandle(Err, Erl, Error$, DBLastErrorMsg(0))
+	Call BWS_Success(False)
+   Resume ExitFillAuthFields
+	'
+End Sub
+'
+'
+'
+Sub CheckInetFields                                     
+   '
+   On Error GoTo CheckInetFieldsError
+   '
+   Dim strTerminalAttendanceIndicator As String
+   Dim strCardPresenceIndicatorTerm As String
+   Dim strInputCapabilityIndicator As String
+ 	Dim strPosEntryMode As String
+   '
+	strTerminalAttendanceIndicator = Trim(DBGetValue(hdlSundry,"TERMINAL_ATTENDANCE"))
+	strCardPresenceIndicatorTerm =   Trim(DBGetValue(hdlSundry,"CARDHOLDER_PRESENCE"))
+	strInputCapabilityIndicator    = Trim(DBGetValue(hdlSundry,"POS_INPUT_CAPABILITY"))
+	strPosEntryMode                = Trim(DBGetValue(hdlSundry,"POS_ENTRY_MODE"))
+	'
+	If blnInetMembers = True Then
+		If  strTerminalAttendanceIndicator = ""  Or _
+			 strCardPresenceIndicatorTerm   = ""  Or _
+			 strInputCapabilityIndicator    = ""  Or _
+ 	       strPosEntryMode                = ""  Then
+ 	       '
+ 	       intReturn = BWS_Msg(MSG_OK,MSG_TYPE_ERROR,9998,"For INET Members the following fields: POS Entry Code, Term.Attendance," & Chr(13) & Chr(10) &  "POS Input Capabilty and CardHolder Presence are Mandatory!")
+ 	       blnreturn = SetFocus(36)
+			 Call BWS_Success(False)	
+		End If
+	End If
+	'
+ExitCheckInetFields:
+   '
+   Exit Sub
+   '
+CheckInetFieldsError:
+   '
+   Call ErrorHandle(Err, Erl, Err.Description, DBLastErrorMsg(0))
+   Resume ExitCheckInetFields                                     
+   '
+End Sub
+
+Sub EnableReasonGroups(strSundryReason As String)
+	'
+	If Trim(GetChoiceDisplayValue("bwt_fraud_reason","index_field","groups",strSundryReason))="Z" Then
+		blnReturn = Set_CHGroup(08,"EAZ")
+	Else
+		blnReturn = Set_CHGroup(08,"EA")
+	End If
+	'
+End Sub
+'
+'
+'
+Sub PreProc
+	'
+   On Error GoTo ErrorPreProc
+	'
+	Dim strLocalPath   	  As String
+   Dim strLocalConfigFile As String
+   Dim strSystemDrive 	  As String
+   Dim strServerDrive	  As String
+   Dim strSysConfigFile	  As String
+	Dim strInetMember		  As String
+	'
+	hdlSundry = GetMainHandle()
+	'
+	blnInetMembers = False
+	'
+	'Initialize paths
+	strLocalPath = "C:\bw3-locl\"
+	strLocalConfigFile = strLocalPath & "bw3-locl.ini"
+	'
+	strServerDrive = Get_ConfigString("Server", "Drive", strLocalConfigFile)
+	strSysConfigFile = strServerDrive & Get_ConfigString("Server", "ConfigFile", strLocalConfigFile)
+	'
+	strInetMember = Get_ConfigString("INET", "INETMember", strSysConfigFile)
+	'
+	If Val(strInetMember) = -1 Then 
+		blnInetMembers = True
+	End If
+	'
+	If Chain_IsActive Then
+		Call ShowDBEmptyMsg(False)
+	End If
+	'
+EXITPreProc:
+	'
+	Exit Sub
+	'
+ErrorPreProc:
+	'
+	Call ErrorHandle(Err,Erl,Error$,DBLastErrorMsg(0))
+   Call BWS_Success(False)
+	Resume ExitPreProc
+	'
+End Sub
+'
+'
+'
+Sub ChainPreProc
+   '
+   On Error GoTo ChainPreProcError
+   '
+	HdlSundry = GetMainHandle()
+   '
+ExitChainPreProc:
+   '
+   Exit Sub
+   '
+ChainPreProcError:
+   '
+   Call ErrorHandle(Err, Erl, Error$, DBLastErrorMsg(0))
+   Call BWS_Success(False)
+   Resume ExitChainPreProc
+   '
+End Sub
+'
+'
+'
+Sub PostProc
+	'
+	On Error GoTo PostProcERROR
+	'
+	If Chain_IsActive Then 
+		blnReturn = Chain_DBCommit()
+	End If
+	'
+PostProcEXIT:
+	'
+	Exit Sub
+   '
+PostProcERROR:
+	'
+	Call ErrorHandle(Err,Erl,Error$,DBLastErrorMsg(0))
+   Resume PostProcEXIT
+	'
+End Sub
+'
+'
+'
+Sub LostFocus09
+	'
+   On Error GoTo ErrorLostFocus09
+	'
+	Dim 	strSundryStatus 		As String
+   '
+	strSundryStatus = DBGetValue(hdlSundry,"SUNDRY_STATUS")
+	'
+	If strSundryStatus = "008" Or strSundryStatus = "007" Or strSundryStatus = "012" Then
+		blnReturn = SetDisplayAttrib(03,"DI")
+		blnReturn = SetDisplayAttrib(08,"DI")
+		blnReturn = SetDisplayAttrib(09,"DI")
+		blnReturn = SetDisplayAttrib(13,"DI")
+		blnReturn = SetDisplayAttrib(15,"DI")
+		blnReturn = SetDisplayAttrib(17,"DI")
+		blnReturn = SetDisplayAttrib(19,"DI")
+		blnReturn = SetDisplayAttrib(20,"DI")
+		blnReturn = SetDisplayAttrib(21,"DI")
+		blnReturn = SetDisplayAttrib(22,"DI")
+		blnReturn = SetDisplayAttrib(24,"DI")
+		blnReturn = SetDisplayAttrib(25,"DI")
+		blnReturn = SetDisplayAttrib(26,"DI")
+	Else
+		blnReturn = SetDisplayAttrib(03,"PR")
+		blnReturn = SetDisplayAttrib(08,"PR")
+		blnReturn = SetDisplayAttrib(09,"PR")
+		blnReturn = SetDisplayAttrib(13,"PR")
+		blnReturn = SetDisplayAttrib(15,"PR")
+		blnReturn = SetDisplayAttrib(17,"PR")
+		blnReturn = SetDisplayAttrib(19,"PR")
+		blnReturn = SetDisplayAttrib(20,"PR")
+		blnReturn = SetDisplayAttrib(21,"PR")
+		blnReturn = SetDisplayAttrib(22,"PR")
+		blnReturn = SetDisplayAttrib(24,"PR")
+		blnReturn = SetDisplayAttrib(25,"PR")
+		blnReturn = SetDisplayAttrib(26,"PR")
+      blnreturn = SetFocus(23)
+	End If
+	'
+ExitLostFocus09:
+   '
+   Exit Sub
+   '
+ErrorLostFocus09:
+   '
+   Call ErrorHandle(Err, Erl, Error$, DBLastErrorMsg(0))
+	Call BWS_Success(False)
+   Resume Exitlostfocus09
+   '
+End Sub
+'
+'
+'
+Sub AmendProc
+	'
+	On Error GoTo ErrorAmendProc
+	'
+	Dim Count As Integer
+	'
+	If DBGetValue(HdlSundry,"SUNDRY_STATUS")="002" Then
+		For Count = 1 To 43
+			intReturn = SetDisplayAttrib (Count,"PR")
+		Next Count
+		'
+		intReturn = SetDisplayAttrib(23,"DI")
+		blnReturn = SetFocus(23)
+	End If
+	'
+	Call LostFocus09
+	'
+	If DBGetValue(hdlSundry,"TRANSFER_FLAG")="001" Then
+		blnReturn = SetDisplayAttrib(27,"DI")
+		blnReturn = SetDisplayAttrib(28,"DI")
+	End If
+	'
+	Call EnableReasonGroups(DBGetValue(hdlSundry,"SUNDRY_REASON"))
+	'
+ExitAmendProc:
+   '
+	Exit Sub
+	'
+ErrorAmendProc:
+	'
+	Call ErrorHandle(Err,Erl,Error$,DBLastErrorMsg(0))
+   Call BWS_Success(False)
+	Resume ExitAmendProc
+	'
+End Sub
+'
+'
+'
+Sub LostFocus19
+   '
+   On Error GoTo ErrorLostFocus19
+   '
+	Dim	strCounterfeitText As String
+	'
+	If Trim(DBGetValue(hdlSundry,"COUNTERFEIT_CODE"))<>"" Then
+		strCounterfeitText = GetChoiceDisplayValue("bwt_counterfeit_code","index_field","sub_fraud_type",DBGetValue(hdlSundry,"COUNTERFEIT_CODE"))	
+		Call	SetTextLine(5,strCounterfeitText,False)
+	End If
+	'
+ExitLostFocus19:
+   '
+   Exit Sub
+   '
+ErrorLostFocus19:
+   '
+   Call ErrorHandle(Err, Erl, Error$, DBLastErrorMsg(0))
+	Call BWS_Success(False)
+   Resume ExitLostFocus19
+   '
+End Sub
+'
+'
+'
+Sub LostFocus20
+   '
+   On Error GoTo LostFocus20Error
+	'
+	Call LostTransferFlag(hdlSundry,27,6)
+	'
+ExitLostFocus20:
+   '
+   Exit Sub
+   '
+LostFocus20Error:
+   '
+   Call ErrorHandle(Err, Erl, Error$, DBLastErrorMsg(0))
+	Call BWS_Success(False)
+   Resume ExitLostFocus20
+   '
+End Sub
+'
+'
+'
+Sub LostFocus15
+   '
+   On Error GoTo LostFocus15Error
+	'
+	If DBGetValue(hdlSundry,"TRAN_CURRENCY") = DBGetValue(hdlSundry,"SETTLEMENT_CURRENCY") Then 
+		blnReturn = DBSetValue(hdlSundry,"TRAN_AMOUNT_GR",DBGetValue(hdlSundry,"SETTLEMENT_AMOUNT_GR"))
+	End If
+	'
+ExitLostFocus15:
+   '
+   Exit Sub
+   '
+LostFocus15Error:
+   '
+   Call ErrorHandle(Err, Erl, Error$, DBLastErrorMsg(0))
+	Call BWS_Success(False)
+   Resume ExitLostFocus15
+   '
+End Sub
+'
+'
+'
+Sub LostFocus21
+   '
+   On Error GoTo LostFocus21Error
+   '
+	Call ValidateMemberID(DBGetValue(hdlSundry,"RECIEVING_MEMBER_ID"),21,1,2,True,True)
+	'
+ExitLostFocus21:
+   '
+   Exit Sub
+   '
+LostFocus21Error:
+   '
+   Call ErrorHandle(Err, Erl, Error$, DBLastErrorMsg(0))
+	Call BWS_Success(False)
+   Resume Exitlostfocus21
+   '
+End Sub
+'
+Sub LostFocus22
+   '
+   On Error GoTo LostFocus22Error
+   '
+	Dim 	strProcClass				As 	String
+   '
+	strProcClass = DBGetValue(hdlSundry,"PROCESSING_CLASS")
+	'
+	If Trim(strProcClass) <> "" And Instr("ECRD,ECHA,EDCM",strProcClass) = 0 Then
+		intReturn = BWS_Msg(MSG_OK,MSG_TYPE_INFO,6585)
+		blnreturn = SetFocus(22)
+		Call BWS_Success(False)
+  	End If
+	'
+ExitLostFocus22:
+   '
+   Exit Sub
+   '
+LostFocus22Error:
+   '
+   Call ErrorHandle(Err, Erl, Error$, DBLastErrorMsg(0))
+	Call BWS_Success(False)
+   Resume ExitLostFocus22
+   '
+End Sub
+'
+'
+'
+Sub LostFocus27
+	'
+   On Error GoTo LostFocus27Error
+	'
+	If Val(DBGetValue(hdlSundry,"DESTINATION_ACCOUNT"))=0 Then
+		blnReturn = SetDisplayAttrib(28,"DI")
+	Else
+		If AcctCheck(hdlSundry,"AN",6,"DESTINATION_ACCOUNT","CLIENT_NUMBER","GROUP_NUMBER","SERVICE_CONTRACT_ID","ACCOUNT_TYPE_ID","ACCT_CURRENCY",27,28,29,30,31,32)=0 Then
+			blnreturn = SetFocus(27)
+			Call BWS_Success(False)
+		End If
+	End If
+	'
+ExitLostFocus27:
+	'
+   Exit Sub
+	'
+LostFocus27Error:
+	'
+   Call ErrorHandle(Err, Erl, Error$, DBLastErrorMsg(0))
+	Call BWS_Success(False)
+   Resume ExitLostFocus27
+	'
+End Sub
+'
+'
+'
+Sub LostFocus28
+	'
+   On Error GoTo LostFocus28Error
+	'
+	If Val(DBGetValue(hdlSundry,"CLIENT_NUMBER"))=0 Then
+		blnReturn = SetDisplayAttrib(27,"DI")
+		Call SetTextLine(06,"",False)
+	Else
+		If AcctCheck(hdlSundry,"CN",6,"DESTINATION_ACCOUNT","CLIENT_NUMBER","GROUP_NUMBER","SERVICE_CONTRACT_ID","ACCOUNT_TYPE_ID","ACCT_CURRENCY",27,28,29,30,31,32)=0 Then
+			blnreturn = SetFocus(28)
+			Call BWS_Success(False)
+		End If
+	End If
+	'
+ExitLostFocus28:
+	'
+   Exit Sub
+	'
+LostFocus28Error:
+	'
+   Call ErrorHandle(Err, Erl, Error$, DBLastErrorMsg(0))
+	Call BWS_Success(False)
+   Resume ExitLostFocus28
+	'
+End Sub
+'
+'
+'
+Sub LostFocus29
+	'
+   On Error GoTo LostFocus29Error
+	'
+	If AcctCheck(hdlSundry,"GN",6,"DESTINATION_ACCOUNT","CLIENT_NUMBER","GROUP_NUMBER","SERVICE_CONTRACT_ID","ACCOUNT_TYPE_ID","ACCT_CURRENCY",27,28,29,30,31,32)=0 Then
+		blnreturn = SetFocus(29)
+		Call BWS_Success(False)
+		Exit Sub
+	End If
+	'
+ExitLostFocus29:
+	'
+   Exit Sub
+	'
+LostFocus29Error:
+	'
+   Call ErrorHandle(Err, Erl, Error$, DBLastErrorMsg(0))
+	Call BWS_Success(False)
+   Resume ExitLostFocus29
+	'
+End Sub
+'
+'
+'
+Sub LostFocus36
+   '
+	Dim strPOSEntry As String
+	'
+   On Error GoTo LostFocus36Error
+   '
+	strPOSEntry=Trim(DBGetValue(hdlSundry,"POS_ENTRY_MODE"))
+   '
+	If strPOSEntry<>"" Then
+		If Not(strPOSEntry="00" Or strPOSEntry="01" Or strPOSEntry="90" Or strPOSEntry="02" Or strPOSEntry="05" Or strPOSEntry="81") Then
+			intReturn = BWS_Msg(MSG_OK,MSG_TYPE_ERROR,9998,"Valid entries are 00,01,02,05,81 and 90")
+		   blnreturn = SetFocus(36)
+			Call BWS_Success(False)
+		End If
+	End If
+	'
+ExitLostFocus36:
+   '
+   Exit Sub
+   '
+LostFocus36Error:
+   '
+   Call ErrorHandle(Err, Erl, Error$, DBLastErrorMsg(0))
+	Call BWS_Success(False)
+   Resume ExitLostFocus36
+   '
+End Sub
+'
+'
+'
+Sub LostFocus37
+   '
+	Dim strAuthCode As String
+	'
+   On Error GoTo LostFocus37Error
+   '
+	strAuthCode=Trim(DBGetValue(hdlSundry,"AUTH_RESPONSE_CODE"))
+	'
+	If strAuthCode<>"" Then
+		If Val(DBSQLStatFunc("SELECT COUNT(*) FROM BWT_SAFE_EURO_AUTH_RESP_CODE WHERE " & _
+							      "SAFE_VALUE = '" & strAuthCode & "'"))=0 Then
+		
+			intReturn = BWS_Msg(MSG_OK,MSG_TYPE_ERROR,9998,"Invalid Authorisation Response Code")
+		   blnreturn = SetFocus(37)
+			Call BWS_Success(False)
+		End If
+	End If
+   '
+ExitLostFocus37:
+   '
+   Exit Sub
+   '
+LostFocus37Error:
+   '
+   Call ErrorHandle(Err, Erl, Error$, DBLastErrorMsg(0))
+	Call BWS_Success(False)
+   Resume ExitLostFocus37
+   '
+End Sub
+'
+'
+'
+Sub LostFocus38
+   '
+	Dim strTerminal As String
+	'
+   On Error GoTo LostFocus38Error
+   '
+	strTerminal = Trim(DBGetValue(hdlSundry,"TERMINAL_ATTENDANCE"))
+	'
+	If Instr("0129",strTerminal)=0 Then
+		intReturn = BWS_Msg(MSG_OK,MSG_TYPE_ERROR,9998,"Valid values are 0,1,2 and 9")
+	   blnreturn = SetFocus(38)
+		Call BWS_Success(False)
+	End If
+   '
+ExitLostFocus38:
+   '
+   Exit Sub
+   '
+LostFocus38Error:
+   '
+   Call ErrorHandle(Err, Erl, Error$, DBLastErrorMsg(0))
+	Call BWS_Success(False)
+   Resume ExitLostFocus38
+   '
+End Sub
+'
+'
+'
+Sub LostFocus39
+   '
+	Dim strPresInd	As String
+	'
+	On Error GoTo LostFocus39Error
+   '
+	strPresInd = Trim(DBGetValue(hdlSundry,"CARDHOLDER_PRESENCE"))
+   '
+	If Instr("012349",strPresInd)=0 Then
+		intReturn = BWS_Msg(MSG_OK,MSG_TYPE_ERROR,9998,"Valid values are 0,1,2,3,4 and 9")
+	   blnreturn = SetFocus(39)
+		Call BWS_Success(False)
+	End If
+	'
+ExitLostFocus39:
+   '
+   Exit Sub
+   '
+LostFocus39Error:
+   '
+   Call ErrorHandle(Err, Erl, Error$, DBLastErrorMsg(0))
+	Call BWS_Success(False)
+   Resume ExitLostFocus39
+   '
+End Sub
+'
+'
+'
+Sub LostFocus40
+   '
+	Dim strCATLevel As String
+	'
+   On Error GoTo LostFocus40Error
+   '
+	strCATLevel = Trim(DBGetValue(hdlSundry,"CAT_LEVEL"))
+   '
+	If Instr("01234*",strCATLevel)=0 Then
+		intReturn = BWS_Msg(MSG_OK,MSG_TYPE_ERROR,9998,"Valid values are 0,1,2,3,4 and *")
+	   blnreturn = SetFocus(40)
+		Call BWS_Success(False)
+	End If
+	'
+ExitLostFocus40:
+   '
+   Exit Sub
+   '
+LostFocus40Error:
+   '
+   Call ErrorHandle(Err, Erl, Error$, DBLastErrorMsg(0))
+	Call BWS_Success(False)
+   Resume ExitLostFocus40
+   '
+End Sub
+'
+'
+'
+Sub LostFocus41
+   '
+	Dim strPOS As String
+	'
+   On Error GoTo LostFocus41Error
+   '
+	strPOS = Trim(DBGetValue(hdlSundry,"POS_INPUT_CAPABILITY"))
+   '
+	If Instr("129",strPOS)=0 Then
+		intReturn = BWS_Msg(MSG_OK,MSG_TYPE_ERROR,9998,"Valid values are 1,2 and 9")
+	   blnreturn = SetFocus(41)
+		Call BWS_Success(False)
+	End If
+	'
+ExitLostFocus41:
+   '
+   Exit Sub
+   '
+LostFocus41Error:
+   '
+   Call ErrorHandle(Err, Erl, Error$, DBLastErrorMsg(0))
+	Call BWS_Success(False)
+   Resume ExitLostFocus41
+   '
+End Sub
+'
+'
+'
+Sub LostFocus42
+   '
+	Dim strECommerce As String
+	'
+   On Error GoTo LostFocus42Error
+   '
+	strECommerce = Trim(DBGetValue(hdlSundry,"ECOM_SECURITY_LEVEL"))
+   '
+	If Not (strECommerce="*" Or strECommerce="91" Or strECommerce="21" Or strECommerce="11" Or strECommerce="12") Then
+		intReturn = BWS_Msg(MSG_OK,MSG_TYPE_ERROR,9998,"Valid values are 91,21,11,12 and *")
+	   blnreturn = SetFocus(42)
+		Call BWS_Success(False)
+	End If
+	'
+ExitLostFocus42:
+   '
+   Exit Sub
+   '
+LostFocus42Error:
+   '
+   Call ErrorHandle(Err, Erl, Error$, DBLastErrorMsg(0))
+	Call BWS_Success(False)
+   Resume ExitLostFocus42
+   '
+End Sub
+'
+'
+'
+Sub LostFocus43
+   '
+   On Error GoTo LostFocus43Error
+   '
+	If Trim(DBGetValue(hdlSundry,"CVC_INVALID"))<>"" Then
+		If Trim(DBGetValue(hdlSundry,"CVC_INVALID"))<>"1" And Trim(DBGetValue(hdlSundry,"CVC_INVALID"))<>"*" Then
+			intReturn = BWS_Msg(MSG_OK,MSG_TYPE_ERROR,9998,"Valid characters are * and 1")
+	      blnreturn = SetFocus(43)
+			Call BWS_Success(False)
+		End If
+	End If
+   '
+ExitLostFocus43:
+   '
+   Exit Sub
+   '
+LostFocus43Error:
+   '
+   Call ErrorHandle(Err, Erl, Error$, DBLastErrorMsg(0))
+	Call BWS_Success(False)
+   Resume ExitLostFocus43
+   '
+End Sub
+'
+'
+'
+Sub LostFocus08
+	'
+   On Error GoTo LostFocus08Error
+	'
+	Dim strSundryText			As	String
+	Dim strSubFraudText		As String
+	Dim strCounterfeitText	As String
+	'
+	If Trim(DBGetValue(hdlSundry,"SUNDRY_REASON"))="" Then Exit Sub
+	'
+	StrSundryText = GetChoiceDisplayValue("bwt_fraud_reason","index_field","sundry_reason",DBGetValue(hdlSundry,"SUNDRY_REASON"))	
+	Call	SetTextLine(3,StrSundryText,False)
+	'
+	If DBGetValue(hdlSundry,"SUNDRY_REASON") <> "304" Then
+		blnReturn = DBSetValue(hdlSundry,"SUB_FRAUD_TYPE","999")
+		blnReturn = DBSetValue(hdlSundry,"COUNTERFEIT_CODE","999")
+      '
+		strSubFraudText = GetChoiceDisplayValue("bwt_sub_fraud_reason","index_field","sub_fraud_type",DBGetValue(hdlSundry,"SUB_FRAUD_TYPE"))
+		Call	SetTextLine(4,StrSubFraudText,False)
+	   '
+   	strCounterfeitText = GetChoiceDisplayValue("bwt_counterfeit_code","index_field","sub_fraud_type",DBGetValue(hdlSundry,"COUNTERFEIT_CODE"))	
+		Call	SetTextLine(5,strCounterfeitText,False)
+      '
+		blnReturn = SetDisplayAttrib(03,"PR")	
+		blnReturn = SetDisplayAttrib(19,"PR")	
+	Else
+		blnReturn = SetDisplayAttrib(03,"DI")	
+		blnReturn = SetDisplayAttrib(19,"DI")	
+	End If
+   '
+ExitLostFocus08:
+   '
+   Exit Sub
+   '
+LostFocus08Error:
+   '
+   Call ErrorHandle(Err, Erl, Error$, DBLastErrorMsg(0))
+	Call BWS_Success(False)
+   Resume ExitLostFocus08
+   '
+End Sub
+'
+'
+'
+Sub LostFocus11
+   '
+   On Error GoTo LostFocus11Error
+   '
+	Dim	strFraudType		As		String
+	'
+	strFraudType = DBGetValue(hdlSundry,"SUNDRY_TYPE")
+	'
+	If strFraudType = "016" Then
+		blnReturn = SetDisplayAttrib(03,"DI")
+		blnReturn = SetDisplayAttrib(08,"DI")
+		blnReturn = SetDisplayAttrib(13,"DI")
+		blnReturn = SetDisplayAttrib(15,"DI")
+		blnReturn = SetDisplayAttrib(17,"DI")
+		blnReturn = SetDisplayAttrib(19,"DI")
+		blnReturn = SetDisplayAttrib(20,"DI")
+		blnReturn = SetDisplayAttrib(22,"DI")
+		blnReturn = SetDisplayAttrib(23,"DI")
+		blnReturn = SetDisplayAttrib(24,"DI")
+		blnReturn = SetDisplayAttrib(25,"PR")
+		blnReturn = SetDisplayAttrib(26,"DI")
+	ElseIf strFraudType = "017"  Or strFraudType = "018" Then    
+		blnReturn = SetDisplayAttrib(03,"PR")
+		blnReturn = SetDisplayAttrib(08,"PR")
+		blnReturn = SetDisplayAttrib(13,"PR")
+		blnReturn = SetDisplayAttrib(15,"PR")
+		blnReturn = SetDisplayAttrib(17,"PR")
+		blnReturn = SetDisplayAttrib(19,"PR")
+		blnReturn = SetDisplayAttrib(20,"PR")
+		blnReturn = SetDisplayAttrib(22,"PR")
+		blnReturn = SetDisplayAttrib(23,"PR")
+		blnReturn = SetDisplayAttrib(24,"PR")
+		blnReturn = SetDisplayAttrib(25,"PR")
+		blnReturn = SetDisplayAttrib(26,"PR")
+		If strFraudType = "018" Then blnReturn = SetDisplayAttrib(25,"DI")
+	End If
+   '
+ExitLostFocus11:
+   '
+   Exit Sub
+   '
+LostFocus11Error:
+   '
+   Call ErrorHandle(Err, Erl, Error$, DBLastErrorMsg(0))
+	Call BWS_Success(False)
+   Resume ExitLostFocus11
+   '
+End Sub
+'
+'
+'
+Sub LostFocus03
+   '
+   On Error GoTo LostFocus03Error
+   '
+	Dim	strDocumentCodeText		As		String
+	'
+	If Trim(DBGetValue(hdlSundry,"SUB_FRAUD_TYPE"))<>"" Then
+		StrDocumentCodeText = GetChoiceDisplayValue("bwt_sub_fraud_reason","index_field","sub_fraud_type",DBGetValue(hdlSundry,"SUB_FRAUD_TYPE"))	
+		Call	SetTextLine(4,StrDocumentCodeText,False)
+	End If
+   '
+ExitLostFocus03:
+   '
+   Exit Sub
+   '
+LostFocus03Error:
+   '
+   Call ErrorHandle(Err, Erl, Error$, DBLastErrorMsg(0))
+	Call BWS_Success(False)
+   Resume ExitLostFocus03
+   '
+End Sub
+'
+'
+'
+Sub RefreshDisplayProc
+   '
+   On Error GoTo RefreshDisplayProcError
+   '
+	Dim	StrDocumentCodeText		As		String
+	Dim	StrSundryText				As		String
+	Dim	strCounterfeitText		As		String
+	'
+	hdlSundry = GetMainHandle()
+	'
+	Call ValidateMemberID(DBGetValue(hdlSundry,"RECIEVING_MEMBER_ID"),21,1,2,False,False)
+	'
+	StrSundryText = GetChoiceDisplayValue("bwt_fraud_reason","index_field","sundry_reason",DBGetValue(hdlSundry,"SUNDRY_REASON"))
+	Call	SetTextLine(3,StrSundryText,False)
+	'
+	StrDocumentCodeText = GetChoiceDisplayValue("bwt_sub_fraud_reason","index_field","sub_fraud_type",DBGetValue(hdlSundry,"SUB_FRAUD_TYPE"))	
+	Call	SetTextLine(4,StrDocumentCodeText,False)
+	'
+	strCounterfeitText = GetChoiceDisplayValue("bwt_counterfeit_code","index_field","sub_fraud_type",DBGetValue(hdlSundry,"COUNTERFEIT_CODE"))	
+	Call	SetTextLine(5,strCounterfeitText,False)
+	'
+	If AcctCheck(hdlSundry,"CNView",6,"DESTINATION_ACCOUNT","CLIENT_NUMBER","GROUP_NUMBER","SERVICE_CONTRACT_ID","ACCOUNT_TYPE_ID","ACCT_CURRENCY",27,28,29,30,31,32)=0 Then
+		Call SetTextLine(06,"CLIENT NOT FOUND!",False)
+	End If
+	'
+ExitRefreshDisplayProc:
+   '
+   Exit Sub
+   '
+RefreshDisplayProcError:
+   '
+   Call ErrorHandle(Err, Erl, Error$, DBLastErrorMsg(0))
+	Call BWS_Success(False)
+   Resume ExitRefreshDisplayProc
+   '
+End Sub
+'
+'
+'
+Sub LostFocus12
+   '
+   On Error GoTo LostFocus12Error
+   '
+	Dim   hdlOrigSlip             As    Integer
+	Dim	HdlSRDC						As		Integer
+	Dim	Transdate					As		String
+	Dim	TransSource					As		String
+	Dim	strSelectSRDC				As		String
+	Dim	strTranCurr					As		String
+	Dim	strsettlCurr				As		String
+	Dim	hdlRelChargeback			As		Integer
+	Dim 	strProcClass				As 	String
+	Dim 	strMemberID					As 	String
+	Dim	strMemberName 				As		String
+	Dim	strICANumber  				As		String
+	Dim 	hdlOnus						As 	Integer
+	Dim   hdlTranSlip 	 			As Integer
+	'
+	strTranslip = Trim(DBGetValue(hdlSundry,"TRANSACTION_SLIP"))
+   '
+	If strTranSLip = "00000000000" Then
+		intReturn = BWS_Msg(MSG_OK,MSG_TYPE_INFO,6571)
+      blnreturn = SetFocus(12)
+		Call BWS_Success(False)
+		Exit Sub
+	End If
+	'
+	strselect = "SELECT * FROM INT_TRANSACTIONS WHERE " &_
+					"INSTITUTION_NUMBER = '"& GetGlobalInfo(GI_ISSUER_ID) &"' " &_
+					"AND TRANSACTION_SLIP = '" & strtranslip &"' " 
+   '
+	hdlTranSlip = DBOpen(strselect, True)
+	'
+	If DBIsEOF(hdltranslip) And DBIsBOF(hdltranslip) Then 
+		intReturn = BWS_Msg(MSG_OK,MSG_TYPE_INFO,6565)
+		blnReturn = DBClose(hdlTranSlip)
+      blnreturn = SetFocus(12)
+		Call BWS_Success(False)
+		Exit Sub
+	End If
+	'
+	If (DBGetValue(hdlTranSlip,"TRANSACTION_CLASS") <> "002" And DBGetValue(hdlTranSlip,"TRANSACTION_CLASS") <> "011") Then
+		intReturn = BWS_Msg(MSG_OK,MSG_TYPE_ERROR,6270)
+		blnReturn = DBClose(hdlTranSlip)
+      blnreturn = SetFocus(12)
+		Call BWS_Success(False)
+		Exit Sub
+	End If
+   '
+	strAcqBin  = Mid(DBGetValue(hdlTranSlip,"ACQUIRER_REFERENCE"),2,6)
+	transcateg = Trim(DBGetValue(hdlTranSlip,"TRANSACTION_CATEGORY"))
+	'
+	If transcateg = "001" Then
+		blnReturn = DBSetValue(hdlSundry,"SUNDRY_TYPE","015")
+		blnReturn = SetDisplayAttrib(11,"PR")
+		blnReturn = SetDisplayAttrib(19,"PR")
+		'
+	ElseIf transcateg = "031" Then
+		blnReturn = SetDisplayAttrib(11,"DI")
+      blnreturn = SetFocus(11)
+      blnreturn = Set_CHGroup(11,"C")
+		'
+	Else
+		intReturn = BWS_Msg(MSG_OK,MSG_TYPE_INFO,6572)
+		blnReturn = DBClose(hdlTranSlip)
+      blnreturn = SetFocus(12)
+		Call BWS_Success(False)
+		Exit Sub
+	End If
+	'
+	strTranStatus = DBGetValue(hdlTranSlip,"TRANSACTION_STATUS")
+	TransSource   = DBGetValue(hdlTranSlip,"TRANSACTION_SOURCE")
+	'
+	If TransSource<>"037" And TransSource<>"036" Then
+      hdlOrigSlip = hdlTranSlip
+   Else
+   	strselect="SELECT * " &_
+        	       "FROM INT_TRANSACTIONS " &_
+        	       "WHERE TRANSACTION_SOURCE NOT IN ('036','037') AND INSTITUTION_NUMBER='" & GetGlobalInfo(GI_ISSUER_ID) & "' " &_
+              	 "START WITH TRANSACTION_SLIP='" & strTranSlip & "' AND INSTITUTION_NUMBER='" & GetGlobalInfo(GI_ISSUER_ID) & "' " &_
+              	 "CONNECT BY PRIOR NUMBER_ORIGINAL_SLIP=TRANSACTION_SLIP " &_
+             	 "AND PRIOR NUMBER_ORIGINAL_SLIP <> PRIOR TRANSACTION_SLIP " &_
+              	 "AND PRIOR TRANSACTION_SOURCE IN ('036','037') " & _
+              	 "AND INSTITUTION_NUMBER='" & GetGlobalInfo(GI_ISSUER_ID) & "' " &_
+              	 "ORDER BY TRANSACTION_SOURCE "
+      '
+      hdlOrigSlip = DBOpen(strSelect, True)
+      '
+      If Not DBIsEOF(hdlOrigSlip) Then
+         TransSource = DBGetValue(hdlOrigSlip,"TRANSACTION_SOURCE") 
+      Else
+         hdlOrigSlip = hdlTranSlip
+      End If
+   End If
+	'
+   strSource = DBGetValue(hdlOrigSlip,"TRANSACTION_SOURCE") 
+	blnReturn = DBSetValue(hdlSundry,  "TRANSACTION_SOURCE","037")
+   '
+	TransDest="047"
+	If TransDest<>"" Then
+		blnReturn = DBSetValue(HdlSundry,"TRANSACTION_DESTINATION",TransDest)		
+	Else 
+		intReturn = BWS_Msg(MSG_OK,MSG_TYPE_ERROR,6200)
+		blnReturn = DBClose(hdlTranSlip)
+      blnreturn = SetFocus(12)	
+		Call BWS_Success(False)
+		Exit Sub
+	End If
+	'
+	strselectSRDC  = "SELECT TRANSACTION_SLIP FROM INT_SUNDRY_TRANSACTIONS WHERE " &_
+						  "INSTITUTION_NUMBER = '"& GetGlobalInfo(GI_ISSUER_ID) &"' " &_
+						  "AND TRANSACTION_SLIP = '" & strtranslip &"' " &_
+						  "AND SUNDRY_TYPE = '" & DBGetValue(hdlSundry,"SUNDRY_TYPE") & "' " &_
+						  "AND TRANSACTION_DESTINATION = '" & DBGetValue(hdlSundry,"TRANSACTION_DESTINATION") & "'"
+   '
+	hdlSRDC = DBOpen(strselectSRDC, True)
+	If Not DBIsEOF(hdlSRDC) Then
+		 intReturn = BWS_Msg(MSG_OK,MSG_TYPE_ERROR,6300)
+		blnReturn = DBClose(hdlSRDC)
+		blnReturn = DBClose(hdlTranSlip)
+		'	
+		If hdlTranSlip <> hdlOrigSlip Then blnReturn = DBClose(hdlOrigSlip)
+		'	
+		blnReturn = Setfocus(12)
+		Call bws_success(False)
+		Exit Sub
+	End If	
+	'
+	'--------------------------------
+	'Find correspondent Sundry record
+	'--------------------------------
+	If transcateg = "031" Then
+		strselectSRDC = "SELECT FORWARDING_MEMBER_ID,SUNDRY_REASON, SUB_FRAUD_TYPE, COUNTERFEIT_CODE, " &_
+							 "SUNDRY_REFERENCE, CHARGEBACK_FLAG, FRAUD_CARD_TYPE,PROCESSING_CLASS FROM " &_
+							 "INT_SUNDRY_TRANSACTIONS WHERE INSTITUTION_NUMBER = '"& GetGlobalInfo(GI_ISSUER_ID) &"' " &_
+							 "AND SUNDRY_TRANSACTION_SLIP = '" & strtranslip &"' " 
+      '
+		hdlSRDC = DBOpen(strselectSRDC, True)
+		'
+		If DBIsEOF(hdlSRDC) Then 
+			intReturn = BWS_Msg(MSG_OK,MSG_TYPE_INFO,6588)
+			blnReturn = DBSetValue(hdlSundry,"SUNDRY_REASON","")
+			blnReturn = DBSetValue(hdlSundry,"SUB_FRAUD_TYPE","")
+			blnReturn = DBSetValue(hdlSundry,"COUNTERFEIT_CODE","")
+			blnReturn = DBSetValue(hdlSundry,"SUNDRY_REFERENCE","")
+			blnReturn = SetDisplayAttrib(03,"DI")
+			blnReturn = SetDisplayAttrib(05,"DI")
+			blnReturn = SetDisplayAttrib(08,"DI")
+			blnReturn = SetDisplayAttrib(19,"DI")
+		Else
+			Call EnableReasonGroups(DBGetValue(hdlSRDC,"SUNDRY_REASON"))
+			blnReturn = DBSetValue(hdlSundry,"SUNDRY_REASON",   DBGetValue(hdlSRDC,"SUNDRY_REASON"))
+			blnReturn = DBSetValue(hdlSundry,"SUB_FRAUD_TYPE",  DBGetValue(hdlSRDC,"SUB_FRAUD_TYPE"))
+			blnReturn = DBSetValue(hdlSundry,"COUNTERFEIT_CODE",DBGetValue(hdlSRDC,"COUNTERFEIT_CODE"))
+			blnReturn = DBSetValue(hdlSundry,"SUNDRY_REFERENCE",DBGetValue(hdlSRDC,"SUNDRY_REFERENCE"))
+			blnReturn = DBSetValue(hdlSundry,"CHARGEBACK_FLAG", DBGetValue(hdlSRDC,"CHARGEBACK_FLAG"))
+			blnReturn = DBSetValue(hdlSundry,"FRAUD_CARD_TYPE", DBGetValue(hdlSRDC,"FRAUD_CARD_TYPE"))
+			'
+			Call SetTextLine(3,GetChoiceDisplayValue("bwt_fraud_reason","index_field","sundry_reason",DBGetValue(hdlSundry,"SUNDRY_REASON")),False)
+			Call SetTextLine(4,GetChoiceDisplayValue("bwt_sub_fraud_reason","index_field","sub_fraud_type",DBGetValue(hdlSundry,"SUB_FRAUD_TYPE")),False)
+			Call SetTextLine(5,GetChoiceDisplayValue("bwt_counterfeit_code","index_field","sub_fraud_type",DBGetValue(hdlSundry,"COUNTERFEIT_CODE")),False)
+			'
+			strMemberID  = DBGetValue(hdlSRDC,"FORWARDING_MEMBER_ID")
+			strProcClass = DBGetValue(hdlSRDC,"PROCESSING_CLASS")	
+
+			blnReturn = SetDisplayAttrib(03,"PR")
+			blnReturn = SetDisplayAttrib(05,"PR")
+			blnReturn = SetDisplayAttrib(08,"PR")
+			blnReturn = SetDisplayAttrib(19,"PR")
+		End If
+		'
+		blnReturn = DBClose(hdlSRDC)
+		'
+	Else 
+		If transcateg = "001" Then	
+			blnReturn = DBSetValue(hdlSundry,"SUNDRY_REFERENCE",GenerateSundryRef(hdlSundry,"ESO"))
+		End If
+		blnReturn = SetDisplayAttrib(03,"DI")
+		blnReturn = SetDisplayAttrib(05,"PR")
+		blnReturn = SetDisplayAttrib(08,"DI")
+		blnReturn = SetDisplayAttrib(19,"DI")
+	End If
+	'
+	strTranCurr = DBGetValue(hdlTranSlip,"TRAN_CURRENCY")
+	'
+	blnReturn 	 = DBSetValue(hdlSundry,"TRAN_CURRENCY",strTranCurr)	
+	blnReturn 	 = DBSetValue(hdlSundry,"TRAN_AMOUNT_GR",DBGetValue(hdlTranSlip,"TRAN_AMOUNT_GR"))	
+	strSettlCurr = DBGetValue(hdlOrigSlip,"SETTLEMENT_CURRENCY")
+	'
+	blnReturn  = DBSetValue(hdlSundry,"SETTLEMENT_CURRENCY",strSettlCurr)
+	blnReturn  = DBSetValue(hdlSundry,"SETTLEMENT_AMOUNT_GR",DBGetValue(hdlOrigSlip,"SETTLEMENT_AMOUNT_GR"))
+	Transdate  = DBGetValue(hdlTranSlip,"TRANSACTION_DATE")
+	'
+	If Trim(TransDate) <> "" And Right(TransDate,4) <> "0000" Then
+		blnReturn = DBSetValue(hdlSundry,"TRANSACTION_DATE",TransDate)
+		blnReturn = SetDisplayAttrib(13,"PR")
+	Else
+		blnReturn = DBSetValue(hdlSundry,"TRANSACTION_DATE","")
+		blnReturn = SetDisplayAttrib(13,"DI")	
+	End If
+	'
+	If DBGetValue(hdlSundry,"SUNDRY_TYPE") = "018" Then
+		blnReturn = SetDisplayAttrib(25,"DI")	
+	Else
+		blnReturn = DBSetValue(hdlSundry,"DELETE_FLAG","000")
+		blnReturn = SetDisplayAttrib(25,"PR")	
+	End If
+	'
+	blnReturn = DBSetValue(hdlSundry,"CARD_NUMBER",DBGetValue(hdlTranSlip,"CARD_NUMBER"))	
+	'
+	strSelect = "SELECT TRANSACTION_SLIP FROM INT_SUNDRY_TRANSACTIONS WHERE " &_
+					"TRANSACTION_SLIP = '" & strtranslip & "' AND " &_
+					"SUNDRY_TYPE = '001' AND SUNDRY_STATUS = '002' AND " &_
+					"(TRANSACTION_DESTINATION = '012' OR TRANSACTION_DESTINATION = '002')"
+   '
+	hdlRelChargeback = DBOpen(strSelect,True)
+   '
+	If DBIsBOF(hdlRelChargeback) And DBIsEOF(hdlRelChargeback) Then
+		blnReturn = DBSetValue(hdlSundry,"CHARGEBACK_FLAG","000")
+	Else
+		blnReturn = DBSetValue(hdlSundry,"CHARGEBACK_FLAG","001")
+	End If
+   '
+	blnReturn = DBClose(hdlRelChargeback)	
+	'
+	Select Case strSource
+		Case "025"							'Visa Domestic
+		'
+			strMemberID = GetChoiceDisplayValue("bwt_acquirer_bin_lookup","visa_bin","member_id",strAcqBin)	
+			blnReturn   = DBSetValue(HdlSundry,"RECIEVING_MEMBER_ID",strMemberID)
+			blnReturn   = SetDisplayAttrib(21,"PR")
+			strmemberName = GetChoiceDisplayValue("bwt_acquirer_bin_lookup","visa_bin","member_name",strAcqBin)
+			strICANumber  = GetChoiceDisplayValue("bwt_acquirer_bin_lookup","visa_bin","ica",strAcqBin)
+			Call SetTextLine(1,strmemberName,False)
+			Call SetTextLine(2,strICANumber,False)
+			'
+			If Instr("ECRD,ECHA,EDCM",strProcClass) > 0 Then 
+				blnReturn = SetDisplayAttrib(22,"PR")
+			Else
+				blnReturn = SetDisplayAttrib(22,"DI")
+				blnReturn = DBSetValue(hdlSundry,"PROCESSING_CLASS","ECRD")
+			End If
+			'
+		Case "005","019","083","015"	'Onus
+			'
+			hdlOnus = DBOpen("SELECT MEMBER_ID FROM " &_
+								  "CIS_INTERCHANGE_DETAILS WHERE " &_
+								  "INSTITUTION_NUMBER='"& GetGlobalInfo(GI_ISSUER_ID) &"' " &_
+								  "AND CARD_ORGANIZATION IN('002','001') " &_
+								  "ORDER BY CARD_ORGANIZATION DESC",True)
+			'
+			If Not DBIsEOF(hdlOnus) Then
+				strMemberID =DBGetValue(hdlOnus,"MEMBER_ID")
+				blnReturn = DBSetValue(hdlSundry,"RECIEVING_MEMBER_ID",strMemberID)
+				'
+				If Instr("ECRD,ECHA,EDCM",strProcClass) > 0 Then 
+					blnReturn = SetDisplayAttrib(22,"PR")
+				Else
+					blnReturn = SetDisplayAttrib(22,"DI")
+					blnReturn = DBSetValue(hdlSundry,"PROCESSING_CLASS","ECRD")
+				End If
+				'
+				Call ValidateMemberID (strMemberID,21,1,2,True,False)
+				'
+			Else
+				intReturn = BWS_Msg(MSG_OK,MSG_TYPE_INFO,9998,"Member ID does not exist in CIS_INTERCHANGE_DETAILS table.")
+				blnReturn = SetDisplayAttrib(21,"DI")
+			End If
+			'
+			blnreturn = DBClose(hdlOnus)
+			'
+		Case Else
+			'
+			'-----------------------------------
+			'Fill up and validate member details
+			'-----------------------------------
+			Call GetMemberAndClass(hdlOrigSlip,strMemberID,strProcClass,22)
+			Call ValidateMemberID (strMemberID,21,1,2,True,False)
+			'
+			blnReturn = DBSetValue(hdlSundry,"RECIEVING_MEMBER_ID",strMemberID)
+			blnReturn = DBSetValue(hdlSundry,"PROCESSING_CLASS",strProcClass)
+			'
+			If TransCateg <> "001" Or strTranStatus = "011" Then
+				blnReturn = SetDisplayAttrib(20,"PR")
+			Else
+				blnReturn = SetDisplayAttrib(20,"DI")
+			End If
+			'
+			blnReturn = DBSetValue(hdlSundry,"TRANSFER_FLAG","000")
+			'
+			If Val(Trim(DBGetValue(hdlSundry,"CLIENT_NUMBER")))=0 Then
+					Call CheckDefaults(hdlSundry,DBGetValue(hdlTranSlip,"ACCT_NUMBER"),DBGetValue(hdlSundry,"SUNDRY_TYPE"), _
+								transcateg,TransDest,DBGetValue(hdlTranSlip,"TRANSACTION_TYPE"),True,False,28) 
+			End If
+			'
+			blnreturn = SetFocus(08)		
+			'	
+	End Select
+	'
+	Call FillAuthFields(hdlOrigSlip)
+	'
+	If hdlTranSlip <> hdlOrigSlip Then blnReturn = DBClose(hdlOrigSlip)
+	blnReturn = DBClose(hdlTranSlip)
+	'
+Exitlostfocus12:
+	'
+	Exit Sub
+	'
+LostFocus12Error:
+	'
+   Call ErrorHandle(Err, Erl, Error$, DBLastErrorMsg(0))
+	Call BWS_Success(False)
+   Resume ExitLostFocus12
+	'
+End Sub
+'
+'
+'
+Sub UpdateNewProc
+	'
+   On Error GoTo ErrorUpdateNewProc
+	'
+	blnreturn = Set_CHGroup(11,"SCM")
+	blnReturn = DBSetValue(hdlSundry,"SUNDRY_TRANSACTION_SLIP",GenerateSlipNo(DBGetValue(HdlSundry,"RECORD_DATE")))
+	blnReturn = DBSetValue(hdlSundry,"AUDIT_TRAIL",CreateAuditTrail)
+	'
+	If AcctCheck(hdlSundry,"AD",6,"DESTINATION_ACCOUNT","CLIENT_NUMBER","GROUP_NUMBER","SERVICE_CONTRACT_ID","ACCOUNT_TYPE_ID","ACCT_CURRENCY",27,28,29,30,31,32)=0 Then
+		Call BWS_Success(False)
+	End If
+	'
+	blnReturn = Set_CHGroup(08,"EAZ")
+	'
+	Call CheckInetFields
+	'
+EXITUpdateNewProc:
+	'
+	Exit Sub
+	'
+ErrorUpdateNewProc:
+	'
+	Call ErrorHandle(Err,Erl,Error$,DBLastErrorMsg(0))
+   Call BWS_Success(False)
+	Resume ExitUpdateNewProc
+	'
+End Sub
+'
+'
+'
+Sub AddNewProc
+	'
+   On Error GoTo AddNewProcERROR
+	'
+	hdlSundry = GetMainHandle()
+	'
+	Call SetTextLine(1," ",False):Call SetTextLine(2," ",False) 
+	Call SetTextLine(3," ",False):Call SetTextLine(4," ",False) 
+	Call SetTextLine(5," ",False):Call SetTextLine(6," ",False) 
+	'
+	blnReturn = SetDisplayAttrib(09,"PR")
+	blnReturn = Set_CHGroup(08,"EA")
+	blnReturn = DBSetValue(hdlSundry,"SUNDRY_STATUS","008")
+	'
+	If Chain_IsActive Then
+		intReturn = DBSetValue(hdlSundry,"TRANSACTION_SLIP",Chain_DBGetValue(1,"TRANSACTION_SLIP"))
+		blnReturn = SetDisplayAttrib(12,"PR")
+		Call lostfocus12
+	End If
+	'
+ADDNewProcEXIT:     
+	'
+	Exit Sub
+	'
+AddNewProcERROR:
+	'
+	Call ErrorHandle(Err, Erl, Error$, DBLastErrorMsg(0))
+	Call BWS_Success(False)
+	Resume ADDNewProcEXIT
+	'
+End Sub
+'
+'
+'
+Sub CancelAddNewProc
+	'
+   On Error GoTo CancelAddNewProcError
+	'
+   blnreturn = Set_CHGroup(11,"SCM")
+	blnReturn = Set_CHGroup(08,"EAZ")
+	'
+ExitCancelAddNewProc:
+	'
+   Exit Sub
+	'
+CancelAddNewProcError:
+	'
+   Call ErrorHandle(Err, Erl, Error$, DBLastErrorMsg(0))
+   Call BWS_Success(False)
+   Resume ExitCancelAddNewProc
+	'
+End Sub
+'
+'
+'
+Sub CancelAmendProc
+   '
+   On Error GoTo CancelAmendProcError
+   '
+   blnreturn = Set_CHGroup(11,"SCM")
+	blnReturn = Set_CHGroup(08,"EAZ")
+   '
+ExitCancelAmendProc:
+   '
+   Exit Sub
+   '
+CancelAmendProcError:
+   '
+   Call ErrorHandle(Err, Erl, Error$, DBLastErrorMsg(0))
+	Call BWS_Success(False)
+   Resume ExitCancelAmendProc
+   '
+End Sub
+'
+'
+'
+Sub UpdateAmendProc
+   '
+   On Error GoTo UpdateAmendProcError
+   '
+  	blnReturn = DBSetValue(hdlSundry,"AUDIT_TRAIL",CreateAuditTrail)
+   '
+	If AcctCheck(hdlSundry,"AD",6,"DESTINATION_ACCOUNT","CLIENT_NUMBER","GROUP_NUMBER","SERVICE_CONTRACT_ID","ACCOUNT_TYPE_ID","ACCT_CURRENCY",27,28,29,30,31,32)=0 Then
+		Call BWS_Success(False)
+	Else	
+		blnReturn = Set_CHGroup(08,"EAZ")
+	End If
+	'
+	Call CheckInetFields
+	'
+ExitUpdateAmendProc:
+   '
+   Exit Sub
+   '
+UpdateAmendProcError:
+   '
+   Call ErrorHandle(Err, Erl, Error$, DBLastErrorMsg(0))
+   Call BWS_Success(False)
+   Resume ExitUpdateAmendProc
+   '
+End Sub
+'
+'
+'
+Sub DeleteProc
+   '
+   On Error GoTo DeleteProcError
+   '
+	If DBGetValue(HdlSundry,"SUNDRY_STATUS")="002" Then
+		intReturn = BWS_Msg(MSG_OK,MSG_TYPE_ERROR,9998,"Cannot delete a Completed transaction.")
+		Call BWS_Success(False)
+	End If
+   '
+ExitDeleteProc:
+   '
+   Exit Sub
+   '
+DeleteProcError:
+   '
+   Call ErrorHandle(Err, Erl, Error$, DBLastErrorMsg(0))
+	Call BWS_Success(False)
+   Resume ExitDeleteProc
+   '
+End Sub

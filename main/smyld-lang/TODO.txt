@@ -1,0 +1,8 @@
+27/06/2005
+===========
+1 - Maintaining the sequence of the added instances of the class, for example when 
+we add variable, method, or a comment, we must mentain the sequence of addition, so that
+they can be printed in the same sequence.
+2 - Comment have to be also one of the instances of the variable object.
+
+1 - Adding the utility for adding the listener to Java Scriptlet.

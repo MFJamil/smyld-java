@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<languages>
+  <language name="German">
+    <word module="menus"                 id="mni_aboutbankworks"     translate="Überuns .." />
+    <word module="menus"                 id="mnu_help"               translate="Hilfe" />
+    <word module="menus"                 id="mnu_file"               translate="Daten" />
+    <word module="menus"                 id="mnu_open_functions"     translate="Funktionen" />
+    <word module="menus"                 id="mnu_frm_edt_exit"       translate="Beenden" />
+    <word module="menus"                 id="mni_showhelpcont"       translate="Hilfe" />
+    <word module="menus"                 id="mnu_exit"               translate="Schließen"/>
+    <word module="windows"               id="MdiWindow"              translate="SMYLD Portal Engine Anwendung" />
+    <word module="windows"               id="WdSettings"             translate="Einstellungen" />
+    <word module="SettingsPanel"         id="general"                translate="Allgemein" />
+    <word module="SettingsPanel"         id="cmdApply"               translate="Anwenden" />
+    <word module="SettingsPanel"         id="cmdCancel"              translate="Abbrechen" />
+    <word module="SettingsPanel"         id="cmdClose"               translate="Schließen" />
+    <word module="GeneralUserSettings"   id="langs"                  translate="Sprache" />
+    <word module="GeneralUserSettings"   id="lblReqStart1"           translate="(Neustart benötigt)" />
+    <word module="GeneralUserSettings"   id="lblReqStart2"           translate="(Neustart benötigt)" />
+    <word module="MainStatus"            id="timeLable"              translate="10:30:23 29-May-2019" />
+    <word module="MainStatus"            id="curStatus"              translate="System ist aktive" />
+    <word module="toolbars_tp"           id="exitSystem"             translate="Schließen"/>
+    <word module="toolbars_tp"           id="mnu_bar_open_functions" translate="Funktionen Zeigen"/>
+    <word module="toolbars_tp"           id="mnu_bar_open_settings"  translate="Einstellungen"/>
+  </language>
+</languages>

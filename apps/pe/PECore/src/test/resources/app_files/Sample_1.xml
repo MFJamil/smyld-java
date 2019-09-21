@@ -1,0 +1,12 @@
+<?xml version='1.0' encoding='windows-1252'?>
+<!-- Below is a simple Application XML file that contains only the main units to detect the suitable GUI Builder -->
+
+<application type="MDI" onstartup="com.client.app.TestAppMainClass" >
+    <log>
+        <name>application.log</name>
+        <path>logs</path>
+    </log>
+    <build>
+        <toolkit>swing</toolkit>
+    </build>
+</application>

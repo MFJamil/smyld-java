@@ -1,0 +1,603 @@
+Option Explicit
+'
+Declare Function CreateAuditTrail() As String
+'
+Declare Sub ErrorHandleDB (intErrorIndex As Integer, strErrorLine As String, strDBLastErrorMsg As String)
+Declare Sub ErrorHandleSTD(intErrorIndex As Integer, strErrorLine As String, strErrorMsg As String)
+Declare Sub ErrorHandleSEQ(intErrorIndex As Integer, strErrorLine As String)
+Declare Sub ErrorHandleUSR(intErrorIndex As Integer)
+Declare Sub ErrorHandle   (intErrorIndex As Integer, strErrorLine As String, strErrorMsg As String, strDBLastErrorMsg As String)
+'
+Const MASK_FULL_MSG 			As String = "There are more services assigned to this Service Contract than this Mask can handle! " &_
+													"Please contact you supplier to upgrade/expand this Mask."
+Const MAX_ROWS					As Integer = 16
+'
+Dim hdlApplService			As Integer				' Main handle
+Dim intReturn					As Integer				' Dummy integer return
+Dim blnReturn					As Boolean				' Dummy boolean return
+Dim lngReturn					As Long					' Dummy long return
+Dim strSQL						As String				' String to hold various SQL statements
+Dim strInstitution			As String				' Institution number
+Dim strPostingDate			As String				' Posting date
+Dim strApplNumber				As String				' Application number
+Dim intFieldNo					As Integer				' Field number reference flag
+Dim intAssignedFldNo 		As Integer				' Field offset for SERVICE_ASSINED_1
+Dim strServiceDBFld 			As String				' Service ID field number
+Dim strClientTariffDBFld 	As String				' Client tariff field number
+Dim strAssignedDBFld 		As String				' Assigned field number
+Dim strFloorLimitDBFld		As String				' Floor limit
+Dim strServiceID 				As String				' Service ID		
+Dim strServiceName 			As String				' Service ID
+Dim strServiceContract		As String				' Service contract
+Dim strClientTariff			As String				' Client tariff
+Dim intIsFocusOK				As String				' Error field reference
+'
+'
+'
+Function ClientTariffLostFocus As Boolean
+	'
+	Dim blnClientTariff As Boolean
+	'
+	intFieldNo 		 = 1
+	blnClientTariff = True
+	'
+	DO While blnClientTariff = True And intFieldNo <= MAX_ROWS
+		'
+		strClientTariff = Trim(DBGetValue(hdlApplService,"CLIENT_TARIFF_" & intFieldNo))
+		'
+		If DBGetValue(hdlApplService,"SERVICE_ASSIGNED_" & intFieldNo)="001" Then
+			'
+			If strClientTariff <> "" And strClientTariff <> "000" Then   '000 = N/A
+				'
+				strServiceId = Trim(DBGetValue(hdlApplService,"SERVICE_ID_" & intFieldNo))
+				'
+				'--------------------------------------------
+				'Service_Id 999 is equivalent to ALL Services
+				'--------------------------------------------
+				strSQL = "SELECT CLIENT_TARIFF " &_
+							"FROM CBR_TRANSACTION_CHARGES " &_
+							"WHERE INSTITUTION_NUMBER = '" & strInstitution & "' " &_
+							"AND SERVICE_CONTRACT_ID = '" & strServiceContract & "' " &_
+							"AND (SERVICE_ID = '" & strServiceID & "' OR SERVICE_ID = '999') " &_
+							"AND CLIENT_TARIFF  = '" & strClientTariff & "' "
+				'
+				If DBSQLStatFunc(strSQL) = "" Then
+					'
+					strServiceId = Trim(DBSQLStatFunc("SELECT SERVICE_ID " & _
+																 "FROM BWT_SERVICES " & _
+																 "WHERE INDEX_FIELD = '" & strServiceId & "' " & _
+																 "AND INSTITUTION_NUMBER = '" & strInstitution & "'"))
+					'
+					intReturn = BWS_Msg(MSG_OK, MSG_TYPE_ERROR, 9998, "Client Tariff [" & GetChoiceDisplayValue("bwt_account_condition_set","index_field","condition_set",strClientTariff) & _
+																					  "] has not been set up for Service ID [" & strServiceID & "] in CBR_TRANSACTION_CHARGES !")
+					intReturn = SetFocus(37 + intFieldNo)
+					blnClientTariff = False
+					'
+				End If
+				'
+			ElseIf strClientTariff = "" And Trim(DBGetValue(hdlApplService,"SERVICE_ASSIGNED_" & intFieldNo)) = "001" Then
+				'
+				intReturn = BWS_Msg(MSG_OK, MSG_TYPE_ERROR, 9998, "Client Tariff is mandatory for an Assigned Service!")
+				intReturn = SetFocus(37 + intFieldNo)
+				blnClientTariff = False
+				'
+			End If
+			'
+		End If
+		'
+		intFieldNo = intFieldNo + 1
+	Loop
+	'
+	ClientTariffLostFocus = blnClientTariff
+	'
+End Function
+'
+'
+'
+Sub ResetGroups
+	'---------------------------
+	'Reset yes/no groups to "AC"
+	'---------------------------
+	For intFieldNo = 1 To MAX_ROWS
+		intReturn = Set_CHGroup		 (4 + intFieldNo, "AC")
+		intReturn = SetDisplayAttrib(4 + intFieldNo, "PR")
+	Next intFieldNo
+End Sub
+'
+'
+'
+Sub PreProc
+	'
+	hdlApplService = GetMainHandle()
+	'
+	strInstitution = GetGlobalInfo(GI_ISSUER_ID)
+	strPostingDate = GetGlobalInfo(GI_PDATE)
+	'
+	If Chain_IsActive Then
+		Call ShowDBEmptyMsg(False)
+	End If
+	'
+ExitPreProc:
+	'
+   Exit Sub
+	'
+ErrorPreProc:
+	'
+	Call ErrorHandle(Err,Erl,Error$,DBLastErrorMsg(0))
+   Call BWS_Success(False)
+	Resume ExitPreProc
+   '
+End Sub
+'
+'
+'
+Sub ChainPreProc
+	'
+	hdlApplService = GetMainHandle()
+	intReturn=SetDisplayAttrib(1,"DI")
+	'
+Exitchainpreproc:
+   '
+   Exit Sub
+   '
+chainpreprocError:
+   '
+   Call ErrorHandle(Err, Erl, Error$, DBLastErrorMsg(0))
+	Call BWS_Success(False)
+   Resume Exitchainpreproc
+   '
+End Sub
+'
+'
+'
+Sub LostFocus01		'Application number
+	'
+	On Error GoTo ErrorLostFocus01
+	'
+	Dim hdlApplDetail 			As Integer
+	Dim hdlAssgndServ 			As Integer
+	Dim intRecords					As Integer
+	Dim intClientTariffFieldNo As Integer
+	Dim intFloorLimitFldNo		As Integer
+	Dim strApplStatus				As String
+	Dim strServiceID				As String
+	Dim strParentAppNo 			As String
+	Dim strTopLevelClient		As String
+   Dim strTopLevelApp      	As String
+	Dim strClientOrg 				As String				
+	Dim strParentCliNumber		As String
+   Dim strMemberClient  	  	As String
+	Dim strRecordType				As String
+	Dim strClientLevel      	As String
+	'
+	intRecords = 0
+	intAssignedFldNo = 4				'Field offset for SERVICE_ASSIgNED_1
+	intClientTariffFieldNo = 37	'Field offset for CLIENT_TARIFF_1
+	intFloorLimitFldNo = 54			'Field offset for CLIENT_INFO_1
+	'
+	If (LastInvalidField() <> 0 And LastInvalidField() <> 01) Or _
+		(intIsFocusOK <> 0 And intIsFocusOK <> 01) Then 
+			Call BWS_Success(False)	
+			Exit Sub
+	End If
+	'
+	intIsFocusOK = 0
+	'
+	'------------------------------
+	'Set groups for ASSIGNED fields
+	'------------------------------
+	Call ResetGroups
+	'
+	'------------------------------------------------------------------------
+	'Get Service Contract ID and all assigned SERVICES and POPULATE TextLines 
+	'and Assinged Status
+	'------------------------------------------------------------------------
+	strApplNumber = Trim(DBGetValue(hdlApplService,"APPLICATION_NUMBER"))
+	'
+	If Val(strApplNumber) = 0 Then
+		'
+		intReturn 	 = BWS_Msg(MSG_OK, MSG_TYPE_INFO, 9998, "You must specify an Application Number !")
+		intIsFocusOK = 01
+		blnReturn 	 = SetFocus(1)
+		'
+	Else
+		'
+		strSQL = "SELECT * FROM CIS_APPLICATION_DETAIL WHERE APPLICATION_NUMBER = '" & strApplNumber &  "' " &_
+					"AND INSTITUTION_NUMBER = '" & strInstitution & "'"
+		'
+		hdlApplDetail = DBOpen(strSQL, True)
+		'
+		If DBIsEOF(hdlApplDetail) Then
+			'
+			blnReturn	 = BWS_Msg(MSG_OK,MSG_TYPE_ERROR,9998,"Invalid application no.")
+			intIsFocusOK = 01
+			blnReturn	 = SetFocus(1)
+			blnReturn	 = DBClose(hdlApplDetail)
+			GoTo ExitLostFocus01
+			'
+		End If
+		'
+		blnReturn          = DBSetValue(hdlApplService,"CURRENCY", _
+									DBGetValue(hdlApplDetail,"LIMIT_CURRENCY"))
+		strApplStatus 		 = DBGetValue(hdlApplDetail,"APPLICATION_STATUS")
+		strServiceContract = DBGetValue(hdlApplDetail,"SERVICE_CONTRACT_ID")
+		strParentAppNo 	 = Trim(DBGetValue(hdlApplDetail,"PARENT_APPL_NUMBER"))
+		strClientOrg 		 = Trim(DBGetValue(hdlApplDetail,"CLIENT_ORGANIZATION"))
+		strRecordType 		 = DBGetValue(hdlApplDetail,"RECORD_TYPE")
+	   strClientLevel 	 = DBGetValue(hdlApplDetail,"CLIENT_LEVEL")
+		'
+		If Instr("051|052|053",strRecordType) > 0 Then		
+			intReturn 	 = BWS_Msg(MSG_OK,MSG_TYPE_ERROR,9998,"Please use specific mask for extension of services!")
+			intIsFocusOK = 01
+			blnReturn 	 = SetFocus(1)
+			blnReturn 	 = DBClose(hdlApplDetail)
+			GoTo ExitLostFocus01
+		End If
+		'
+		'--------------------------------------------------------------
+		'If "Entered", "Approved", "Captured", "Error", "For amendment"
+		'-------------------------------------------------------------- 
+		If Instr("006|002|001|007|008",strApplStatus) > 0 Then
+			blnReturn = DBSetValue(hdlApplService,"RECORD_TYPE",strRecordType)
+			blnReturn = DBSetValue(hdlApplService,"SERVICE_CONTRACT_ID",strServiceContract)
+			blnReturn = DBSetValue(hdlApplService,"CLIENT_TYPE",DBGetValue(hdlApplDetail,"CLIENT_TYPE"))
+		Else
+			intReturn = BWS_Msg(MSG_OK, MSG_TYPE_ERROR, 9998, "This application is in status: [" & GetChoiceDisplayValue("bwt_application_status","index_field","application_status",strApplStatus) & "]." & Chr(13) & Chr(10) & "Please enter another number.")
+			intIsFocusOK=01
+			blnReturn =SetFocus(1)
+			blnReturn =DBClose(hdlApplDetail)
+			GoTo ExitLostFocus01
+		End If
+		'
+		'---------------------------------------------------------------------------
+		'If Application is for member level (i.e. record type merchant) then display 
+		'"Member Client" type serv.
+		'---------------------------------------------------------------------------
+		If ((strClientLevel = "") Or (strClientLevel = "001")) _
+			Or (strRecordType = "073") Then	'Member Client OR Move Hierarchy
+			'	
+			strSQL = "SELECT SERVICE_ID, SERVICE_AVAILABILITY, SERVICE_CATEGORY, SERVICE_BENEFICIARY " &_
+						"FROM CBR_ASSIGNED_SERVICES " &_
+						"WHERE SERVICE_CONTRACT_ID = '" & strServiceContract & "' " &_
+						"AND SERVICE_BENEFICIARY = '001' AND INSTITUTION_NUMBER = '" & strInstitution & "' " &_
+						"AND SERVICE_ID <> '999'"
+			'
+			hdlAssgndServ = DBOpen(strSQL, True)
+			'
+			'-------------------------------------------
+			'Display Services Available at ACCOUNT Level
+			'-------------------------------------------
+		  	DO While Not DBIsEOF(hdlAssgndServ)
+				'
+				intRecords = intRecords + 1
+				'
+				If intRecords > MAX_ROWS Then
+					intReturn = BWS_Msg(MSG_OK, MSG_TYPE_WARNING, 9998, MASK_FULL_MSG)
+					Exit DO
+				End If
+				'
+				'-------------------
+				'Construct fld Names
+				'-------------------
+				strServiceDBFld = "SERVICE_ID_" & CStr(intRecords)
+				strAssignedDBFld = "SERVICE_ASSIGNED_" & CStr(intRecords)
+				strClientTariffDBFld = "CLIENT_TARIFF_" & CStr(intRecords)
+				strFloorLimitDBFld = "SERVICE_INFO_" & CStr(intRecords)
+ 				'
+				'----------------------
+				'Get & Set Service Name
+				'----------------------
+				strServiceID 	= DBGetValue(hdlAssgndServ,"SERVICE_ID")
+				intReturn 		= DBSetValue(hdlApplService, strServiceDBFld, strServiceID)
+				strServiceName = GetChoiceDisplayValue("BWT_SERVICES","INDEX_FIELD","SERVICE_ID",strServiceID)
+				Call SetTextLine(intRecords,strServiceName,False)
+				'
+				'-----------------------------------------------------------
+				'Open "Assigned?" Option depending on if service is Optional
+				'-----------------------------------------------------------
+				If DBGetValue(hdlAssgndServ,"SERVICE_AVAILABILITY") = "002" Then
+					intFieldNo = intAssignedFldNo + intRecords
+					blnReturn  = Set_CHGroup(intFieldNo, "A")
+					blnReturn  = SetDisplayAttrib(intFieldNo,"DI")
+					intReturn  = DBSetValue(hdlApplService, strAssignedDBFld, "000")
+				Else	
+					intReturn  = DBSetValue(hdlApplService, strAssignedDBFld, "001")
+				End If
+				'
+				'-------------------------------------------
+				'Set "Client Tariff Info" & FloorLimit Field
+				'-------------------------------------------
+				If DBGetValue(hdlAssgndServ,"SERVICE_CATEGORY") = "002" Then	'Acquiring
+					intFieldNo = intClientTariffFieldNo + intRecords
+					blnReturn  = SetDisplayAttrib(intFieldNo,"DI")
+					intReturn  = DBSetValue(hdlApplService, strClientTariffDBFld, "")
+					intReturn  = Set_CHGroup(intFieldNo, "C")
+
+					intFieldNo = intFloorLimitFldNo + intRecords
+					blnReturn  = SetDisplayAttrib(intFieldNo,"DI")
+					intReturn  = DBSetValue(hdlApplService, strFloorLimitDBFld,"")
+				Else
+					intFieldNo = intClientTariffFieldNo + intRecords
+					blnReturn  = SetDisplayAttrib(intFieldNo,"PR")
+					intReturn  = DBSetValue(hdlApplService, strClientTariffDBFld, "000")
+					intReturn  = Set_CHGroup(intFieldNo, "NZ")
+
+					intFieldNo = intFloorLimitFldNo + intRecords
+					blnReturn  = SetDisplayAttrib(intFieldNo,"PR")
+					intReturn  = DBSetValue(hdlApplService, strFloorLimitDBFld,"0")
+				End If
+			 	'
+				blnReturn = DBNext(hdlAssgndServ)
+			Loop
+			'
+			blnReturn = DBClose(hdlAssgndServ)
+			'
+		End If	'AcctHolder
+		'
+		intReturn = DBClose(hdlApplDetail)
+		'
+	End If
+	'
+	If intRecords = 0 Then
+		intReturn 	= BWS_Msg(MSG_OK, MSG_TYPE_INFO, 9998, "No Services can be assigned to this application !")
+		intIsFocusOK=01
+		blnReturn 	= SetFocus(1)
+	End If
+	'
+	'----------------------
+	'Clear Remaining Fields
+	'----------------------
+	For intFieldNo = (1 + intRecords) To MAX_ROWS
+		blnReturn = SetDisplayAttrib(4  + intFieldNo, "PR")
+		blnReturn = SetDisplayAttrib(37 + intFieldNo, "PR")
+		blnReturn = Set_CHGroup(37 + intFieldNo, "NZ")
+		blnReturn = SetDisplayAttrib(54 + intFieldNo, "PR")
+	Next intFieldNo
+	'
+	DO
+		intRecords = intRecords + 1
+		Call SetTextLine(intRecords,"",False)
+		'
+		strServiceDBFld	   = "SERVICE_ID_" & CStr(intRecords)
+		strAssignedDBFld 	   = "SERVICE_ASSIGNED_" & CStr(intRecords)
+		strClientTariffDBFld = "CLIENT_TARIFF_" & CStr(intRecords)
+		strFloorLimitDBFld   = "SERVICE_INFO_" & CStr(intRecords)	
+		'
+		blnReturn = DBSetValue(hdlApplService,strServiceDBFld,"")
+		blnReturn = DBSetValue(hdlApplService,strAssignedDBFld,"")
+		blnReturn = DBSetValue(hdlApplService,strClientTariffDBFld,"")
+		blnreturn = DBSetValue(hdlApplService,strFloorLimitDBFld,"")
+		'
+	Loop UNTIL intRecords = MAX_ROWS
+	'
+ExitLostFocus01:
+	'
+	Exit Sub
+	'
+ErrorLostFocus01:
+	'
+	Call ErrorHandle(Err,Erl,Error$,DBLastErrorMsg(0))
+	Call BWS_Success(False)
+	Resume ExitLostFocus01
+	'
+End Sub
+'
+'
+'
+Sub AddNewProc
+	'
+   On Error GoTo AddNewProcError
+	'
+	hdlApplService = GetMainHandle()
+	'
+	intIsFocusOK = 0
+	'
+	For intFieldNo = 1 To MAX_ROWS
+		Call SetTextLine(intFieldNo,"",False)
+	Next intFieldNo
+	'
+	If Chain_IsActive Then
+		intReturn = DBSetValue(hdlApplService,"APPLICATION_NUMBER",Chain_DBGetValue(1,"APPLICATION_NUMBER"))
+		blnReturn = SetDisplayAttrib(01,"PR")
+		Call LostFocus01
+	End If
+	'
+ExitAddNewProc:
+	'
+   Exit Sub
+	'
+AddNewProcError:
+	'
+   Call ErrorHandle(Err, Erl, Error$, DBLastErrorMsg(0))
+	Call BWS_Success(False)
+   Resume ExitAddNewProc
+End Sub
+'
+'
+'
+Sub AmendProc
+	'
+	On Error GoTo ErrAmendProc
+	'
+	Dim strApplStatus  As String
+	'
+	intIsFocusOK = 0
+	'
+	strSQL = "SELECT APPLICATION_STATUS FROM CIS_APPLICATION_DETAIL " &_
+				"WHERE APPLICATION_NUMBER = '" & DBGetValue(hdlApplService, "APPLICATION_NUMBER") & "' " &_
+				"AND INSTITUTION_NUMBER = '" & strInstitution & "'"
+	'
+	strApplStatus = DBSQLStatFunc(strSQL)
+	'
+	If Instr("001|002|006|007|008", strApplStatus) = 0 Then
+		'
+		intReturn = BWS_Msg(MSG_OK, MSG_TYPE_ERROR, 9998, "This application is in status: [" & GetChoiceDisplayValue("bwt_application_status","index_field","application_status",strApplStatus) & "]." & Chr(13) & Chr(10) & "Record is not amendable!")
+		Call BWS_Success(False)
+		'
+	ElseIf BWS_Msg(MSG_YESNO, MSG_TYPE_WARNING, 9998, "Going into AMEND mode will reset any previously entered data!" & Chr(13) & Chr(10) & "Are you sure?") = MSG_RET_YES Then
+		'
+		Call LostFocus01
+		intReturn = SetDisplayAttrib(1,"PR")
+		'
+	Else
+		Call BWS_Success(False)
+	End If
+	'
+ExitAmendProc:
+	'
+	Exit Sub
+	'
+ErrAmendProc:
+	'	
+	Call ErrorHandle(Err,Erl,Error$,DBLastErrorMsg(0))
+	Call BWS_Success(False)
+	Resume ExitAmendProc
+	'
+End Sub 'AmendProc
+'
+'
+'
+Sub UpdateNewProc
+	'
+	On Error GoTo ErrorUpdateNewProc
+	'
+	If Chain_IsActive Then
+'		lngReturn = BWS_SendMsg(1,0,"")
+		Call Chain_SetScreenModes(2,7)
+	End If
+	'
+	intReturn = DBSetValue(hdlApplService,"AUDIT_TRAIL",CreateAuditTrail())
+	'
+	If ClientTariffLostFocus Then
+		Call ResetGroups
+	Else
+		Call BWS_Success(False)
+	End If
+	'
+ExitUpdateNewProc:
+	'
+	Exit Sub
+	'
+ErrorUpdateNewProc:
+	'
+	Call ErrorHandle(Err,Erl,Error$,DBLastErrorMsg(0))
+	Call BWS_Success(False)
+	Resume ExitUpdateNewProc
+	'
+End Sub 'UpdateNewProc
+'
+'
+'
+Sub UpdateAmendProc
+	'
+	On Error GoTo ErrUpdateAmendProc
+	'
+	If ClientTariffLostFocus Then
+		Call ResetGroups
+	Else
+		Call BWS_Success(False)
+	End If
+	'
+	intReturn = DBSetValue(hdlApplService,"AUDIT_TRAIL",CreateAuditTrail())
+	'
+ExitUpdateAmendProc:
+	'
+	Exit Sub
+	'
+ErrUpdateAmendProc:
+	'	
+	Call ErrorHandle(Err,Erl,Error$,DBLastErrorMsg(0))
+	Call BWS_Success(False)
+	Resume ExitUpdateAmendProc
+	'
+End Sub 'UpdateAmendProc
+'
+'
+'
+Sub RefreshDisplayProc
+	'
+	On Error GoTo ErrRefreshDisplayProc
+	'
+	Dim strServiceDBID	As String
+	Dim hdlApplServ		As Integer
+	'
+	hdlApplService = GetMainHandle()
+	'
+	'---------------------------------------
+	'Populate and Set Text Lines with values
+	'---------------------------------------
+	For intFieldNo = 1 To MAX_ROWS
+		'
+		strServiceDBID = "SERVICE_ID_" & CStr(intFieldNo)
+		strServiceID = Trim(DBGetValue(hdlApplService,strServiceDBID))
+		'
+		If strServiceID <> "" Then
+			strServiceName = GetChoiceDisplayValue("BWT_SERVICES","INDEX_FIELD","SERVICE_ID",strServiceID)
+			Call SetTextLine(intFieldNo,strServiceName,False)
+		Else
+			Call SetTextLine(intFieldNo,"",False)
+		End If
+		'
+	Next intFieldNo
+	'
+	hdlApplServ=DBOpen("SELECT LIMIT_CURRENCY,CLIENT_TYPE FROM CIS_APPLICATION_DETAIL " &_
+							 "WHERE INSTITUTION_NUMBER='" & strInstitution & "' " &_ 
+							 "AND APPLICATION_NUMBER='" & DBGetValue(hdlApplService,"APPLICATION_NUMBER") & "'",True)
+	'
+	intReturn = DBEdit(hdlApplService)
+	intReturn = DBSetValue(hdlApplService, "CLIENT_TYPE", DBGetValue(hdlApplServ,"CLIENT_TYPE"))
+	intReturn = DBSetValue(hdlApplService, "CURRENCY",    DBGetValue(hdlApplServ,"LIMIT_CURRENCY"))
+	intReturn = DBClose(hdlApplServ)
+	'
+ExitRefreshDisplayProc:
+	'
+   Exit Sub
+	'
+ErrRefreshDisplayProc:
+	'
+	Call ErrorHandle(Err,Erl,Error$,DBLastErrorMsg(0))
+   Call BWS_Success(False)
+	Resume ExitRefreshDisplayProc
+	'
+End Sub
+'
+'
+'
+Sub CancelAddNewProc
+   '
+   On Error GoTo CancelAddNewProcError
+   '
+	Call ResetGroups
+   '
+ExitCancelAddNewProc:
+   '
+   Exit Sub
+   '
+CancelAddNewProcError:
+   '
+   Call ErrorHandle(Err, Erl, Error$, DBLastErrorMsg(0))
+	Call BWS_Success(False)
+   Resume ExitCancelAddNewProc
+   '
+End Sub
+'
+'
+'
+Sub CancelAmendProc
+   '
+   On Error GoTo CancelAmendProcError
+   '
+	Call ResetGroups
+   '
+ExitCancelAmendProc:
+   '
+   Exit Sub
+   '
+CancelAmendProcError:
+   '
+   Call ErrorHandle(Err, Erl, Error$, DBLastErrorMsg(0))
+	Call BWS_Success(False)
+   Resume ExitCancelAmendProc
+   '
+End Sub
+'

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>com.smyld.app.pe</groupId>
+		<artifactId>smyld-app-pe</artifactId>
+		<version>1.0-SNAPSHOT</version>
+	</parent>
+	<groupId>com.smyld.app.pe.model</groupId>
+	<artifactId>PEModel</artifactId>
+	<version>1.0-SNAPSHOT</version>
+	<name>SMYLD Portal Engine Model</name>
+	<description>Portal Engine Model</description>
+
+	<properties>
+		<java.version>1.8</java.version>
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.reflections</groupId>
+			<artifactId>reflections</artifactId>
+			<version>0.9.10</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.smyld.main</groupId>
+			<artifactId>smyld-main-api</artifactId>
+			<version>1.0-SNAPSHOT</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.smyld.main</groupId>
+			<artifactId>smyld-main-gui</artifactId>
+			<version>1.0-SNAPSHOT</version>
+		</dependency>
+
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>2.10.4</version>
+				<configuration>
+					<stylesheetfile>${project.basedir}/src/main/resources/javadoc/stylesheet.css</stylesheetfile>
+					<reportOutputDirectory>${project.basedir}/docs</reportOutputDirectory>
+					<destDir>api</destDir>
+					<source>1.8</source>
+					<doctitle>&lt;img src="images/happy.png" style="border:none;top:10px;position:relative;"/&gt; SMYLD Portal Engine 2.1.1</doctitle>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+</project>

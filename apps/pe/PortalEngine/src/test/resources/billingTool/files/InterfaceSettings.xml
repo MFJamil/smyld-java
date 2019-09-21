@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<applicationSettings>
+	<log>
+		<name />
+		<path />
+	</log>
+	<languages default="English">
+		<language name="German"  src="German.xml" />
+		<language name="English" src="English.xml" />
+	</languages>
+	<roles>
+		<role>bchandler</role>
+		<role>contractor</role>
+		<role>admin</role>
+	</roles>
+	<lookandfeels default="Metal">
+		<lookandfeel name="Substance Nebula"                class="org.jvnet.substance.skin.SubstanceNebulaLookAndFeel" />
+		<lookandfeel name="Substance Sahara"                class="org.jvnet.substance.skin.SubstanceSaharaLookAndFeel" />
+		<lookandfeel name="Substance Business Black Steel"	class="org.jvnet.substance.skin.SubstanceBusinessBlackSteelLookAndFeel" />
+		<lookandfeel name="Substance Office Silver 2007"	class="org.jvnet.substance.skin.SubstanceOfficeSilver2007LookAndFeel" />
+		<lookandfeel name="Jtattoo Luna"                    class="com.jtattoo.plaf.luna.LunaLookAndFeel" />
+		<lookandfeel name="Jtattoo Bernstein"		        class="com.jtattoo.plaf.bernstein.BernsteinLookAndFeel" />
+		<lookandfeel name="Substance Autumn"			    class="org.jvnet.substance.skin.SubstanceAutumnLookAndFeel" />
+		<lookandfeel name="Substance Mist Silver"			class="org.jvnet.substance.skin.SubstanceMistSilverLookAndFeel" />
+		<lookandfeel name="Substance Mist Aqua"             class="org.jvnet.substance.skin.SubstanceMistAquaLookAndFeel" />
+		<lookandfeel name="Jtattoo Noire"			        class="com.jtattoo.plaf.noire.NoireLookAndFeel" />
+		<lookandfeel name="Substance Business"			    class="org.jvnet.substance.skin.SubstanceBusinessLookAndFeel" />
+		<lookandfeel name="Jtattoo HiFi"                    class="com.jtattoo.plaf.hifi.HiFiLookAndFeel" />
+		<lookandfeel name="Jtattoo Aero"                    class="com.jtattoo.plaf.aero.AeroLookAndFeel" />
+		<lookandfeel name="Substance Creme"			        class="org.jvnet.substance.skin.SubstanceCremeLookAndFeel" />
+		<lookandfeel name="Jtattoo Aluminium"			    class="com.jtattoo.plaf.aluminium.AluminiumLookAndFeel" />
+		<lookandfeel name="Jtattoo McWin"	                class="com.jtattoo.plaf.mcwin.McWinLookAndFeel" />
+		<lookandfeel name="Solaries"                        class="com.sun.java.swing.plaf.motif.MotifLookAndFeel" />
+		<lookandfeel name="Substance Nebula Brick"	        class="org.jvnet.substance.skin.SubstanceNebulaBrickWallLookAndFeel" />
+		<lookandfeel name="Goodies Plastic 3D"              class="com.jgoodies.looks.plastic.Plastic3DLookAndFeel" />
+		<lookandfeel name="Metal"                           class="javax.swing.plaf.metal.MetalLookAndFeel" />
+		<lookandfeel name="Borland"                         class="com.borland.plaf.borland.BorlandLookAndFeel" />
+		<lookandfeel name="Jtattoo Smart"                   class="com.jtattoo.plaf.smart.SmartLookAndFeel" />
+		<lookandfeel name="Goodies Plastic XP"              class="com.jgoodies.looks.plastic.PlasticXPLookAndFeel" />
+		<lookandfeel name="Jtattoo Fast"                    class="com.jtattoo.plaf.fast.FastLookAndFeel" />
+		<lookandfeel name="Substance Business Blue Steel"   class="org.jvnet.substance.skin.SubstanceBusinessBlueSteelLookAndFeel" />
+		<lookandfeel name="Substance Moderate"              class="org.jvnet.substance.skin.SubstanceModerateLookAndFeel" />
+		<lookandfeel name="Substance Creme Coffee"          class="org.jvnet.substance.skin.SubstanceCremeCoffeeLookAndFeel" />
+		<lookandfeel name="Jtattoo Mint"                    class="com.jtattoo.plaf.mint.MintLookAndFeel" />
+		<!-- Need to know the reason why Nimbus does not exists in the JDK anymore!! they might found out several bugs inside?! any how correct with the proper nimbus location and activate it afterwards 
+		<lookandfeel name="Nimbus"                          class="com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel" />-->
+		<lookandfeel name="Jtattoo Acryl"                   class="com.jtattoo.plaf.acryl.AcrylLookAndFeel" />
+		<lookandfeel name="GTK"                             class="com.sun.java.swing.plaf.gtk.GTKLookAndFeel" />
+		
+	</lookandfeels>
+</applicationSettings>

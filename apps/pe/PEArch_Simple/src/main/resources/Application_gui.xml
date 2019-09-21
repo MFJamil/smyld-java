@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<application type="1">
+	<artifact>${artifactId} Application</artifact>
+	<log>
+		<name>application.log</name>
+		<path />
+	</log>
+	<appearance>
+		<!--   **************************** Look and Feels ******************************** -->
+		<lookandfeels>
+			<lookandfeel name="Goodies Plastic XP"  class="com.jgoodies.looks.plastic.PlasticXPLookAndFeel" />
+			<lookandfeel name="Jtattoo Acryl"       class="com.jtattoo.plaf.acryl.AcrylLookAndFeel"         />
+			<lookandfeel name="Jtattoo Aero"        class="com.jtattoo.plaf.aero.AeroLookAndFeel"           />
+			<lookandfeel name="Jtattoo Aluminium"   class="com.jtattoo.plaf.aluminium.AluminiumLookAndFeel" />
+			<lookandfeel name="Jtattoo Bernstein"   class="com.jtattoo.plaf.bernstein.BernsteinLookAndFeel" />
+			<lookandfeel name="Jtattoo Fast"        class="com.jtattoo.plaf.fast.FastLookAndFeel"           />
+			<lookandfeel name="Jtattoo HiFi"        class="com.jtattoo.plaf.hifi.HiFiLookAndFeel"           />
+			<lookandfeel name="Jtattoo Luna"        class="com.jtattoo.plaf.luna.LunaLookAndFeel"           />
+			<lookandfeel name="Jtattoo McWin"       class="com.jtattoo.plaf.mcwin.McWinLookAndFeel"         />
+			<lookandfeel name="Jtattoo Mint"        class="com.jtattoo.plaf.mint.MintLookAndFeel"           />
+			<lookandfeel name="Jtattoo Noire"       class="com.jtattoo.plaf.noire.NoireLookAndFeel"         />
+			<lookandfeel name="Jtattoo Smart"       class="com.jtattoo.plaf.smart.SmartLookAndFeel"         />
+			<lookandfeel name="Goodies Plastic 3D"  class="com.jgoodies.looks.plastic.Plastic3DLookAndFeel" default="true" />
+		</lookandfeels>
+	</appearance>
+	<build compile="false">
+		<!--   **************************** Languages ******************************** -->
+		<languages>
+			<language name="German"  src="${source}/German.xml"  target="German.xml" />
+			<language name="English" src="${source}/English.xml" target="English.xml" />
+		</languages>
+	</build>
+	<!--   **************************** Panels ******************************** -->
+	<panels>
+		<panel id="SettingsPanel" layout="border" package="${groupId}.gui.panels" vgap="8" hgap="5">
+			<tabbedpanel id="mainTab" position="Center">
+				<tab id="general" layout="border" label="General" icon="script.png">
+					<panel id="MainPanel" src="GeneralUserSettings" position="Center" />
+				</tab>
+			</tabbedpanel>
+			<panel id="controlPanel" layout="flow" position="South" align="right">
+				<button id="cmdApply"  label="Apply.." icon="view-restore.png" onclick="doApply" />
+				<button id="cmdCancel" label="Cancel"  icon="process-stop.png" onclick="doCancel" />
+				<button id="cmdClose"  label="Close"   icon="close_16.png"     onclick="doClose" />
+			</panel>
+		</panel>
+		<panel id="GeneralUserSettings" layout="rc" package="${groupId}.gui.panels">
+			<comboField id="langs"        row="1" col="1"  height="1" width="25" label="Language       " />
+			<label      id="lblReqStart1" row="1" col="27" height="1" width="15" label="(Requires Restart)" />
+			<comboField id="lafs"         row="2" col="1"  height="1" width="25" label="Look and feel " />
+			<label      id="lblReqStart2" row="2" col="27" height="1" width="15" label="(Requires Restart)" />
+		</panel>
+		<panel id="MainStatus" layout="border" package="${groupId}.gui.panels">
+			<panel id="RightSide" layout="flow" align="right" position="East" bordertype="lowered">
+				<label id="curStatus" icon="PnlUserLoginconsole_16.png" label="System is Active" />
+			</panel>
+			<panel id="RightSide" layout="flow" align="left" position="Center" bordertype="lowered" />
+			<panel id="LeftSide" layout="flow" align="left" position="West" bordertype="lowered">
+				<label id="timeLabel" icon="schedule.png" label="12:10:23 21-May-2005" bordertype="etched" />
+			</panel>
+		</panel>
+	</panels>
+	<!--   **************************** Windows ******************************** -->
+	<windows>
+		<window onstartup="init" id="MdiWindow" type="mdi" icon="monitor.png" width="max" height="max" package="${groupId}.gui.windows" label="SMYL Transaction Formats">
+			<menubar id="bar_main" type="classic" />
+			<toolbar id="MdiToolbar" />
+			<body id="mainDesktop" type="dockabledesktop" />
+			<statusbar id="MainStatus" />
+		</window>
+		<window id="WdSettings" type="dialog" icon="settings_16.png" width="470" height="400" package="${groupId}.gui.windows" label="Settings Window">
+			<body id="settingsPanel" type="panel" linklistenerto="window">SettingsPanel</body>
+		</window>
+	</windows>
+	<!--   **************************** Menus ******************************** -->
+	<menus>
+		<menubar id="bar_main">
+			<menu id="mnu_file">
+				<menu id="mnu_open_functions" action="openUserMenu"     icon="functions.png"   accelerator="Ctrl+O" />
+				<menu id="mni_settings"       action="openUserSettings" icon="settings_16.png" accelerator="Ctrl+S" role="contractor" showrole="bchandler" />
+				<menu type="separator" />
+				<menu id="mnu_exit"           action="exitApp"          icon="close_16.png" accelerator="Ctrl+E" />
+			</menu>
+			<menu id="mnu_help">
+				<menu id="mni_showhelpcont"   action="openHelp"         icon="help.png" />
+				<menu id="sep_19" type="separator" />
+				<menu id="mni_aboutbankworks" action="openAbout" />
+			</menu>
+		</menubar>
+	</menus>
+	<!--   **************************** Toolbars ******************************** -->
+	<toolbars>
+		<toolbar id="MdiToolbar">
+			<menu id="mnu_bar_open_functions" action="openUserMenu"     icon="object.gif"      accelerator="Ctrl+O" />
+			<menu id="mnu_bar_open_settings"  action="openUserSettings" icon="settings_16.png" accelerator="Ctrl+S" />
+			<menu type="separator" />
+			<menu id="exitSystem"             action="exitApp"          icon="close_16.png"  tooltip="Press to exit" />
+		</toolbar>
+	</toolbars>
+	<!--   **************************** Actions ******************************** -->
+	<actions>
+		<action id="exitApp"               command="closeApplication" />
+		<action id="openCustomer"          command="addComponent"        target="MdiWindow" label="Funktionen" icon="functions.png" object="panel.CustomerPanel" param="main" />
+		<action id="openUserMenu"          command="addComponent"        target="MdiWindow" label="Funktionen" icon="functions.png" object="menu.functions.tree" param="side" />
+		<action id="openHelp"              command="openWindow"          target="WdHelp" />
+		<action id="openUserSettings"      command="openWindow"          target="WdSettings" />
+		<action id="openAbout"             command="openWindow"          target="WdAbout" />
+		<action id="openHelpIntroduction"  command="assingToApplication" target="WdHelp" param="Introduction" />
+		<action id="openHelpUserManual"    command="assingToApplication" target="WdHelp" param="User_Manual" />
+		<action id="SaveCustomer"          command="assingToApplication" />
+		<action id="RefreshCustomer"       command="assingToApplication" />
+		<action id="AddAddress"            command="assingToApplication" />
+		<action id="AddCustomer"           command="assingToApplication" role="contractor,bchandler" />
+		<action id="AddEntityConnection"   command="assingToApplication" />
+		<action id="AddInvoice"            command="assingToApplication" role="bchandler" showrole="contractor" />
+		<action id="AddUser"               command="assingToApplication" role="admin" />
+		<action id="AlignTop"              command="assingToApplication" />
+		<action id="AlignButtom"           command="assingToApplication" />
+		<action id="AlignRight"            command="assingToApplication" />
+		<action id="AlignLeft"             command="assingToApplication" />
+		<action id="AlignCenterHorizontal" command="assingToApplication" />
+		<action id="AlignCenterVertical"   command="assingToApplication" />
+		<action id="AlignStairRight"       command="assingToApplication" />
+		<action id="AlignStairLeft"        command="assingToApplication" />
+		<action id="CloneCustomer"         command="openWindow"          role="contractor,bchandler" target="WdClone" />
+	</actions>
+</application>

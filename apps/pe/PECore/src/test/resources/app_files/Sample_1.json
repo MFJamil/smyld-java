@@ -1,0 +1,13 @@
+{
+  "application":{
+    "log":  {
+      "name": "application.log",
+      "path": "logs"
+    },
+    "build":
+    {
+      "toolkit" : "swing"
+    }
+  }
+}
+

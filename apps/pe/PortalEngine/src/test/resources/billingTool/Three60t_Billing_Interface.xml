@@ -1,0 +1,1222 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?> 
+<application type="1">
+  <name>SMYL Interface Console</name>
+  <log>
+    <name>Simulator.log</name>
+    <path></path>
+  </log>
+  <splash icon="360T_splash.png" body="" />
+	<security>
+  		<roles>
+			<role>admin</role>
+			<role>bchandler</role>
+			<role>contracter</role>
+  		</roles>
+  		<users>
+  			<user>
+	  			<name>Mohammed</name>
+	  			<password>Mfj1971</password>
+	  			<role>admin</role>
+	  		</user>
+	  		<user>
+	  			<name>Eva</name>
+	  			<password>Eva123</password>
+	  			<role>bchandler</role>
+	  		</user>
+  		</users>
+	</security>
+	<appearance>
+		<lookandfeels>
+			<lookandfeel name="Goodies Plastic XP"  class="com.jgoodies.looks.plastic.PlasticXPLookAndFeel" />
+			<lookandfeel name="Jtattoo Acryl"       class="com.jtattoo.plaf.acryl.AcrylLookAndFeel" />
+			<lookandfeel name="Jtattoo Aero"        class="com.jtattoo.plaf.aero.AeroLookAndFeel" />
+			<lookandfeel name="Jtattoo Aluminium"   class="com.jtattoo.plaf.aluminium.AluminiumLookAndFeel" />
+			<lookandfeel name="Jtattoo Bernstein"   class="com.jtattoo.plaf.bernstein.BernsteinLookAndFeel" />
+			<lookandfeel name="Jtattoo Fast"        class="com.jtattoo.plaf.fast.FastLookAndFeel" />
+			<lookandfeel name="Jtattoo HiFi"        class="com.jtattoo.plaf.hifi.HiFiLookAndFeel" />
+			<lookandfeel name="Jtattoo Luna"        class="com.jtattoo.plaf.luna.LunaLookAndFeel" />
+			<lookandfeel name="Jtattoo McWin"       class="com.jtattoo.plaf.mcwin.McWinLookAndFeel" />
+			<lookandfeel name="Jtattoo Mint"        class="com.jtattoo.plaf.mint.MintLookAndFeel" />
+			<lookandfeel name="Jtattoo Noire"       class="com.jtattoo.plaf.noire.NoireLookAndFeel" />
+			<lookandfeel name="Jtattoo Smart"       class="com.jtattoo.plaf.smart.SmartLookAndFeel" />
+			<lookandfeel name="Goodies Plastic 3D"  class="com.jgoodies.looks.plastic.Plastic3DLookAndFeel" default="true"/>
+			<lookandfeel name="Borland"             class="com.borland.plaf.borland.BorlandLookAndFeel" />
+			<lookandfeel name="Metal"               class="javax.swing.plaf.metal.MetalLookAndFeel" />
+			<lookandfeel name="Solaries"            class="com.sun.java.swing.plaf.motif.MotifLookAndFeel" />
+			<!--  <lookandfeel name="GTK"                class="com.sun.java.swing.plaf.gtk.GTKLookAndFeel" />-->
+			<!--  <lookandfeel name="Windows"            class="com.sun.java.swing.plaf.windows.WindowsLookAndFeel" />-->
+			<!--<LookAndFeel>com.l2fprod.gui.plaf.skin.SkinLookAndFeel</LookAndFeel>-->  
+		</lookandfeels>
+	</appearance>
+	<link>
+  		<!--  <appmanager>BillingConsoleManager</appmanager>-->
+	</link>
+	<build compile="true">
+	    <!--  <home>/home/jamil/workspace/tools-billing-interface</home>-->
+	    <home>target/billing</home>
+	    <!--  <source>/home/jamil/workspace/tools-billing-interface/src</source>-->
+	    <!--  <source>/home/jamil/trunk/billing/frontend/billing-frontend-configuration/target/generated-sources</source>-->
+     	<source>target/billing/generated-sources</source>
+    	<classes>target/billing/classes</classes>
+    	<mainClass>com.three60t.app.billing.gui</mainClass>
+    	<componenttype>swing</componenttype>
+
+		<images>
+			<dir src="src/test/resources/billingTool/images" />
+		</images>
+		<resources>
+			<resource name="Introduction_en.htm" src="src/test/resources/billingTool/files/Introduction_en.htm" />
+			<resource name="Introduction_de.htm" src="src/test/resources/billingTool/files/Introduction_de.htm" />
+			<resource name="User_Manual_en.htm"  src="src/test/resources/billingTool/files/User_Manual_en.htm" />
+			<resource name="User_Manual_de.htm"  src="src/test/resources/billingTool/files/User_Manual_de.htm" />
+		</resources>
+		<libraries export="true">
+			<!-- All OS -->
+			<library id="JDOM">${ext_lib}/jdom/jdom-1.0b8.jar</library>
+			<library id="SMYLD_MAIN">${smyld_main}/smyld/target/smyld-main-api-1.0-SNAPSHOT.jar</library>
+			<library id="SMYLD_GUI">${smyld_main}/smyld-gui/target/smyld-main-gui-1.0-SNAPSHOT.jar</library>
+			<library id="SMYLD_DB">${smyld_main}/smyld-db/target/smyld-main-db-1.0-SNAPSHOT.jar</library>
+			<library id="PORTAL_ENGINE">${smyld_apps}/PortalEngine/target/smyld-app-portalengine-1.0-SNAPSHOT.jar</library>
+			<library id="ENTITY_PLOT">${smyld_apps}/EntityPlot/target/smyld-app-entityplot-1.0-SNAPSHOT.jar</library>
+			<library id="LAF_GOODIES">${ext_lib}/laf/goodies/looks-2.2.1.jar</library>
+			<library id="LAF_TATTOO">${ext_lib}/laf/tattoo/jtattoo-1.0.jar</library>
+
+			<!-- Windows >
+			<library id="JDOM">C:\development\java\tools\lib\jdom\jdom-1.0b8.jar</library>
+			<library id="SMYLD_MAIN">C:\development\java\projects\main\smyld\target\smyld-main-api-1.0-SNAPSHOT.jar</library>
+			<library id="SMYLD_GUI">C:\development\java\projects\main\smyld-gui\target\smyld-main-gui-1.0-SNAPSHOT.jar</library>
+			<library id="SMYLD_DB">C:\development\java\projects\main\smyld-db\target\smyld-main-db-1.0-SNAPSHOT.jar</library>
+			<library id="PORTAL_ENGINE">C:\development\java\projects\apps\PortalEngine\target\smyld-app-portalengine-1.0-SNAPSHOT.jar</library>
+			<library id="ENTITY_PLOT">C:\development\java\projects\apps\EntityPlot\target\smyld-app-entityplot-1.0-SNAPSHOT.jar</library>
+			<library id="LAF_GOODIES">C:\development\java\tools\lib\laf\goodies\looks-2.2.1.jar</library>
+			<library id="LAF_TATTOO">C:\development\java\tools\lib\laf\tattoo\jtattoo-1.0.jar</library-->
+			<!-- Ubuntu >
+			<library id="JDOM">/home/mfjamil/development/java/tools/lib/jdom/jdom-1.0b8.jar</library>
+			<library id="SMYLD_MAIN">/home/mfjamil/development/java/projects/main/smyld/target/smyld-main-api-1.0-SNAPSHOT.jar</library>
+			<library id="SMYLD_GUI">/home/mfjamil/development/java/projects/main/smyld-gui/target/smyld-main-gui-1.0-SNAPSHOT.jar</library>
+			<library id="SMYLD_DB">/home/mfjamil/development/java/projects/main/smyld-db/target/smyld-main-db-1.0-SNAPSHOT.jar</library>
+			<library id="PORTAL_ENGINE">/home/mfjamil/development/java/projects/apps/PortalEngine/target/smyl-app-portalengine-1.0-SNAPSHOT.jar</library>
+			<library id="ENTITY_PLOT">/home/mfjamil/development/java/projects/apps/EntityPlot/target/smyl-app-entityplot-1.0-SNAPSHOT.jar</library>
+			<library id="LAF_GOODIES">/home/mfjamil/development/java/tools/lib/laf/goodies/looks-2.2.1.jar</library>
+			<library id="LAF_TATTOO">/home/mfjamil/development/java/tools/lib/laf/tattoo/jtattoo-1.0.jar</library-->
+			<!-- The GUI business libraries
+		   <library id="ConsoleHandler.jar">/home/jamil/workspace/tools-billing-interface/deploy/ConsoleHandler.jar</library>
+		   -->
+		  <!--  <library id="EntityPlotter.jar">/home/jamil/workspace/Training/deploy/EntityPlotter.jar</library>-->
+		   <!-- Persistence layer libraries
+		  <library id="general_persistence.jar">/home/jamil/trunk/general/general-persistence/target/general-persistence-2.9-SNAPSHOT.jar</library>
+		  <library id="general_logging.jar">/home/jamil/trunk/general/general-logging/target/general-logging-2.9-SNAPSHOT.jar</library>
+		  <library id="general_utils.jar">/home/jamil/trunk/general/general-utils/target/general-utils-2.9-SNAPSHOT.jar</library>
+		  <library id="BillingClient.jar">/home/jamil/trunk/runtime/init/runtime-init-client/target/runtime-init-client-2.9-SNAPSHOT.jar</library>
+		  <library id="BillingModel.jar">/home/jamil/trunk/framework/billing/framework-billing-model/target/framework-billing-model-2.9-SNAPSHOT.jar</library>
+		  <library id="ejb3.jar">/home/jamil/.m2/repository/com/three60t/extlibs/ejb3-persistence/3.3.1/ejb3-persistence-3.3.1.jar</library>
+		  -->
+
+
+		  <!--   Hibernate  libraries
+		  <library id="hibernate.jar">/home/jamil/.m2/repository/com/three60t/extlibs/hibernate/3.2.6.GA/hibernate-3.2.6.GA.jar</library>
+		  <library id="hibernate_annotations.jar">/home/jamil/.m2/repository/com/three60t/extinfoChangedlibs/hibernate-annotations/3.3.1.GA/hibernate-annotations-3.3.1.GA.jar</library>
+		  <library id="hibernate_validator.jar">/home/jamil/.m2/repository/com/three60t/extlibs/hibernate-validator/3.0.0.GA/hibernate-validator-3.0.0.GA.jar</library>
+		  <library id="hibernate_common.jar">/home/jamil/.m2/repository/com/three60t/extlibs/hibernate-commons-annotations/3.3.1.GA/hibernate-commons-annotations-3.3.1.GA.jar</library>
+		  -->
+		   <!--   apache common libraries
+		  <library id="apache_lang.jar">/home/jamil/.m2/repository/commons-lang/commons-lang/2.3/commons-lang-2.3.jar</library>
+		  <library id="apache_logging.jar">/home/jamil/.m2/repository/commons-logging/commons-logging/1.1/commons-logging-1.1.jar</library>
+
+		  <library id="aspectj.jar">/home/jamil/.m2/repository/org/aspectj/aspectjrt/1.5.4/aspectjrt-1.5.4.jar</library>
+
+		  <library id="iText.jar">/home/jamil/.m2/repository/com/three60t/extlibs/iText/2.1.1/iText-2.1.1.jar</library>
+
+		  <library id="LAF_BORLAND.jar">/home/jamil/workspace/lib/LAF/borland/BorlandLookAndFeel.jar</library>
+		  <library id="LAF.jar">/home/jamil/workspace/lib/LAF/goodies/looks-2.1.4.jar</library>
+
+		  <library id="JDOM.jar">/home/jamil/.m2/repository/jdom/jdom/1.0/jdom-1.0.jar</library>
+		  <library id="Log4j.jar">/home/jamil/workspace/lib/logging/log4j/log4j-1.2.15.jar</library>
+			-->
+		  <!--  <library id="LAF_WEBLOGIC.jar">/home/jamil/workspace/lib/LAF/weblogic/3rdparty.jar</library>-->
+		  <!--  <library id="JDOM.jar">/home/jamil/workspace/lib/xml/dom/jdom_1_b7.jar</library>-->
+		  <!--  <library id="LAF_SKIN.jar">/home/jamil/workspace/lib/LAF/skin/skinlf.jar</library>-->
+		  <!--library id="LAF.jar">/home/jamil/workspace/lib/LAF/goodies/looks-2.1.4.jar</library>
+		  <library id="JDOM.jar">/home/jamil/workspace/lib/xml/dom/jdom_1_b7.jar</library-->
+		</libraries>
+		<languages>
+		  <language name="German"  src="src/test/resources/billingTool/lang/German.xml" target="German.xml" />
+		  <language name="English" src="src/test/resources/billingTool/lang/English.xml" target="English.xml" />
+		  <!--  <language name="Arabic" src="${basedir}/src/main/resources/translate_Ar.xml" target="Arabic.xml" />-->
+		</languages>
+		<settingsfile srctype="xml">
+		  <name>InterfaceSettings</name>
+		  <!--<path>D:/Projects/TestApplications/SMYLFormatsConsole/deploy</path>-->
+		  <path></path>
+		</settingsfile>
+		<targetjar deploy="true">
+		  <name>BillingInterface</name>
+		  <path>target/billing/deploy</path>
+		</targetjar>
+  </build>
+  
+  
+  <!--   **************************** Current Active Panels ******************************** -->
+ <panels>
+     <panel id="SettingsPanel" layout="border" package="com.three60t.app.billing.gui.panels" vgap="8" hgap="5" >
+      <tabbedpanel id="mainTab" position="Center">
+      	<tab id="general" layout="border" label="General" icon="script.png">
+      		<panel  id="MainPanel" src="GeneralUserSettings" position="Center"/>
+      	</tab>
+      
+       </tabbedpanel>
+      <panel id="controlPanel" layout="flow"  position="South" align="right" >
+        <button id="cmdApply" label="Apply.."  icon="view-restore.png" onclick="doApply" />
+        <button id="cmdCancel" label="Cancel"  icon="process-stop.png" onclick="doCancel" />
+        <button id="cmdClose" label="Close"    icon="close_16.png"     onclick="doClose"  />
+        
+      </panel>
+    </panel>
+    <panel id="PnlUserLogin" layout="rc" package="com.three60t.app.billing.gui.panels">
+    	<label      id="msg"       row="1"   col="1"   height="1" width="30" label="" /> 
+		<textField  id="name"      row="2"   col="1"   height="1" width="30" label="Name"/>
+		<password   id="password"  row="3"   col="1"   height="1" width="30" label="Password"/>
+      	<panel id="controlPanel" layout="flow"  row="6"   col="1" height="2" width="30" align="right" >
+	        <button id="cmdLogin"  label="Login.."  icon="system-lock-screen.png" onclick="doLogin" />
+	        <button id="cmdCancel" label="Cancel"   icon="application-exit.png"   onclick="doCancel" />
+	        <button id="cmdReset"  label="Reset"    icon="edit-clear.png"         onclick="doReset"  />
+      	</panel>
+		
+    </panel>
+    
+    <panel id="GeneralUserSettings" layout="rc" package="com.three60t.app.billing.gui.panels">
+      <comboField id="langs"        row="1" col="1"   height="1" width="40" label="Interface Language       "/>
+      <label     id="lblReqStart1"  row="1" col="42"  height="1" width="15" label="(Requires Restart)" />
+      <comboField id="lafs"         row="2" col="1"   height="1" width="40" label="Interface Look and feel "/>
+      <label     id="lblReqStart2"  row="2" col="42"  height="1" width="15" label="(Requires Restart)" />
+    </panel>
+    <panel id="EntityGUISettings" layout="border" package="com.three60t.app.billing.gui.panels">
+        <menubar id="EntityPropMenu" type="tree" position="Center" icon="application_view_list.png" label="Entity Properties" titletype="icon" linklistenerto="window" />
+      
+    </panel>
+ 
+    <panel id="AboutPanel" layout="border" package="com.three60t.app.billing.gui.panels">
+      <tabbedpanel id="aboutTabs" position="Center">
+        <tab id="info" layout="border" label="Product Info" icon="script.png">
+          <!--<label id="smyllogo"  position="Center" bordertype="etched"/>-->
+          <label id="picture" icon="360T.jpg" position="Center" align="center" onmouseclick="showSite" />
+          <label id="product" position="South">
+            <html>
+              <table width="500" height="300">
+                <tr><td align="center"><font face="Times Roman" size="5" color="#004A02"><b>360t Billing Interface</b></font></td></tr>
+                <tr><td align="center"><font face="Times Roman">Version 1.00.003</font></td></tr>
+                <tr><td align="center"><font face="Times Roman">Copyright © 2006,2008 360t Treasury System.</font></td></tr>
+                <tr><td align="center"><font face="Times Roman">All rights reserved. </font></td></tr>
+              </table>
+            </html>
+          </label>
+
+        </tab>
+        <tab id="system" layout="border" label="Details" icon="zoom-in.png">
+          <scrollpane id="inforListScroll" position="Center">
+            <table id="infoList"  position="Center" label="">tlb_CustomerMain
+              <header> 
+                <col id="colPrcType" label="Product" width="20" />
+                <col id="colPrcNo" label="Version" width="14" />
+              </header>
+              <values>
+                <value>Framework-billing-model|1.13.073 Beta 12</value>
+                <value>Tools Billing Interface|1.01.012 Beta 12</value>
+                <value>SMYL Portal Engine|1.00.003</value>
+              </values>
+            </table>
+          </scrollpane>
+        </tab>
+      </tabbedpanel>
+    </panel>
+	<panel id="UserPanel" layout="border" package="com.three60t.app.billing.gui.panels">
+		<tabbedpanel id="userInfo" position="Center">
+			<tab id="general" layout="border" label="General" icon="script.png">
+				<panel id="pnlUserGeneral" src="PnlUserGeneral" position="Center"/>  
+			</tab>
+			<tab id="rights" layout="border" label="Roles" icon="security-medium.png">
+				<panel id="pnlValuesMapper" src="PnlValuesMapper" position="Center"/>  
+			</tab>
+
+
+		</tabbedpanel>
+	</panel>		
+	<panel id="PnlUserGeneral" layout="border" package="com.three60t.app.billing.gui.panels">
+		<panel id="generalInfo" layout="rc" position="Center" bordertype="lowered">
+			<textField  id="name"           row="1"    col="1"   height="1" width="40"  onchange="infoChanged" label="Name"/>
+			<textField  id="password"       row="2"    col="1"   height="1" width="40"  onchange="infoChanged" label="Password"/>
+			<textField  id="email"          row="3"    col="1"   height="1" width="40"  onchange="infoChanged" label="E Mail"/>
+			<comboField id="lang"           row="4"    col="1"   height="1" width="40"  onchange="infoChanged" label="Language"/>
+			<!--  <textField  id="roles"          row="5"    col="1"   height="1" width="40"  onchange="infoChanged" label="Roles"/>-->
+		</panel>
+	</panel>
+	
+    <panel id="CustomerPanel" layout="border" package="com.three60t.app.billing.gui.panels">
+      <toolbar id="tlb_CustomerMain" position="North"/>
+      <tabbedpanel id="customerInfo" position="Center">
+        <tab id="general" layout="border" label="General" icon="script.png">
+        	<panel id="pnlCustomerGeneral" src="PnlCustomerGeneral" position="Center"/>  
+        </tab>
+        <!--  
+        <tab id="address" layout="border" label="Addresses" icon="address-book-new.png">
+        	<panel id="pnlCustomerAddresses" src="PnlCustomerAddresses" position="Center"/>
+        </tab>
+        -->
+        <tab id="invoice" layout="border" label="Invoices" icon="application_view_list.png">
+        	<panel id="pnlInvoiceSettings" src="PnlInvoiceSettings" position="Center"/>
+        </tab>
+        <tab id="invoiceRouter" layout="border" label="Invoice Router" icon="view-restore.png">
+        	<panel id="pnlInvoiceRouter" src="PnlInvoiceRouterTab" position="Center"/>
+        </tab>
+        <tab id="views" layout="border" label="Views" icon="report.png" >
+        	<panel id="pnlCustomerViews" src="PnlCustomerViews" position="Center"/>
+        </tab>
+        <tab id="product" layout="border" label="Product Settings" icon="edit-paste.png" >
+       		<panel id="pnlProductSettings" src="PnlProductSettings" position="Center"/>
+        </tab>
+        <tab id="history" layout="border" label="Billing History" icon="schedule_1.png" >
+       		<panel id="pnlBillingHistory" src="PnlBillingHistory" position="Center"/>
+        </tab>
+      </tabbedpanel>
+    </panel>
+    
+
+    <panel id="BCTabularPanel" layout="border" package="com.three60t.app.billing.gui.panels">
+      <tabbedpanel id="bcInfo" position="Center">
+        <tab id="calcValues" layout="border" label="Calculation Values" icon="accessories-calculator.png">
+        	<panel id="pnlCalcValTabular" src="PnlCalcValTabular" position="Center"/>  
+        </tab>
+        <tab id="exps" layout="border" label="Exceptions" icon="warning-16.png">
+        	<panel id="pnlExpTabular" src="PnlExpTabular" position="Center"/>
+        </tab>
+      </tabbedpanel>
+      <panel id="controlPanel" layout="flow" position="South" >
+      	<button id="cmdClose" label="close" />
+      </panel>
+    </panel>
+	<panel id="PnlCalcValTabular" layout="border" package="com.three60t.app.billing.gui.panels.entity">
+		<scrollpane id="tableScroll" position="Center">
+			<table id="bctab"  position="Center" label="">
+				<header> 
+				<col id="colSideTitle" label=" - " width="20" />
+				<col id="colCVal1"   label="Fixed Price"    width="14" />
+				<col id="colCVal2"   label="Price Per Unit" width="14" />
+				</header>
+			</table>
+		</scrollpane>
+	</panel>
+	<panel id="PnlExpTabular" layout="border" package="com.three60t.app.billing.gui.panels.entity">
+		<scrollpane id="tableScroll" position="Center">
+			<table id="extab"  position="Center" label="">
+				<header> 
+				<col id="colSideTitle" label=" - " width="20" />
+				<col id="colExp1"   label="Floor Limit" width="14" />
+				<col id="colExp2"   label="Cap Floor" width="14" />
+				</header>
+			</table>
+		</scrollpane>
+	</panel>
+	<!-- 
+	<panel id="PnlFontChooser" layout="rc" package="com.three60t.app.bill      <panel id="controlPanel" layout="flow"  position="South" align="right" >
+        <button id="cmdApply" label="Apply.."  icon="view-restore.png" onclick="doApply" />
+        <button id="cmdCancel" label="Cancel"  icon="process-stop.png" onclick="doCancel" />
+        <button id="cmdClose" label="Close"    icon="close_16.png"     onclick="doClose"  />
+        
+      </panel>
+	ing.gui.panels">
+		<panel id="pnlFontFamily" row="1" col="1" height="10" width="10" layout="border" bordertype="line" bordertitle="Font Family">
+			<scrollpane id="fontFamilyScr" position="Center">
+				<listField id="fontFamily" ></listField>
+			</scrollpane>
+		</panel>	
+		<panel id="pnlStyle" row="1" col="14" height="10" width="10" layout="border">
+			<scrollpane id="styleScr" position="Center" bordertype="line" bordertitle="Style">
+				<listField id="fontStyle"  ></listField>
+			</scrollpane>
+		</panel>
+
+	</panel>
+     -->
+	<panel id="PnlFontChooser" layout="rc" package="com.three60t.app.billing.gui.panels">
+		<scrollpane id="fontFamilyScr" row="1" col="1" height="10" width="10" bordertype="line" bordertitle="Font Family">
+			<listField id="fontFamily" onchange="familyChanged" ></listField>
+		</scrollpane>
+		<scrollpane id="styleScr" row="1" col="14" height="10" width="10" bordertype="line" bordertitle="Style">
+			<listField id="fontStyle"  onchange="stylChanged">
+			</listField>
+		</scrollpane>
+		<panel id="pnlFontSize" row="1" col="27" height="10" width="10" layout="rc"  topmargin="50" bordertype="line" bordertitle="Size">
+			<textField  id="fsize"   row="0" col="1" height="1" width="8" fieldwidth="8" />
+			<scrollpane id="fsizeScr" row="1" col="1" height="7" width="8" >
+				<listField id="fontSizeList"  onchange="sizeChanged"/>
+			</scrollpane>
+		</panel>
+		<panel id="pnlPreview" row="9" col="1" height="4" width="36" layout="border" bordertype="line" bordertitle="Preview">
+			<textField  id="preview"   position="Center"  />
+		</panel>
+      	<panel id="controlPanel" layout="flow"  row="13"   col="1" height="2" width="36" align="right"  >
+	        <button id="cmdApply"  label="Apply.."  icon="view-restore.png" onclick="doApply" />
+	        <button id="cmdCancel" label="Cancel"   icon="process-stop.png" onclick="doCancel" />
+	        <button id="cmdClose"  label="Close"    icon="close_16.png"     onclick="doClose"  />
+	    </panel>
+		
+		
+
+	</panel>
+    
+    <panel id="PnlErrorMessage" layout="rc" package="com.three60t.app.billing.gui.panels" vgap="8" hgap="5" >
+    	<label id="message"  row="1" col="1" width="40" height="4" align="center" icon="process-stop_32.png" >
+    	   <html>
+              <p>
+              	Error message will be shown here
+              </p>
+            </html>
+    	</label>
+    	<panel id="details" layout="rc" row="12" col="1" width="40" height="7">
+    		<panel id="detailsBar" layout="flow" row="1" col="1" width="40" height="2" align="right">
+        		<button id="cmdDetails" label="Details"  icon="zoom-in.png" onclick="showDetails" />    			
+        		<button id="cmdClose" label="Close"  icon="close_16.png" onclick="cmdClose" />
+    		</panel>
+    		<scrollpane id="detailsScroll" row="3" col="1" width="40" height="5">
+    			<textArea id="detailsText" position="Center" width="30" height="15" />
+    		</scrollpane>
+    	</panel>
+    </panel>
+    <panel id="PnlCustomerNew" layout="border" package="com.three60t.app.billing.gui.panels" vgap="8" hgap="5" >
+	    <panel id="generalInfo" position="Center" src="PnlCustomerGeneralInfo"/>
+		<panel id="controlPanel" layout="flow"  position="South" align="right" >
+			<button id="cmdApply"  label="Create.." icon="contact-new.png"  onclick="doCreate" />
+			<button id="cmdCancel" label="Cancel"   icon="process-stop.png" onclick="doCancel" />
+		</panel>
+	</panel>	
+    
+    <panel id="PnlCustomerClone" layout="border" package="com.three60t.app.billing.gui.panels" vgap="8" hgap="5" >
+	  <tabbedpanel id="cloneInfo" position="Center">
+        <tab id="general" layout="border" label="General" icon="script.png">
+        	<panel      id="generalInfo"    position="Center" src="PnlCustomerGeneralInfo"/>
+        </tab>
+        <tab id="bc" layout="border" label="Clone Settings" icon="settings_16.png">
+        	<panel id="pnlCustomerBC" layout="rc" position="Center">
+				<checkbox   id="chkBillingConfig"  row="1"   col="1"   height="1" width="30" label="Clone Product Settings" value="true" />
+				<checkbox   id="chkInvoiceRouter"  row="2"   col="1"   height="1" width="30" label="Clone Invoice Router"   value="true" onchange="chkInvoiceRouterChanged"/>
+				<checkbox   id="chkInvoice"        row="3"   col="1"   height="1" width="30" label="Clone Invoices"         value="true" onchange="chkInvoicesChanged"/>
+				<checkbox   id="chkAddresses"      row="4"   col="1"   height="1" width="30" label="Clone Addresses"        value="true" onchange="chkAddressesChanged"/>
+        	</panel>  
+
+        </tab>
+      </tabbedpanel>
+      <panel id="controlPanel" layout="flow"  position="South" align="right" >
+        <button id="cmdApply" label="Clone.."  icon="edit-copy.png"    onclick="doClone" />
+        <button id="cmdCancel" label="Cancel"  icon="process-stop.png" onclick="doCancel" />
+        <button id="cmdClose" label="Close"    icon="close_16.png"     onclick="doClose"  />
+      </panel>
+    </panel>	
+   	<panel id="PnlInvoiceRouterTab" layout="border" package="com.three60t.app.billing.gui.panels">
+   		<toolbar id="tlb_InvoiceRouter" position="North"/>
+   		<scrollpane id="invoiceRouterScrol" position="Center">
+   			<!--  <panel id="pnlProductPlot" src="com.three60t.billing.frontend.configuration.BillingEntityPlot" position="Center"/>-->
+   			<panel id="pnlInvoiceRouter" src="com.smyld.app.entityplot.flowchart.FlowChartPlotter" position="Center"/>
+   			
+   		</scrollpane>
+   	</panel>
+    
+    
+   	<panel id="PnlProductSettings" layout="border" package="com.three60t.app.billing.gui.panels">
+   		<toolbar id="tlb_BillingEntPlot" position="North"/>
+   		<scrollpane id="entityPlotScrol" position="Center">
+   			  
+   			<!--  <panel id="pnlProductPlot" src="com.three60t.billing.frontend.configuration.BillingEntityPlot" position="Center"/>-->
+   			<panel id="pnlProductPlot" src="com.smyld.app.entityplot.GUIPlotter" position="Center"/>
+   			
+   		</scrollpane>
+   	</panel>
+   	<panel id="PnlInvoiceSettings" layout="border" package="com.three60t.app.billing.gui.panels">
+   		<toolbar id="tlb_InvoiceEntPlot" position="North"/>
+   		<scrollpane id="entityPlotScrol" position="Center">
+   			  
+   			<!--  <panel id="pnlProductPlot" src="com.three60t.billing.frontend.configuration.BillingEntityPlot" position="Center"/>-->
+   			<panel id="pnlProductPlot" src="com.smyld.app.entityplot.GUIPlotter" position="Center"/>
+   			
+   		</scrollpane>
+   	</panel>
+   	
+	<panel id="PnlBillingHistory" layout="border" package="com.three60t.app.billing.gui.panels">
+		<split id="mainSplitter" orient="horizontal" position="Center">
+        	<scrollpane id="treeScroll" position="left">
+          		<tree id="billingList"  position="Center" label="Billing List"/>
+        	</scrollpane>
+        	<scrollpane id="entityPlotScrol" position="right">
+	   			<!--  <panel id="pnlProductPlot" src="com.three60t.billing.frontend.configuration.BillingEntityPlot" position="Center"/>-->
+	   			<panel id="pnlProductPlot" src="com.smyld.app.entityplot.GUIPlotter" position="Center"/>
+   			</scrollpane>
+        </split>
+     </panel>
+   	
+
+    <panel id="HelpPanel" layout="border" package="com.three60t.app.billing.gui.panels">
+      <panel id="MainPanel" type="TemplateDockable" position="Center">
+        <internet id="pageViewer" position="main" />
+        <menubar id="HelpMenu" type="tree" position="side" icon="application_view_list.png" label="Table of Contents" titletype="icon" linklistenerto="window" />
+      </panel>
+    </panel>
+	<panel id="MainStatus" layout="border" package="com.three60t.app.billing.gui.panels">
+		<panel id="RightSide" layout="flow" align="right" position="East" bordertype="lowered">
+			<!--  <label id="instLabel" icon="institution_3d_sm.png" label="No Customer Selected" bordertype="etched"/>-->
+			<label id="curStatus" icon="PnlUserLoginconsole_16.png" label="System is Active" />
+		</panel>
+		<panel id="RightSide" layout="flow" align="left" position="Center" bordertype="lowered"/>
+		<panel id="LeftSide" layout="flow" align="left" position="West" bordertype="lowered">
+			<label id="timeLabel" icon="schedule.png" label="12:10:23 21-May-2005" bordertype="etched"/>
+			
+		</panel>
+	</panel>
+	<panel id="PnlCustomerGeneralInfo" layout="rc" package="com.three60t.app.billing.gui.panels" topMargin="0" >
+		<textField  id="name"                 row="1"    col="1"   height="1" width="40"  onchange="infoChanged" label="Name"/>
+		<textField  id="password"             row="2"    col="1"   height="1" width="40"  onchange="infoChanged" label="Password"/>
+		<textField  id="email"                row="3"    col="1"   height="1" width="40"  onchange="infoChanged" label="E Mail"/>
+		<textField  id="number"               row="4"    col="1"   height="1" width="40"  onchange="infoChanged" label="Number"/>
+		<comboField id="currency"             row="5"    col="1"   height="1" width="40"  onchange="infoChanged" label="Currency"/>
+		<comboField id="lang"                 row="6"    col="1"   height="1" width="40"  onchange="infoChanged" label="Language"/>
+		<checkbox   id="taxObligated"   	  row="7"    col="1"   height="1" width="40"  onchange="infoChanged" label="Tax Obligated" />
+	</panel>
+	<panel id="PnlCustomerGeneral" layout="border" package="com.three60t.app.billing.gui.panels">
+		<panel id="borderPanel" layout="rc" position="Center" bordertype="lowered">
+			<panel      id="generalInfo"     	  row="0"	 col="1"   height="11" width="41" src="PnlCustomerGeneralInfo"/>	
+			<label      id="packetLabel"          row="8"    col="46"  height="1" width="40"  label="Packet"/>
+			<textField  id="autoDealerFee"        row="9"    col="2"   height="1" width="40"  onchange="infoChanged" label="Auto Dealer Fee"/>
+			<checkbox   id="autoDealerActivate"   row="9"    col="43"  height="1" width="2"   onchange="autoDealerState" />
+			<!--  <textField  id="autoDealerFeePacket"  row="7"    col="45"  height="1" width="5"  onchange="infoChanged"  fieldwidth ="5"/>-->
+			<comboField  id="autoDealerFeePacket"  row="9"    col="46"  height="1" width="5"  onchange="infoChanged"  fieldwidth ="5">
+				<values>
+					<value>1</value>
+					<value>0</value>
+				</values>
+			</comboField>
+			
+			<textField  id="userPackFee"          row="10"    col="2"   height="1" width="40"  onchange="infoChanged" label="User Package Fee"/>
+			<checkbox   id="userPackActivate"     row="10"    col="43"  height="1" width="2"   onchange="userPackState" />
+			<textField  id="userPackFeePacket"    row="10"    col="46"  height="1" width="5"  onchange="infoChanged"  fieldwidth ="5"/>
+			<!--  
+			<comboField id="userPackFeePacket"    row="8"    col="45"  height="1" width="5"  onchange="infoChanged"  fieldwidth ="5">
+				<values>
+					<value>1</value>
+					<value>0</value>
+				</values>
+			</comboField>
+			
+			-->
+			
+			<label      id="userPackTraderLabel"  row="9"    col="53"  height="1" width="10"  label="Trader No."/>
+			<textField  id="userPackTraderList"   row="10"    col="53"  height="1" width="8"  fieldwidth ="8"/>
+			
+			<textField  id="userSetupFee"         row="11"    col="2"   height="1" width="40"  onchange="infoChanged" label="User Setup Fee"/>
+			<textField  id="platformName"         row="12"   col="2"   height="1" width="40"  onchange="infoChanged" label="Platform Name"/>
+			<!--  <textField id="tax"   PnlUserLogin       row="4"  col="1"   height="1" width="40" label="Tax        "/>-->
+			<textField  id="customLine1"    row="14"  col="2"   height="1" width="40"  onchange="infoChanged" label="Custom Line 1"/>
+			<textField  id="customLine2"    row="15"  col="2"   height="1" width="40"  onchange="infoChanged" label="Custom Line 2"/>
+			<textField  id="customLine3"    row="16"  col="2"   height="1" width="40"  onchange="infoChanged" label="Custom Line 3"/>
+			<textField  id="customLine4"    row="17"  col="2"   height="1" width="40"  onchange="infoChanged" label="Custom Line 4"/>
+		</panel>
+	</panel>
+	<panel id="PnlCustomerViews" layout="rc" package="com.three60t.app.billing.gui.panels">
+		<checkbox  id="chkInv"     row="6"  col="1" width="40" label="Generate Invoice             " onchange="genInvChange"/>
+		<!--  
+		<checkbox  id="chkDetInv"  row="8"  col="1" width="40" label="Generate Detailed Invoice    " onchange="genDetInvChange"/>
+		<checkbox  id="chkCntrInv" row="10" col="1" width="40" label="Generate Counterpart Invoice " onchange="genCountrInvChange"/>
+		-->
+		<checkbox  id="chkDealRpt" row="8" col="1" width="40" label="Generate Deal Report         " onchange="genRptChange"/>
+		
+	</panel>
+	
+		
+	PnlUserLogin
+	<!-- Panels for Entities -->
+    <panel id="PnlEntityTemplate" layout="border" package="com.three60t.app.billing.gui.panels.entity" vgap="8" hgap="5" >
+	  <panel id="entityPanel"  position="Center"/>
+      <panel id="controlPanel" layout="flow"  position="South" align="right" >
+        <button id="cmdApply" label="Apply.."  icon="view-restore.png" onclick="doApply" />
+        <button id="cmdCancel" label="Cancel"  icon="process-stop.png" onclick="doCancel" />
+        <button id="cmdClose" label="Close"    icon="close_16.png"     onclick="doClose"  />
+      </panel>
+    </panel>	
+
+		<!-- Calculation values entities -->	
+		<panel id="PnlCVFixedPrice" layout="rc" package="com.three60t.app.billing.gui.panels.entity">
+			<textField  id="fixedPrice"     row="1"  col="1" width="40" height="1" label="Fixed Price" />
+		</panel>
+		<panel id="PnlCVPricePerUnit" layout="rc" package="com.three60t.app.billing.gui.panels.entity">
+			<textField  id="unit"         row="1"  col="1" width="40" height="1" label="Unit" />
+			<textField  id="pricePerUnit" row="2"  col="1" width="40" height="1" label="Price Per Unit" />
+			<comboField  id="unitCalc"     row="3"  col="1" width="40" height="1" label="Unit calculation" />
+		</panel>
+		<panel id="PnlCVPricePerUnitAndPeriod" layout="rc" package="com.three60t.app.billing.gui.panels.entity">
+			<textField  id="unit"         row="1"  col="1" width="40" height="1" label="Unit" />
+			<textField  id="pricePerUnit" row="2"  col="1" width="40" height="1" label="Price Per Unit" />
+			<comboField  id="unitCalc"     row="3"  col="1" width="40" height="1" label="Unit calculation" />
+			<comboField  id="period"       row="4"  col="1" width="40" height="1" label="Period" />
+		</panel>
+		<panel id="PnlCVGPricePerUnit" layout="rc" package="com.three60t.app.billing.gui.panels.entity">
+			<textField  id="greaterThanPrice"  row="1"  col="1" width="40" height="1" label="Greater Than Price" />
+			<checkbox   id="lessOrEqual"       row="2"  col="1" width="40" label="Less Or Equal" />
+			<textField  id="unit"              row="3"  col="1" width="40" height="1" label="Unit" />
+			<textField  id="pricePerUnit"      row="4"  col="1" width="40" height="1" label="Price Per Unit" />
+		</panel>
+		<panel id="PnlCVGPricePerPeriod" layout="rc" package="com.three60t.app.billing.gui.panels.entity">
+			<comboField  id="period"            row="1"  col="1" width="40" height="1" label="Period" />
+			<textField  id="greaterThanPrice"  row="2"  col="1" width="40" height="1" label="Greater Than Price" />
+			<checkbox   id="lessOrEqual"       row="3"  col="1" width="40" label="Less Or Equal" />
+			<textField  id="unit"              row="4"  col="1" width="40" height="1" label="Unit" />
+			<textField  id="pricePerUnit"      row="5"  col="1" width="40" height="1" label="Price Per Unit" />
+		</panel>
+		<panel id="PnlCVGPricePerPeriodAndUnit" layout="rc" package="com.three60t.app.billing.gui.panels.entity">
+			<comboField  id="period"            row="1"  col="1" width="40" height="1" label="Period" />
+			<textField  id="munit"             row="2"  col="1" width="40" height="1" label="Unit" />
+			<comboField  id="unitCalc"          row="3"  col="1" width="40" height="1" label="Unit calculation" />
+			<textField  id="greaterThanPrice"  row="4"  col="1" width="40" height="1" label="Greater Than Price" />
+			<checkbox   id="lessOrEqual"       row="5"  col="1" width="40" label="Less Or Equal" />
+			<textField  id="unit"              row="6"  col="1" width="40" height="1" label="Unit" />
+			<textField  id="pricePerUnit"      row="7"  col="1" width="40" height="1" label="Price Per Unit" />
+		</panel>
+		
+		<!-- Exception entities -->	
+	
+		<panel id="PnlEXDiscount" layout="rc" package="com.three60t.app.billing.gui.panels.entity">
+			<textField  id="percentValue"  row= "1" col="1" width="30" height="1" label="Discount Percent " />
+		</panel>
+
+		<panel id="PnlEXAmountCap" layout="rc" package="com.three60t.app.billing.gui.panels.entity">
+			<textField  id="capValue"       row="1"  col="1" width="30" height="1" label="Cap Value" />
+			<textField  id="amountValue"    row="2"  col="1" width="30" height="1" label="Amount Value" />
+			<checkbox   id="greaterOrEqual" row="3"  col="1" width="30" label="Greater Or Equal" />
+		</panel>
+		<panel id="PnlEXAmountFloor" layout="rc" package="com.three60t.app.billing.gui.panels.entity">
+			<textField  id="floorValue"   row="1"  col="1" width="30" height="1" label="Floor Value " />
+			<textField  id="amountValue"  row="2"  col="1" width="30" height="1" label="Amount Value" />
+			<checkbox   id="lessOrEqual"  row="3"  col="1" width="30" label="Less Or Equal" />
+		</panel>
+		<panel id="PnlEXTradeFeeCap" layout="rc" package="com.three60t.app.billing.gui.panels.entity">
+			<textField  id="capValue"       row="1"  col="1" width="30" height="1" label="Cap Value" />
+			<checkbox   id="greaterOrEqual" row="2"  col="1" width="30" label="Greater Or Equal" />
+		</panel>
+		<panel id="PnlEXTradeFeeFloor" layout="rc" package="com.three60t.app.billing.gui.panels.entity">
+			<textField  id="floorValue"   row="1"  col="1" width="30" height="1" label="Floor Value" />
+			<checkbox   id="lessOrEqual"  row="2"  col="1" width="30" label="Less Or Equal" />
+		</panel>
+		
+		<panel id="PnlEXNoBilling" layout="border" package="com.three60t.app.billing.gui.panels.entity">
+            <scrollpane id="tableScroll" position="Center">
+	            <table id="expMap"  position="Center" label="">
+	              <header> 
+	                <col id="colPrcType" label="Company" width="20" />
+	                <col id="colPrcNo"   label="FXSpot" width="14" />
+	              </header>
+	            </table>
+            </scrollpane>
+		</panel>
+
+		<panel id="PnlIRVariable" layout="border" package="com.three60t.app.billing.gui.panels.entity">
+			<panel id="commonInfo" layout="rc" position="North" >
+				<textField  id="varName"   row="1" col="1" width="30" height="1" label="Name" role="bchandler" showrole="contractor"/>
+				<comboField id="condition" row="2" col="1" width="30" height="1" label="Condition" role="bchandler" showrole="contractor"/>
+			</panel>
+			<panel id="valuePanel" src="PnlValuesMapper"  position="Center"/>
+			
+			<!--
+			<scrollpane id="valsScroll"  position="Center">			
+				<table id="values"    position="Center">
+		              <header> 
+		                <col id="colValue" label="Value(s)" width="50" />
+		              </header>
+		        </table>
+		     </scrollpane>
+		     -->
+		</panel>
+	<panel id="PnlSingleTextValue" layout="rc" package="com.three60t.app.billing.gui.panels.entity">
+		<textField  id="txtValue"   row="0" col="1" width="30" height="1" label="Value      "/>
+	</panel>
+	<panel id="PnlSingleBooleanValue" layout="rc" package="com.three60t.app.billing.gui.panels.entity">
+		<checkbox   id="blnValue"   row="0"   col="1"   height="1" width="30" label="Is True"  value="false"/>
+	</panel>
+
+	<panel id="PnlValuesMapper" layout="rc" package="com.three60t.app.billing.gui.panels.entity"> 					
+		
+		<label id="lblAll"       label="ALL"  align="center" bordertype="etched" row="1"  col="8" height="1" width="8"/>
+		<label id="lblSelected"  label="Selected" align="center" bordertype="etched" row="1"  col="32" height="1" width="8"/>
+		<label id="lblObject"   icon="objects-32.png" row="0"  col="21" height="3" width="4"/>
+		
+		<scrollpane id="allProductsScroll" row="2"  col="1" height="15" width="20"  >
+			<listField id="allProducts"   position="Center"    label="All Prodcuts"/>
+		</scrollpane>
+		
+		<button    id="cmdAddProduct" row="6"  col="22"   height="2" width="3" icon="go_next.png"  onclick="addProduct" role="bchandler,admin" showrole="contractor" />
+		<button    id="cmdDelProduct" row="8"  col="22"   height="2" width="3" icon="go_previous.png"  onclick="deleteProduct" role="bchandler,admin" showrole="contractor" />        
+		<scrollpane id="selProductsScroll" row="2"  col="26" height="15" width="20" >
+			<listField id="selProducts"   position="Center"    label="Selected Prodcuts" labelposition="top"/>
+		</scrollpane>
+	</panel>
+
+	<panel id="PnlProductDetails" layout="border" package="com.three60t.app.billing.gui.panels.entity">
+		<split id="mainSplitter" orient="horizontal" position="Center">
+        	<scrollpane id="treeScroll" position="left">
+          		<tree id="expList"  position="Center" label="Exception List"/>
+        	</scrollpane>
+        	<panel id="expCounterParties" layout="border" position="right">
+				<textArea id="infoList" label="Companies"  width="40" height="30" labelposition="top" position="Center" />
+				<!--  
+				<scrollpane id="infoListScroll" position="Center" >
+					<listField iPnlUserLogind="infoList"   position="Center"    label="Companies" labelposition="top"/>
+				</scrollpane>
+				-->
+			</panel>
+		</split>
+	</panel>
+	<panel id="PnlCustomerAddress" layout="rc" package="com.three60t.app.billing.gui.panels.entity">    
+		<textField  id="company"   row="1"  col="1"   height="1" width="40" label="Company"/>
+		<textField  id="person"    row="2"  col="1"   height="1" width="40" label="Person"/>
+		<textField  id="address1"  row="3"  col="1"   height="1" width="40" label="Address 1"/>
+		<textField  id="address2"  row="4"  col="1"   height="1" width="40" label="Address 2"/>
+		<textField  id="city"      row="5"  col="1"   height="1" width="40" label="City"/>
+		<comboField id="country"   row="6"  col="1"   height="1" width="40" label="Country">
+			<values>
+				<value>The Netherlands</value>
+				<value>Deutschland</value>
+				<value>United Kingdom</value>
+				<value>Singapore</value>
+				<value>Luxembourg</value>
+				<value>France</value>
+				<value>Denmark</value>
+				<value>Belgium</value>
+				<value>Switzerland</value>
+				<value>USA</value>
+				<value>Canada</value>
+				<value>Latvia</value>
+				<value>Republic of Ireland</value>
+				<value>India</value>
+				<value>Österreich</value>
+				<value>Czech Republic</value>
+				<value>Australia</value>
+				<value>Sweden</value>
+				<value>Hong Kong</value>
+			
+			</values>
+		</comboField>
+		<!--  <comboField id="lang"       row="7"  col="1"   height="1" width="40" label="Language   " />-->
+		<!--  <comboField id="currency"   row="8"  col="1"   height="1" width="40" label="Currency    " />-->
+	</panel>
+	<panel id="PnlCustomerInvoice" layout="rc" package="com.three60t.app.billing.gui.panels.entity">
+		<!--  <comboField id="type"           row="1"   col="1"   height="1" width="40" label="Type         "/>-->
+		<textField  id="name"           row="1"   col="1"   height="1" width="40" label="Name"/>
+		<textField  id="email"          row="2"   col="1"   height="1" width="40" label="E Mail"/>
+		<comboField id="currency"       row="3"   col="1"   height="1" width="40" label="Currency"/>
+		<comboField id="lang"           row="4"   col="1"   height="1" width="40" label="Language"/>
+		<checkbox   id="taxObligated"   row="5"   col="1"   height="1" width="40" label="Tax Obligated" />
+	</panel>
+            
+
+	
+<!--  
+	<panel id="PnlCustomerAddresses" layout="border" package="com.three60t.app.billing.gui.panels">
+		<split id="mainSplitter" orient="horizontal" position="Center">
+        	<scrollpane id="treeScroll" position="left">
+          		<tree id="addressList"  position="Center" label="Address List"/>
+        	</scrollpane>
+        	<panel id="addressPanel" layout="rc" position="right">    
+				<textField  id="company"    row="1"  col="1"   height="1" width="40" label="Company    "/>
+				<textField  id="person"     row="2"  col="1"   height="1" width="40" label="Person       "/>
+				<textField  id="address1"   row="3"  col="1"   height="1" width="40" label="Address 1  "/>
+				<textField  id="address2"   row="4"  col="1"   height="1" width="40" label="Address 2  "/>
+				<textField  id="city"       row="5"  col="1"   height="1" width="40" label="City            "/>
+				<comboField id="country"   row="6"  col="1"   height="1" width="40" label="Country      ">
+					<values>
+						<value>The Netherlands</value>
+						<value>Deutschland</value>
+						<value>United Kingdom</value>
+						<value>Singapore</value>
+						<value>Luxembourg</value>
+						<value>France</value>
+						<value>Denmark</value>
+						<value>Belgium</value>
+						<value>Switzerland</value>
+						<value>USA</value>
+						<value>Canada</value>
+						<value>Latvia</value>
+						<value>Republic of Ireland</value>
+						<value>India</value>
+						<value>Österreich</value>
+						<value>Czech Republic</value>
+						<value>Australia</value>
+						<value>Sweden</value>
+						<value>Hong Kong</value>
+					
+					</values>
+				</comboField>
+				<comboField  id="invoice"   row="7"  col="1"   height="1" width="40" label="Invoice       "/>
+				<comboField id="lang"       row="8"  col="1"   height="1" width="40" label="Language   " />
+				<comboField id="currency"   row="9"  col="1"   height="1" width="40" label="Currency    " />
+				
+				<scrollpane id="allProductsScroll" row="12"  col="1" height="20" width="30" >
+					<listField id="allProducts"   position="Center"    label="All Prodcuts"/>
+				</scrollpane>
+				<button    id="cmdAddProduct" row="18"  col="32"   height="2" width="3" icon="go_next.png"  onclick="addProduct" />
+				<button    id="cmdDelProduct" row="20"  col="32"   height="2" width="3" icon="go_previous.png"  onclick="deleteProduct" />        
+				<scrollpane id="selProductsScroll" row="12"  col="36" height="20" width="30" >
+					<listField id="selProducts"   position="Center"    label="Selected Prodcuts" labelposition="top"/>
+				</scrollpane>
+			</panel>
+
+      </split>
+	</panel>	
+-->	
+    
+ 	<!--   **************************** End Of Active Panels ******************************** -->
+ 
+ 
+  </panels>
+  <windows>
+	<!--   **************************** Current Active Windows ******************************** -->
+    <window onstartup="init" id="MdiWindow" type="mdi" icon="monitor.png" width="max" height="max" package="com.three60t.app.billing.gui.windows" label="SMYL Transaction Formats">
+      <menubar id="bar_main" type="classic"/>
+      <toolbar id="MdiToolbar"/>
+      <!--<body id="mainPanel" type="panel" linklistenerto="window">MainPanel</body>-->
+      <body id="mainDesktop" type="dockabledesktop"/>
+      <statusbar id="MainStatus"/>
+    </window>
+    <window id="WdHelp" type ="dialog" icon="help.png" width="750" height="400"  package="com.three60t.app.billing.gui.windows" label="Help Window">
+      <body id="helpPanel" type="panel" linklistenerto="window">HelpPanel</body>
+    </window>
+    <window id="WdEntityProp" type ="dialog" icon="help.png" width="155" height="400"  package="com.three60t.app.billing.gui.windows" label="Properties">
+      <body id="entityPanel" type="panel" linklistenerto="window">EntityGUISettings</body>
+    </window>
+
+    <window id="WdSettings" type = "dialog" icon="settings_16.png" width="670" height="400"  package="com.three60t.app.billing.gui.windows" label="Settings Window">
+      <body id="settingsPanel" type="panel" linklistenerto="window">SettingsPanel</body>
+    </window>
+    <window id="WdAbout" type="dialog" icon="converter_sm.png" resize="false" width="500" height="320" package="com.three60t.app.billing.gui.windows" label="About 360t Billing Interface">
+      <body id="about" type="panel" linklistenerto="window">AboutPanel</body>
+    </window>
+    <window id="WdBCTabular" type="dialog" icon="application_view_list.png" resize="true" width="700" height="500" package="com.three60t.app.billing.gui.windows" label="Billing Configuration tablular view">
+      <body id="bcTabularPanel" type="panel" linklistenerto="window">BCTabularPanel</body>
+    </window>
+
+    <window id="WdEntity" type="dialog" icon="converter_sm.png" resize="true" width="400" height="260" package="com.three60t.app.billing.gui.windows" label="Entity editor">
+      <body id="entityTemplate" type="panel" linklistenerto="window">PnlEntityTemplate</body>
+    </window>
+	<window id="WdClone" type="dialog" icon="edit-copy.png" resize="true" width="525" height="360" package="com.three60t.app.billing.gui.windows" label="Customer Cloner">
+      <body id="cloneBody" type="panel" linklistenerto="window">PnlCustomerClone</body>
+    </window>
+	<window id="WdNewCustomer" type="dialog" icon="contact-new.png" resize="true" width="525" height="360" package="com.three60t.app.billing.gui.windows" label="New Customer">
+      <body id="createBody" type="panel" linklistenerto="window">PnlCustomerNew</body>
+    </window>
+
+    
+	<window id="WdMessage" type="dialog" icon="process-stop.png" resize="true" width="400" height="260" package="com.three60t.app.billing.gui.windows" label="Message Window">
+      <body id="msgBody" type="panel" linklistenerto="window">PnlErrorMessage</body>
+    </window>
+	<window id="WdLogin" type="dialog" icon="system-lock-screen.png" resize="false" width="400" height="230" package="com.three60t.app.billing.gui.windows" label="Login Window">
+      <body id="body" type="panel" linklistenerto="window">PnlUserLogin</body>
+    </window>
+	<window id="WdFontChooser" type="dialog" icon="system-lock-screen.png" resize="false" width="470" height="400" package="com.three60t.app.billing.gui.windows" label="Font Chooser">
+      <body id="body" type="panel" linklistenerto="window">PnlFontChooser</body>
+    </window>
+ 
+	<!--   *****************************  End of Active Windows ******************************** --> 
+   </windows>
+  <menus>
+    <!-- ****************************   Current Active Menus   **************************************** -->
+    <menubar id="bar_main">
+      <menu id="mnu_file">
+		<!--<menu id="mnu_open_interface" action="openInterfaceDocument" icon="net_data_16.png" accelerator="Ctrl+O" />-->
+        <menu id="mnu_open_functions" action="openUserMenu" icon="functions.png" accelerator="Ctrl+O" /> 
+        <menu id="mni_settings" action="openUserSettings" icon="settings_16.png" accelerator="Ctrl+S" role="contractor" showrole="bchandler" />
+        <menu type="separator"/>
+        <menu id="mnu_exit" action="exitApp" accelerator="Ctrl+E" icon="close_16.png" />
+      </menu>
+      
+	<menu id="mnu_user" role="admin">
+	  	<menu id="mnu_user_edt"     action="EditUser"  icon="edit-select-all.png"/>
+	    <menu id="mnu_user_new"     action="AddUser"   icon="document-new.png"/>
+	    <menu id="sep_20" type="separator" />
+		<menu id="mnu_user_del"     action="DelUser" icon="edit_delete.png"/>
+	</menu>
+      
+      <menu id="mnu_help">
+        <menu id="mni_showhelpcont"  action="openHelp" icon="help.png" />
+        <menu id="sep_19" type="separator" />
+        <menu id="mni_aboutbankworks" action="openAbout"/>
+		<menu id="mnu_customer01"  action="openCustomer" icon="institution_3d_sm.png"/>
+      </menu>
+    </menubar>
+
+    <menubar id="functions">
+
+      <menu id="mnu_admin" icon="settings_16.png" role="admin">
+        <menu id="mnu_users"  icon="group.png"/> 
+        <!-- <menu id="mnu_roles" icon="advanced_16.png" />  -->    
+      </menu>  
+      <menu id="mnu_customerService"  icon="advanced_16.png" role="bchandler,contractor">
+
+		  <!--
+        <menu id="mnu_customer01"  action="openCustomer" icon="institution_3d_sm.png"/>
+        
+        <menu id="mnu_customer02"  action="openCustomer" icon="institution_3d_sm.png"/>
+        <menu id="mnu_customer03"  action="openCustomer" icon="institution_3d_sm.png"/>
+        <menu id="mnu_customer04"  action="openCustomer" icon="institution_3d_sm.png"/>
+        <menu id="mnu_customer05"  action="openCustomer" icon="institution_3d_sm.png"/>
+        <menu id="mnu_customer06"  action="openCustomer" icon="institution_3d_sm.png"/>
+        -->
+        
+       </menu> 
+    </menubar>
+    <menubar id="customerServiceMenu">
+    	<menu id="mnu_cust_edt"     action="EditCustomer"  icon="edit-select-all.png"/>
+    	<menu id="mnu_cust_new"     action="AddCustomer"   icon="document-new.png"/>
+    	<menu id="mnu_cust_clone"   action="CloneCustomer" icon="edit-copy.png"/>
+    	<menu id="sep_20" type="separator" />
+    	<menu id="mnu_cust_del"     action="DelCustomer" icon="edit_delete.png"/>
+    </menubar>
+    <menubar id="userServiceMenu">
+    	<menu id="mnu_user_edt"     action="EditUser"  icon="edit-select-all.png"/>
+    	<menu id="mnu_user_new"     action="AddUser"   icon="document-new.png"/>
+    	<menu id="sep_20" type="separator" />
+    	<menu id="mnu_user_del"     action="DelUser" icon="edit_delete.png"/>
+    </menubar>
+
+    <menubar id="addressServiceMenu">
+    	<menu id="mnu_add_new"    action="AddAddress"  icon="document-new.png"/>
+    	<menu id="mnu_add_edit"   action="EditAddress" icon="edit-select-all.png"/>
+    	<menu id="sep_20" type="separator" />
+    	<menu id="mnu_add_del"    action="DelAddress" icon="edit_delete.png"/>
+    </menubar>
+
+    <menubar id="entityPopmenu">
+    	<menu id="mnu_ent_prop"  action="EditEntProp"     icon="settings_16.png"/>
+    	<menu id="mnu_ent_edit"  action="EditEntity"      icon="gtk-edit.png"/>
+    	<menu id="sep_20" type="separator" />
+    	<menu id="mnu_ent_del"   action="DelSingleEntity" icon="edit_delete.png"/>
+    </menubar>
+
+    <menubar id="addressPopmenu">
+    	<menu id="mnu_ent_prop"  action="EditEntProp"     icon="settings_16.png"/>
+    	<menu id="mnu_ent_edit"  action="EditEntity"      icon="gtk-edit.png"/>
+    	<menu id="mnu_adr_add"   action="AddInvoice"      icon="bookmark-new.png"/>
+    	<menu id="sep_20" type="separator" />
+    	<menu id="mnu_ent_del"   action="DelSingleEntity" icon="edit_delete.png"/>
+    </menubar>
+    <menubar id="entityFormat">
+    	  
+    	<!--  
+    	<menu id="menu_ent_align"> 
+    	-->
+	    	<menu id="mnu_ent_align_top"         action="AlignTop"                icon="format-justify-top.png"/>
+	    	<menu id="mnu_ent_align_left"        action="AlignLeft"               icon="format-justify-left.png"/>
+	    	<menu id="mnu_ent_align_right"       action="AlignRight"              icon="format-justify-right.png"/>
+	    	<menu id="mnu_ent_align_buttom"      action="AlignButtom"             icon="format-justify-buttom.png"/>
+	    	<menu id="mnu_ent_align_cent_hor"    action="AlignCenterHorizontal"   icon="format-justify-center-horizontal.png"/>
+	    	<menu id="mnu_ent_align_cent_ver"    action="AlignCenterVertical"     icon="format-justify-center-vertical.png"/>
+	    	<menu id="mnu_ent_align_stair_right" action="AlignStairRight"         icon="format-justify-stairs-right.png"/>
+	    	<menu id="mnu_ent_align_stair_left"  action="AlignStairLeft"          icon="format-justify-stairs-left.png"/>
+	    	
+    	
+    	<menu id="sep_20" type="separator" />
+	    	<menu id="mnu_ent_width"         action="ResizeWidth"   icon="format-justify-fill.png"/>
+	    	<menu id="mnu_ent_height"        action="ResizeHeight"  icon="format-justify-height.png"/>
+	    <menu id="sep_20" type="separator" />
+	    <menu id="mnu_ent_space_horizontal"  action="SpaceHorizontal"  icon="formats-space-horizontal.png"/>
+	    <menu id="mnu_ent_space_vertical"    action="SpaceVertical"  icon="formats-space-vertical.png"/>
+    </menubar>
+    
+    
+    
+    <menubar id="EntityPropMenu">
+    	<menu id="mnu_egp_title" icon="report.png" label="Title">
+      		<menu id="mnu_egpt_darkColor"    action="EGPTitleDarkColor"  label="Dark Color" />
+      		<menu id="mnu_egpt_lightColor"   action="EGPTitleLightColor" label="Light Color" />
+      		<menu id="mnu_egpt_fontColor"    action="EGPTitleFontColor"  label="Font Color" />
+      		<menu id="mnu_egpt_font"         action="EGPTitleFont"       label="Font" />		
+      	</menu>
+      	<menu id="mnu_egp_contents"  icon="report.png"     label="Contents">
+      		<menu id="mnu_egpc_fontColor"    action="EGPContentFontColor"  label="Font Color" />
+      		<menu id="mnu_egpc_font"         action="EGPContentFont"       label="Font" />
+      		<menu id="mnu_egpc_background"   action="EGPContentBGColor"    label="Background" />
+      		
+      	</menu> 
+    </menubar>
+    
+    
+    
+    <menubar id="HelpMenu">
+      	
+      <!--  <menu id="mnu_hlp_disclaimer"   action="openHelpDisclaimer"   icon="exclamation_16.png"  label="Disclaimer Note"/>-->
+      <menu id="mnu_hlp_introduction" action="openHelpIntroduction" icon="console_16.png" label="Introduction"/>
+      <menu id="mnu_hlp_user_manual"  action="openHelpUserManual"   icon="report.png"     label="User Manual">
+        <!--  
+        <menu id="mnu_hlp_interface_document"   action="openHelpInterfaceDocument" icon="page_code.png" label="Interface Document" >
+        	<menu id="mnu_hlp_interface_servers" action="openHelpInterfaceServer" icon="server.png" label="Servers"/>	
+        	<menu id="mnu_hlp_interface_services" action="openHelpInterfaceService" icon="advanced_16.png" label="Servers"/>
+        </menu>
+        -->
+      </menu> 
+      <!--  <menu id="mnu_hlp_gui_interface_usage"  action="openHelpGUIInterface" icon="monitor_16.png"  label="GUI Interface"/>-->
+    </menubar>
+	<!-- ****************************   End Of Active Menus   **************************************** -->    
+  </menus>
+  <toolbars>
+    <toolbar id="MdiToolbar">
+      <menu id="mnu_bar_open_functions" action="openUserMenu"     icon="object.gif"      accelerator="Ctrl+O" />
+      <menu id="mnu_bar_open_settings"  action="openUserSettings" icon="settings_16.png" accelerator="Ctrl+S" />
+      <menu type="separator"/>
+      <menu id="exitSystem" icon="close_16.png" action="exitApp" tooltip="Press to exit"/>
+    </toolbar>
+    <toolbar id="tlb_BillingEntPlot">
+      <menu id="mnu_add_connection" icon="connect.png"    action="AddEntityConnection" role="bchandler" showrole="contractor" tooltip="Activate Connection Adding Mode"/>
+      <menu id="mnu_del_connection" icon="disconnect.png" action="DelEntityConnection"  role="bchandler" showrole="contractor" tooltip="Activate Connection Deleting Mode"/>
+      <menu type="separator"/>
+      <menu id="mnu_undo"           icon="edit_undo.png"   action="UndoAction" accelerator="Ctrl+Z" role="bchandler" showrole="contractor" tooltip="Undo" />
+      <menu id="mnu_delete"         icon="edit_delete.png" action="DelEntity"  accelerator="delete" role="bchandler" showrole="contractor" tooltip="Delete"/>
+      <menu id="mnu_zoom_in"        icon="zoom-in.png"     action="ZoomIn" />
+      <menu id="mnu_zoom_out"       icon="zoom-out.png"    action="ZoomOut" />
+      <menu id="mnu_trim"           icon="cut.png"         action="TrimPlot" tooltip="Trim additional spaces"/>
+      <menu type="separator"/>
+      <menu id="lblProd"  type="label" label="Products " icon="object.gif" />
+	  <menu id="product"  type="combo" >
+		<values>
+			<value>Fx Spot</value>
+			<value>Fx Spot Super Sonic</value>
+			<value>Fx Swap </value>
+			<value>Fx Forward</value>
+			<value>Fx Forward Swap</value>
+			<value>Fx Option </value>
+			<value>Fx Time Option</value>
+			<value>Strategy FX Option</value>
+			<value>Fx Early Settlement</value>
+			<value>FX Prolongation</value>
+			<value>Cap Floor</value>
+			<value>Commercial Paper</value>
+			<value>Forward Rate Agreement</value>
+			<value>IRS</value>
+			<value>Loan Deposit</value>			
+			<value>Loan Deposit Open Maturity</value>
+			<value>Open Maturity Call</value>
+			<value>Prolongation</value>
+			<value>Prolongation Open Maturity</value>
+			<value>Testing the wrong compilation</value>												
+		</values>
+	  </menu>
+	  <menu id="cmdAddProd" icon="go-down.png"    action="InsertProduct"  role="bchandler" showrole="contractor"/>
+	  <menu type="separator"/>
+      <menu id="lblCalc"  type="label" label="Calculation Values " icon="accessories-calculator.png" />
+	  <menu id="calcVals"  type="combo" >
+		<values>
+			<value>Fixed Price</value>
+			<value>Price Per Unit</value>
+			<value>Price Per Unit and Period</value>
+			<value>Graduated Price Per Unit</value>
+			<value>Graduated Price Per Period</value>
+			<value>Graduated Price Per Unit and Period</value>
+		</values>
+		
+	  </menu>
+	  <menu id="cmdAddCVal" icon="go-down.png"    action="InsertCalculationValue" role="bchandler" showrole="contractor" />
+	  <menu type="separator"/>
+
+	  <menu id="lblExp"  type="label" label="Exceptions " icon="page_delete.png" />
+	  <menu id="exception"  type="combo" >
+		<values>
+			<value>No Billing</value>
+			<value>Amonut Cap</value>
+			<value>Amonut Floor</value>
+			<value>Discount</value>
+			<value>Trade Fee Cap</value>
+			<value>Trade Fee Floor</value>
+		</values>
+	</menu>	  
+	 <menu id="cmdAddExp" icon="go-down.png"     action="InsertException"  role="bchandler" showrole="contractor"/>
+     <menu type="separator"/>
+     
+     <menu id="mnu_showConns"    action="ShowConnections"  type="check" />
+     <menu id="mnu_bctabular"    icon="application_view_list.png"   action="OpenBCTabular"    accelerator="Ctrl+T" tooltip="See info in tabular form" />
+     <menu id="mnu_export_image" icon="insert-image.png"            action="ExportAsImage"    tooltip="Export to an Image"/>
+     <menu id="mnu_print"        icon="adobe.pdf.png"               action="Print"            tooltip="Print Diagram"/>
+     <menu id="mnu_save"         icon="parser_16.png"               action="SaveLayout"       tooltip="Save current layout"/>
+     <menu id="mnu_layout"       icon="wizard_16.png"               action="WizardLayout"     tooltip="do Automatic layout "/>
+    </toolbar>
+    <toolbar id="tlb_CustomerMain">
+	  <menu id="mnu_save_customer"    icon="file_save_16.png" action="SaveCustomer"    role="bchandler" showrole="contractor" tooltip="Save Invoices"/>
+	  <menu id="mnu_refresh_customer" icon="view-refresh.png" action="RefreshCustomer" role="bchandler" showrole="contractor" tooltip="Refresh Invoices"/>
+	</toolbar>
+    <toolbar id="tlb_InvoiceEntPlot">
+      <menu type="separator"/>
+      <menu id="mnu_add_connection"   icon="connect.png"    action="AddEntityConnection" role="bchandler" showrole="contractor" tooltip="Activate Connection Adding Mode"/>
+      <menu id="mnu_del_connection"   icon="disconnect.png" action="DelEntityConnection"  role="bchandler" showrole="contractor" tooltip="Activate Connection Deleting Mode"/>
+      <menu type="separator"/>
+      <menu id="mnu_undo"           icon="edit_undo.png"   action="UndoAction" accelerator="Ctrl+Z" role="bchandler" showrole="contractor" tooltip="Undo" />
+      <menu id="mnu_delete"         icon="edit_delete.png" action="DelEntity"  accelerator="delete" role="bchandler" showrole="contractor" tooltip="Delete"/>
+      <menu id="mnu_zoom_in"        icon="zoom-in.png"     action="ZoomIn" />
+      <menu id="mnu_zoom_out"       icon="zoom-out.png"    action="ZoomOut" />
+      <menu id="mnu_trim"           icon="cut.png"         action="TrimPlot" tooltip="Trim additional spaces"/>
+      <menu type="separator"/>
+     
+	  <!--
+	   <menu id="lblProd"  type="label" label="Products " icon="object.gif" />  
+	  <menu id="product"  type="combo" >
+		<values>
+			<value>Fx Spot</value>
+			<value>Fx Spot Super Sonic</value>
+			<value>Fx Swap </value>
+			<value>Fx Forward</value>
+			<value>Fx Forward Swap</value>
+			<value>Fx Option </value>
+			<value>Fx Time Option</value>
+			<value>Strategy FX Option</value>
+			<value>Fx Early Settlement</value>
+			<value>FX Prolongation</value>
+			<value>Cap Floor</value>
+			<value>Commercial Paper</value>
+			<value>Forward Rate Agreement</value>
+			<value>IRS</value>
+			<value>Loan Deposit</value>			
+			<value>Loan Deposit Open Maturity</value>
+			<value>Open Maturity Call</value>
+			<value>Prolongation</value>
+			<value>Prolongation Open Maturity</value>
+			<value>Testing the wrong compilation</value>												
+		</values>
+	  </menu>
+	  <menu id="cmdAddProd"    icon="go-down.png"             action="InsertProduct" />
+	  -->
+	  <!--
+	  <menu type="separator"/>
+	  <menu id="lblInv"        type="label" label="New Invoice "  icon="bookmark-new.png"/>
+	  <menu id="cmdAddInvoice"    icon="go-down.png"             action="AddInvoice"  />
+	  -->
+	  <menu type="separator"/>
+	  <menu id="lblAdd"        type="label" label="New Address " icon="address-book-new.png"/>
+	  <menu id="cmdAddAddress"    icon="go-down.png"             action="AddAddress" />
+	  <menu type="separator"/>
+      <menu id="mnu_export_image" icon="insert-image.png"     action="ExportAsImage"  tooltip="Export to an Image"/>
+      <menu id="mnu_print"        icon="adobe.pdf.png"   action="Print" tooltip="Export to a PDF"/>
+      <menu id="mnu_save"         icon="parser_16.png"   action="SaveLayout"   tooltip="Save current layout"/>
+      <menu id="mnu_layout"       icon="wizard_16.png"   action="WizardLayout"   tooltip="do Automatic layout "/>
+    </toolbar>
+    <toolbar id="tlb_InvoiceRouter">
+      <menu id="mnu_add_connection" icon="connect.png"    action="AddEntityConnection" role="bchandler" showrole="contractor" tooltip="Activate Connection Adding Mode"/>
+      <menu id="mnu_del_connection" icon="disconnect.png" action="DelEntityConnection"  role="bchandler" showrole="contractor" tooltip="Activate Connection Deleting Mode"/>
+      <menu type="separator"/>
+      <menu id="mnu_undo"           icon="edit_undo.png"   action="UndoAction" accelerator="Ctrl+Z" role="bchandler" showrole="contractor" tooltip="Undo" />
+      <menu id="mnu_delete"         icon="edit_delete.png" action="DelEntity"  accelerator="delete" role="bchandler" showrole="contractor" tooltip="Delete"/>
+      <menu id="mnu_zoom_in"        icon="zoom-in.png"     action="ZoomIn" />
+      <menu id="mnu_zoom_out"       icon="zoom-out.png"    action="ZoomOut" />
+      <menu id="mnu_trim"           icon="cut.png"         action="TrimPlot" tooltip="Trim additional spaces"/>
+      <menu type="separator"/>
+      <menu id="lblVariables"  type="label" label="Variables " icon="exclamation_16.png" />
+	  <menu id="variables"  type="combo" >
+		<values>
+			<value>Product</value>
+			<value>EffectiveDate</value>
+			<value>IsItex</value>
+			<value>NotionalAmount</value>
+			<value>NotionalCurrency</value>
+			<value>Days</value>
+			<value>NotionalAmountInEUR</value>
+		</values>
+	  </menu>
+	  <menu id="cmdAddVar"    icon="go-down.png"  action="InsertIRVariable" role="bchandler" showrole="contractor"/>
+	  <menu type="separator"/>
+      <menu id="lblInvoice"  type="label" label="Invoice " icon="bookmark-new.png" />
+      
+	  <menu id="invoices"  type="combo" >
+		<values>
+			<value>Invoice 1</value>
+			<value>Invoice 2</value>
+		</values>
+	  </menu>
+	  <menu id="cmdAddInv"    icon="go-down.png"             action="InsertIRInvoice"  role="bchandler" showrole="contractor"/>
+
+	  <menu type="separator"/>
+      <menu id="mnu_export_image" icon="insert-image.png"     action="ExportAsImage"  tooltip="Export to an Image"/>
+      <menu id="mnu_print"        icon="adobe.pdf.png"   action="Print"  tooltip="Export to a PDF"/>
+     <menu id="mnu_save"         icon="parser_16.png"   action="SaveLayout"   tooltip="Save current layout"/>
+     <menu id="mnu_layout"       icon="wizard_16.png"   action="WizardLayout"   tooltip="do Automatic layout "/>
+      
+    </toolbar>
+
+  </toolbars>
+  <actions>
+  	<!-- *****************************   Current Active Actions ******************************** -->
+  	<action id="exitApp"                   command="closeApplication"  />
+    <action id="openCustomer"              command="addComponent"        target="MdiWindow" label="Funktionen" icon="functions.png" object="panel.CustomerPanel"   param="main"  />
+    <action id="openUserMenu"              command="addComponent"        target="MdiWindow" label="Funktionen" icon="functions.png" object="menu.functions.tree"  param="side"   />
+    <action id="openHelp"                  command="openWindow"          target="WdHelp"/>
+    <action id="openUserSettings"          command="openWindow"          target="WdSettings" />
+	<action id="openAbout"                 command="openWindow"          target="WdAbout"   />
+    <action id="openHelpIntroduction"      command="assingToApplication" target="WdHelp" param="Introduction" />
+    <action id="openHelpUserManual"        command="assingToApplication" target="WdHelp" param="User_Manual"/>
+
+	<action id="SaveCustomer"              command="assingToApplication" />
+	<action id="RefreshCustomer"           command="assingToApplication" />
+
+	<action id="AddAddress"                command="assingToApplication" />
+	<action id="AddCustomer"               command="assingToApplication" role="contractor,bchandler" />
+	<action id="AddEntityConnection"       command="assingToApplication" />
+	<action id="AddInvoice"                command="assingToApplication" role="bchandler" showrole="contractor"/>
+	<action id="AddUser"                   command="assingToApplication" role="admin" />
+	<action id="AlignTop"                  command="assingToApplication" />
+	<action id="AlignButtom"               command="assingToApplication" />
+	<action id="AlignRight"                command="assingToApplication" />
+	<action id="AlignLeft"                 command="assingToApplication" />
+	<action id="AlignCenterHorizontal"     command="assingToApplication" />
+	<action id="AlignCenterVertical"       command="assingToApplication" />
+	<action id="AlignStairRight"           command="assingToApplication" />
+	<action id="AlignStairLeft"            command="assingToApplication" />		
+	
+	<action id="CloneCustomer"             command="openWindow"          role="contractor,bchandler" target="WdClone"/>
+	<!--  <action id="OpenBCTabular"             command="openWindow"          role="contractor,bchandler" target="WdBCTabular"/>-->
+	<action id="OpenBCTabular"             command="assingToApplication" />
+	<action id="DelAddress"                command="assingToApplication" />
+	<action id="DelCustomer"               command="assingToApplication" role="bchandler"  showrole="contractor"/>
+	<action id="DelEntityConnection"       command="assingToApplication" />
+	<action id="DelEntity"                 command="assingToApplication" />
+	<action id="DelSingleEntity"           command="assingToApplication" />
+	<action id="DelUser"                   command="assingToApplication" role="admin"/>
+	<action id="EditEntity"                command="assingToApplication" />
+	<action id="EditEntProp"               command="assingToApplication" />
+	<action id="EditAddress"               command="assingToApplication" />
+	<action id="EditCustomer"              command="assingToApplication" />
+	<action id="EditUser"                  command="assingToApplication" role="admin"/>
+	<action id="EGPTitleDarkColor"         command="assingToApplication"  target="WdEntityProp" param="ETDC"/>
+	<action id="EGPTitleLightColor"        command="assingToApplication"  target="WdEntityProp" param="ETLC"/>
+	<action id="EGPContentFont"            command="assingToApplication"  target="WdEntityProp" param="ECFN"/>
+	<action id="EGPTitleFontColor"         command="assingToApplication"  target="WdEntityProp" param="ETDC"/>
+	<action id="EGPTitleFont"              command="assingToApplication"  target="WdEntityProp" param="ETLC"/>
+	<action id="EGPContentFontColor"       command="assingToApplication"  target="WdEntityProp" param="ECFN"/>
+	<action id="EGPContentFont"            command="assingToApplication"  target="WdEntityProp" param="ECFN"/>
+	<action id="EGPContentBGColor"         command="assingToApplication"  target="WdEntityProp" param="ECFN"/>
+
+	<action id="ExportAsImage"             command="assingToApplication" />
+	<action id="InsertProduct"             command="assingToApplication" />
+	<action id="InsertCalculationValue"    command="assingToApplication" />
+	<action id="InsertException"           command="assingToApplication" />
+	<action id="InsertIRVariable"          command="assingToApplication" />
+	<action id="InsertIRInvoice"           command="assingToApplication" showrole="contractor" role="bchandler" />
+	<action id="UndoAction"                command="assingToApplication" />
+	<action id="Print"                     command="assingToApplication" />
+	<action id="ResizeWidth"               command="assingToApplication" />
+	<action id="ResizeHeight"              command="assingToApplication" />
+	<action id="SaveLayout"                command="assingToApplication" />
+	<action id="ShowConnections"           command="assingToApplication" />
+	<action id="SpaceHorizontal"           command="assingToApplication" />
+	<action id="SpaceVertical"             command="assingToApplication" />
+	<action id="TrimPlot"                  command="assingToApplication" />
+	<action id="ZoomIn"                    command="assingToApplication" />
+	<action id="ZoomOut"                   command="assingToApplication" />
+	<action id="WizardLayout"              command="assingToApplication" />
+	
+	
+	
+	
+	
+	
+	
+	<!-- *****************************   End Of Active Actions ******************************** -->
+  </actions>
+</application>

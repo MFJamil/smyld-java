@@ -1,0 +1,72 @@
+<project>
+	<parent>
+		<groupId>com.smyld.app.pe</groupId>
+		<artifactId>smyld-app-pe</artifactId>
+		<version>1.0-SNAPSHOT</version>
+	</parent>
+
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.smyld.app.pe.swing</groupId>
+	<artifactId>smyld-app-portalengine</artifactId>
+	<packaging>jar</packaging>
+	<version>1.0-SNAPSHOT</version>
+	<name>SMYLD Swing PortalEngine</name>
+	<description>This is the portal engine application for generating GUI layer </description>
+	<developers>
+		<developer>
+			<id>mjamil</id>
+			<email>jamil@mohammed-jamil.de</email>
+			<name>Mohammed Jamil</name>
+			<organization>SMYLD</organization>
+			<organizationUrl>http://www.mohammed-jamil.de/</organizationUrl>
+			<roles>
+				<role>developer</role>
+			</roles>
+		</developer>
+	</developers>
+	<dependencies>
+		<dependency>
+			<groupId>com.smyld.main</groupId>
+			<artifactId>smyld-main-lang</artifactId>
+			<version>1.0-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>com.smyld.main</groupId>
+			<artifactId>smyld-main-db</artifactId>
+			<version>1.0-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.4</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.smyld.app.pe</groupId>
+			<artifactId>PECore</artifactId>
+			<version>1.0-SNAPSHOT</version>
+		</dependency>
+        <dependency>
+            <groupId>javax.inject</groupId>
+            <artifactId>javax.inject</artifactId>
+            <version>1</version>
+            <scope>compile</scope>
+        </dependency>
+
+    </dependencies>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.6.0</version>
+				<configuration>
+					<source>1.8</source>
+					<target>1.8</target>
+				</configuration>
+			</plugin>
+		</plugins>
+
+	</build>
+
+</project>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<applicationSettings>
+<log>
+<name />
+<path />
+</log>
+<languages default="German">
+<language name="English" src="English.xml" />
+<language name="German" src="German.xml" />
+</languages>
+<lookandfeels default="Jtattoo Mint">
+<lookandfeel name="Goodies Plastic 3D" class="com.jgoodies.looks.plastic.Plastic3DLookAndFeel" />
+<lookandfeel name="Jtattoo Smart" class="com.jtattoo.plaf.smart.SmartLookAndFeel" />
+<lookandfeel name="Goodies Plastic XP" class="com.jgoodies.looks.plastic.PlasticXPLookAndFeel" />
+<lookandfeel name="Metal" class="javax.swing.plaf.metal.MetalLookAndFeel" />
+<lookandfeel name="Borland" class="com.borland.plaf.borland.BorlandLookAndFeel" />
+<lookandfeel name="Jtattoo HiFi" class="com.jtattoo.plaf.hifi.HiFiLookAndFeel" />
+<lookandfeel name="Jtattoo McWin" class="com.jtattoo.plaf.mcwin.McWinLookAndFeel" />
+<lookandfeel name="Jtattoo Aero" class="com.jtattoo.plaf.aero.AeroLookAndFeel" />
+<lookandfeel name="Jtattoo Noire" class="com.jtattoo.plaf.noire.NoireLookAndFeel" />
+<lookandfeel name="Jtattoo Bernstein" class="com.jtattoo.plaf.bernstein.BernsteinLookAndFeel" />
+<lookandfeel name="Jtattoo Mint" class="com.jtattoo.plaf.mint.MintLookAndFeel" />
+<lookandfeel name="Jtattoo Aluminium" class="com.jtattoo.plaf.aluminium.AluminiumLookAndFeel" />
+<lookandfeel name="Solaries" class="com.sun.java.swing.plaf.motif.MotifLookAndFeel" />
+<lookandfeel name="Jtattoo Luna" class="com.jtattoo.plaf.luna.LunaLookAndFeel" />
+<lookandfeel name="Jtattoo Acryl" class="com.jtattoo.plaf.acryl.AcrylLookAndFeel" />
+<lookandfeel name="Jtattoo Fast" class="com.jtattoo.plaf.fast.FastLookAndFeel" />
+</lookandfeels>
+</applicationSettings>
+
