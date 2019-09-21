@@ -5,14 +5,14 @@
     <parent>
         <groupId>com.smyld</groupId>
         <artifactId>smyld</artifactId>
-        <version>1.0-SNAPSHOT</version>
+        <version>${release.version}</version>
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.smyld.app</groupId>
     <artifactId>smyld-app</artifactId>
     <packaging>pom</packaging>
-    <version>1.0-SNAPSHOT</version>
+    <version>${release.version}</version>
     <name>SMYLD Applications</name>
 
     <modules>

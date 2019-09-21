@@ -4,7 +4,7 @@
   <groupId>com.smyld.app.pe.boot</groupId>
   <artifactId>pe-boot-dependencies</artifactId>
   <packaging>pom</packaging>
-  <version>1.0-SNAPSHOT</version>
+  <version>1.0.1</version>
   <name>SMYLD Portal Engine Boot Dependencies</name>
   <description>SMYLD Portal Engine Boot Dependencies</description>
   <licenses>
@@ -19,14 +19,13 @@
       <email>jamil@mohammed-jamil.de</email>
       <name>Mohammed Jamil</name>
       <organization>SMYLD</organization>
-      <organizationUrl>http://www.mohammed-jamil.de/</organizationUrl>
       <roles>
         <role>developer</role>
       </roles>
     </developer>
   </developers>
   <properties>
-	<pe.version>1.0-SNAPSHOT</pe.version>
+	<pe.version>1.0.1</pe.version>
 	<jgoodies.version>2.7.0</jgoodies.version>
 	<jtattoo.version>1.6.10</jtattoo.version>
   </properties>
@@ -47,7 +46,7 @@
 			<plugin>
 				<groupId>com.smyld.app.pe.plugin</groupId>
 				<artifactId>smyld-pe-maven-plugin</artifactId>
-				<version>1.0-SNAPSHOT</version>
+				<version>1.0.1</version>
 				<configuration>
 					<app>Application_gui.xml</app>
 				</configuration>
