@@ -24,7 +24,7 @@ The Portal Engine concept is to deal with the GUI layer as a separate module tha
 #### 3 - JSON file
 #### 4 - Data Base
 
-The Portal Engin will handle reading the file and generating the required components. The Components can belong to any technology/framework. We can define the components to two types:
+The Portal Engine will handle reading the file and generating the required components. The Components can belong to any technology/framework. We can define the components to two types:
 
 #### 1 - Desktop:
 Desktop based widgets can be any of the following:
@@ -35,11 +35,21 @@ Desktop based widgets can be any of the following:
 And many more..
 
 #### 2 - Web.
-Web based frameworks are available and involve some complexity that can be eliminated by the Portal Engine as well, some of the well known can be:
+Web based frameworks are available and involve some complexity that can be eliminated by the Portal Engine as well, component oriented approach might look like a limitation for the creativity of the developer when working with such frameworks, but saving a lot of time might be needed in some projects, some of the well known frameworks can be:
 ##### 1 - Angular
 ##### 2 - React
 ##### 3 - Vue
 And many more ..
+
+## Building Process
+Building tools are rich and the Portal Engine can be extended to use most of them. Currently the available building ways are:
+##### 1 - Stand Alone Application.
+##### 2 - Maven artifact
+##### 3 - Maven Plugin
+##### 4 - Spring Boot Application.
+However, it can also be developed to use Gradle, Jenkins, Docker ...etc.
+
+
 
 
 
