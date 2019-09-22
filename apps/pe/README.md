@@ -32,7 +32,7 @@ The Portal Engine will handle reading the file and generating the required compo
    * **JDK/SWT**
    * **Node.js/Electron**
    * **Node.js/NW.js**
-   And many more..
+  And many more..
 
 #### 2 - Web.
    Web based frameworks are available and involve some complexity that can be eliminated by the Portal Engine as well, component oriented approach might look like a limitation for the creativity of the developer when working with such frameworks, but saving a lot of time might be needed in some projects, some of the well known frameworks can be:
@@ -47,7 +47,7 @@ And many more ..
    * **Maven artifact**
    * **Maven Plugin**
    * **Spring Boot Application**
-    However, it can also be developed to use Gradle, Jenkins, Docker ...etc.
+   However, it can also be developed to use Gradle, Jenkins, Docker ...etc.
 
 
 ## Using Portal Engine
