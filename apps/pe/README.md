@@ -32,6 +32,7 @@ The Portal Engine will handle reading the file and generating the required compo
    * **JDK/SWT**
    * **Node.js/Electron**
    * **Node.js/NW.js**
+  
   And many more..
 
 #### 2 - Web.
@@ -39,7 +40,8 @@ The Portal Engine will handle reading the file and generating the required compo
    * **Angular**
    * **React**
    * **Vue**
-And many more ..
+
+   And many more ..
 
 ## Building Process
    Building tools are rich and the Portal Engine can be extended to use most of them. Currently the available building ways are:
@@ -47,6 +49,7 @@ And many more ..
    * **Maven artifact**
    * **Maven Plugin**
    * **Spring Boot Application**
+   
    However, it can also be developed to use Gradle, Jenkins, Docker ...etc.
 
 
