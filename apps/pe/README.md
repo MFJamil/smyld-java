@@ -50,17 +50,8 @@ Building tools are rich and the Portal Engine can be extended to use most of the
 However, it can also be developed to use Gradle, Jenkins, Docker ...etc.
 
 
+## Using Portal Engine
+The current version of Portal Engin can be used to generate Swing Applications. The source currently being supported is only XML files. The Engine was recently developed adopting to the technology changes. Spring Boot in its simplicity was inspiring us to follow a similar approach. With a relatively small POM file, the engine will be ready to pick up the defined XML file by the developer and to generate the required components. 
 
+_More detailed description with tutorials on using the engine will follow_
 
-
-
-
-
-
-
-
-
-
-
-
-_To Be Continued_
