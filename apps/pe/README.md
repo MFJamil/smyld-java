@@ -27,31 +27,31 @@ The Portal Engine concept is to deal with the GUI layer as a separate module tha
 The Portal Engine will handle reading the file and generating the required components. The Components can belong to any technology/framework. We can define the components to two types:
 
 #### 1 - Desktop:
-Desktop based widgets can be any of the following:
-##### 1 - JDK/Swing
-##### 2 - JDK/SWT
-##### 3 - Node.js/Electron
-##### 4 - Node.js/NW.js
-And many more..
+   Desktop based widgets can be any of the following:
+    * **JDK/Swing**
+    * **JDK/SWT**
+    * **Node.js/Electron**
+    * **Node.js/NW.js**
+   And many more..
 
 #### 2 - Web.
-Web based frameworks are available and involve some complexity that can be eliminated by the Portal Engine as well, component oriented approach might look like a limitation for the creativity of the developer when working with such frameworks, but saving a lot of time might be needed in some projects, some of the well known frameworks can be:
-##### 1 - Angular
-##### 2 - React
-##### 3 - Vue
+   Web based frameworks are available and involve some complexity that can be eliminated by the Portal Engine as well, component oriented approach might look like a limitation for the creativity of the developer when working with such frameworks, but saving a lot of time might be needed in some projects, some of the well known frameworks can be:
+    * **Angular**
+    * **React**
+    * **Vue**
 And many more ..
 
 ## Building Process
-Building tools are rich and the Portal Engine can be extended to use most of them. Currently the available building ways are:
-##### 1 - Stand Alone Application.
-##### 2 - Maven artifact
-##### 3 - Maven Plugin
-##### 4 - Spring Boot Application.
-However, it can also be developed to use Gradle, Jenkins, Docker ...etc.
+   Building tools are rich and the Portal Engine can be extended to use most of them. Currently the available building ways are:
+    * **Stand Alone Application**
+    * **Maven artifact**
+    * **Maven Plugin**
+    * **Spring Boot Application**
+    However, it can also be developed to use Gradle, Jenkins, Docker ...etc.
 
 
 ## Using Portal Engine
-The current version of Portal Engin can be used to generate Swing Applications. The source currently being supported is only XML files. The Engine was recently developed adopting to the technology changes. Spring Boot in its simplicity was inspiring us to follow a similar approach. With a relatively small POM file, the engine will be ready to pick up the defined XML file by the developer and to generate the required components. 
+   The current version of Portal Engin can be used to generate Swing Applications. The source currently being supported is only XML files. The Engine was recently developed adopting to the technology changes. Spring Boot in its simplicity was inspiring us to follow a similar approach. With a relatively small POM file, the engine will be ready to pick up the defined XML file by the developer and to generate the required components. 
 
 _More detailed description with tutorials on using the engine will follow_
 
