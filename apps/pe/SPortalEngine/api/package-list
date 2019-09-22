@@ -1,0 +1,6 @@
+org.smyld.app.spe
+org.smyld.app.spe.builders.gui
+org.smyld.app.spe.builders.layout
+org.smyld.app.spe.factory
+org.smyld.app.spe.service
+org.smyld.app.spe.util

@@ -1,31 +1,20 @@
 <?xml version="1.0"?>
 <project>
   <modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>org.smyld.app.pe</groupId>
+		<artifactId>smyld-app-pe</artifactId>
+		<version>${release.version}</version>
+	</parent>
+
   <groupId>org.smyld.app.pe.boot</groupId>
   <artifactId>pe-boot-dependencies</artifactId>
   <packaging>pom</packaging>
-  <version>${release.version}</version>
+  <version>${pe.version}</version>
   <name>SMYLD Portal Engine Boot Dependencies</name>
   <description>SMYLD Portal Engine Boot Dependencies</description>
-  <licenses>
-        <license>
-            <name>Apache License, Version 2.0</name>
-            <url>http://www.apache.org/licenses/LICENSE-2.0</url>
-        </license>
-  </licenses>
-  <developers>
-    <developer>
-      <id>mjamil</id>
-      <email>jamil@mohammed-jamil.de</email>
-      <name>Mohammed Jamil</name>
-      <organization>SMYLD</organization>
-      <roles>
-        <role>developer</role>
-      </roles>
-    </developer>
-  </developers>
-  <properties>
-	<pe.version>${release.version}</pe.version>
+   <properties>
+	<pe.version>1.0.1</pe.version>
 	<jgoodies.version>2.7.0</jgoodies.version>
 	<jtattoo.version>1.6.10</jtattoo.version>
   </properties>

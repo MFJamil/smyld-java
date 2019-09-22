@@ -1,0 +1,8 @@
+org.smyld.app.pe.annotations
+org.smyld.app.pe.exceptions
+org.smyld.app.pe.logging
+org.smyld.app.pe.model
+org.smyld.app.pe.model.gui
+org.smyld.app.pe.model.user
+org.smyld.app.pe.projectbuilder
+org.smyld.app.pe.security
