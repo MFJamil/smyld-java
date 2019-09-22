@@ -18,7 +18,7 @@ Well you are right, many alternatives are available but do not forget two facts:
 
 
 ## Portal Engine Concept
-The Portal Engine concept is to deal with the GUI layer as a separate module that will interact with the rest of the modules via defined interfaces. The GUI definition can take different forms:
+   The Portal Engine concept is to deal with the GUI layer as a separate module that will interact with the rest of the modules via defined interfaces. The GUI definition can take different forms: 
    * **XML file**   
    * **YAML file**
    * **JSON file**
@@ -28,25 +28,25 @@ The Portal Engine will handle reading the file and generating the required compo
 
 #### 1 - Desktop:
    Desktop based widgets can be any of the following:
-    * **JDK/Swing**
-    * **JDK/SWT**
-    * **Node.js/Electron**
-    * **Node.js/NW.js**
+   * **JDK/Swing**
+   * **JDK/SWT**
+   * **Node.js/Electron**
+   * **Node.js/NW.js**
    And many more..
 
 #### 2 - Web.
    Web based frameworks are available and involve some complexity that can be eliminated by the Portal Engine as well, component oriented approach might look like a limitation for the creativity of the developer when working with such frameworks, but saving a lot of time might be needed in some projects, some of the well known frameworks can be:
-    * **Angular**
-    * **React**
-    * **Vue**
+   * **Angular**
+   * **React**
+   * **Vue**
 And many more ..
 
 ## Building Process
    Building tools are rich and the Portal Engine can be extended to use most of them. Currently the available building ways are:
-    * **Stand Alone Application**
-    * **Maven artifact**
-    * **Maven Plugin**
-    * **Spring Boot Application**
+   * **Stand Alone Application**
+   * **Maven artifact**
+   * **Maven Plugin**
+   * **Spring Boot Application**
     However, it can also be developed to use Gradle, Jenkins, Docker ...etc.
 
 
