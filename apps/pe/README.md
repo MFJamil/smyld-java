@@ -19,10 +19,10 @@ Well you are right, many alternatives are available but do not forget two facts:
 
 ## Portal Engine Concept
 The Portal Engine concept is to deal with the GUI layer as a separate module that will interact with the rest of the modules via defined interfaces. The GUI definition can take different forms:
-#### 1 - XML file
-#### 2 - YAML file
-#### 3 - JSON file
-#### 4 - Data Base
+#### ... 1 - XML file
+####  2 - YAML file
+####  3 - JSON file
+####  4 - Data Base
 
 The Portal Engine will handle reading the file and generating the required components. The Components can belong to any technology/framework. We can define the components to two types:
 
