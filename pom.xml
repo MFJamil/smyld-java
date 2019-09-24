@@ -8,11 +8,11 @@
   <name>SMYLD Root</name>
   <description>SMYLD projects package</description>
   <url>https://github.com/MFJamil/smyld-java</url>
-	<parent>
+	<!--parent>
 		<groupId>org.sonatype.oss</groupId>
 		<artifactId>oss-parent</artifactId>
 		<version>9</version>
-	</parent>
+	</parent-->
 
   <properties>
     <release.version>1.0.2-SNAPSHOT</release.version>
@@ -131,5 +131,5 @@
       <url>https://oss.sonatype.org/content/repositories/snapshots</url>
     </snapshotRepository>
   </distributionManagement>
--->
+
 </project>

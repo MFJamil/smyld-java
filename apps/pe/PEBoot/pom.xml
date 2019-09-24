@@ -8,12 +8,6 @@
   <name>SMYLD Portal Engine Boot Dependencies</name>
   <description>SMYLD Portal Engine Boot Dependencies</description>
   <url>https://github.com/MFJamil/smyld-java</url>
-	<parent>
-		<groupId>org.sonatype.oss</groupId>
-		<artifactId>oss-parent</artifactId>
-		<version>9</version>
-	</parent>
-
   <properties>
     <release.version>1.0.2-SNAPSHOT</release.version>
     <pe.version>1.0.2-SNAPSHOT</pe.version>
@@ -99,8 +93,6 @@
           <appendAssemblyId>false</appendAssemblyId>
         </configuration>
       </plugin>
-    </plugins>
-  </build>
 
       <plugin>
         <groupId>org.sonatype.plugins</groupId>
@@ -157,6 +149,9 @@
           </execution>
         </executions>
       </plugin>
+    </plugins>
+  </build>
+
 
   <distributionManagement>
     <snapshotRepository>
