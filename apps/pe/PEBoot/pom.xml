@@ -4,10 +4,20 @@
   <groupId>org.smyld.app.pe.boot</groupId>
   <artifactId>pe-boot-dependencies</artifactId>
   <packaging>pom</packaging>
-  <version>1.0.2</version>
+  <version>${pe.version}</version>
   <name>SMYLD Portal Engine Boot Dependencies</name>
   <description>SMYLD Portal Engine Boot Dependencies</description>
   <url>https://github.com/MFJamil/smyld-java</url>
+	<parent>
+		<groupId>org.sonatype.oss</groupId>
+		<artifactId>oss-parent</artifactId>
+		<version>9</version>
+	</parent>
+
+  <properties>
+    <release.version>1.0.2-SNAPSHOT</release.version>
+    <pe.version>1.0.2-SNAPSHOT</pe.version>
+  </properties>
   <organization>
     <name>SMYLD</name>
     <url>https://www.smyld.org</url>
@@ -39,11 +49,6 @@
       </roles>
     </developer>
   </developers>
-
-  <properties>
-    <jgoodies.version>2.7.0</jgoodies.version>
-    <jtattoo.version>1.6.10</jtattoo.version>
-  </properties>
   <dependencies>
     <dependency>
       <groupId>org.junit.jupiter</groupId>
@@ -52,12 +57,13 @@
       <scope>test</scope>
     </dependency>
   </dependencies>
+
   <build>
     <plugins>
       <plugin>
         <groupId>org.smyld.app.pe</groupId>
         <artifactId>smyld-pe-maven-plugin</artifactId>
-        <version>1.0.2</version>
+        <version>${pe.version}</version>
         <configuration>
           <app>Application_gui.xml</app>
         </configuration>
@@ -93,6 +99,9 @@
           <appendAssemblyId>false</appendAssemblyId>
         </configuration>
       </plugin>
+    </plugins>
+  </build>
+
       <plugin>
         <groupId>org.sonatype.plugins</groupId>
         <artifactId>nexus-staging-maven-plugin</artifactId>
@@ -100,7 +109,8 @@
         <extensions>true</extensions>
         <configuration>
           <serverId>ossrh</serverId>
-          <nexusUrl>https://oss.sonatype.org/</nexusUrl>
+          <!--nexusUrl>https://oss.sonatype.org/</nexusUrl-->
+          <nexusUrl>https://oss.sonatype.org/service/local/staging/deploy/maven2</nexusUrl>
           <autoReleaseAfterClose>true</autoReleaseAfterClose>
         </configuration>
       </plugin>
@@ -147,12 +157,12 @@
           </execution>
         </executions>
       </plugin>
-    </plugins>
-  </build>
+
   <distributionManagement>
     <snapshotRepository>
       <id>ossrh</id>
       <url>https://oss.sonatype.org/content/repositories/snapshots</url>
     </snapshotRepository>
   </distributionManagement>
+  
 </project>
