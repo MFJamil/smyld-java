@@ -1,21 +1,24 @@
 <?xml version="1.0"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0                              http://maven.apache.org/maven-v4_0_0.xsd">
-  <properties>
-    <release.version>1.0.1</release.version>
-    <maven.compiler.target>1.8</maven.compiler.target>
-    <maven.compiler.source>1.8</maven.compiler.source>
-  </properties>
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.smyld</groupId>
   <artifactId>smyld</artifactId>
   <packaging>pom</packaging>
   <version>${release.version}</version>
   <name>SMYLD Root</name>
-  <description>Serialize and Deserialize Json-LD into Java entities</description>
+  <description>SMYLD projects package</description>
   <url>https://github.com/MFJamil/smyld-java</url>
+
+  <properties>
+    <release.version>1.0.3</release.version>
+    <pe.version>1.0.3</pe.version>
+    <maven.compiler.target>1.8</maven.compiler.target>
+    <maven.compiler.source>1.8</maven.compiler.source>
+  </properties>
+
   <organization>
-    <name>com.github.mfjamil</name>
-    <url>https://github.com/MFJamil</url>
+    <name>SMYLD</name>
+    <url>https://www.smyld.org</url>
   </organization>
   <issueManagement>
     <system>GitHub</system>
@@ -30,17 +33,13 @@
   </licenses>
   <scm>
     <url>https://github.com/MFJamil/smyld-java</url>
-    <connection>
-            scm:git:git://github.com/MFJamil/smyld-java.git
-        </connection>
-    <developerConnection>
-            scm:git:ssh://git@github.com:MFJamil/smyld-java.git
-        </developerConnection>
+    <connection>scm:git:git://github.com/MFJamil/smyld-java.git</connection>
+    <developerConnection>scm:git:ssh://git@github.com:MFJamil/smyld-java.git</developerConnection>
   </scm>
   <developers>
     <developer>
       <id>mjamil</id>
-      <email>jamil@360t.com</email>
+      <email>mohammedfjameel@yahoo.com</email>
       <name>Mohammed Jamil</name>
       <organization>SMYLD</organization>
       <roles>
@@ -128,16 +127,5 @@
       <url>https://oss.sonatype.org/content/repositories/snapshots</url>
     </snapshotRepository>
   </distributionManagement>
-  <!-- In case of using maven default deployument plugin
-  <distributionManagement>
-    <snapshotRepository>
-      <id>ossrh</id>
-      <url>https://oss.sonatype.org/content/repositories/snapshots</url>
-    </snapshotRepository>
-    <repository>
-      <id>ossrh</id>
-      <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
-    </repository>
-  </distributionManagement>
-  -->
+
 </project>

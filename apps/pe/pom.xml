@@ -16,12 +16,12 @@
     <name>SMYLD Portal Engine Applications Group</name>
 
     <modules>
-        <module>PEBoot</module>
         <module>PEModel</module>
         <module>PECore</module>
         <module>PortalEngine</module>
         <module>PEMavenPlugin</module>
         <module>SPortalEngine</module>
+        <module>PEBoot</module>
         <!--module>PEArch_Simple</module-->
 
     </modules>

@@ -1,3 +1,4 @@
+<?xml version="1.0"?>
 <project>
   <parent>
     <groupId>org.smyld.app.pe</groupId>
@@ -9,16 +10,13 @@
   <artifactId>smyld-pe-maven-plugin</artifactId>
   <version>${release.version}</version>
   <packaging>maven-plugin</packaging>
-
   <name>SMYLD Portal Engine plugin</name>
- 
   <dependencies>
     <dependency>
       <groupId>org.apache.maven</groupId>
       <artifactId>maven-plugin-api</artifactId>
       <version>3.6.0</version>
     </dependency>
- 
     <!-- dependencies to annotations -->
     <dependency>
       <groupId>org.apache.maven.plugin-tools</groupId>
@@ -27,8 +25,8 @@
       <scope>provided</scope>
     </dependency>
     <dependency>
-	  <groupId>org.smyld.app.pe</groupId>
-   	  <artifactId>smyld-app-portalengine</artifactId>
+      <groupId>org.smyld.app.pe</groupId>
+      <artifactId>smyld-app-portalengine</artifactId>
       <version>${release.version}</version>
       <scope>compile</scope>
     </dependency>
@@ -42,45 +40,64 @@
       <artifactId>maven-core</artifactId>
       <version>2.2.1</version>
     </dependency>
-      <dependency>
-          <groupId>org.apache.maven.shared</groupId>
-          <artifactId>maven-filtering</artifactId>
-          <version>3.1.1</version>
-      </dependency>
+    <dependency>
+      <groupId>org.apache.maven.shared</groupId>
+      <artifactId>maven-filtering</artifactId>
+      <version>3.1.1</version>
+    </dependency>
     <!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-assembly-plugin -->
     <dependency>
       <groupId>org.apache.maven.plugins</groupId>
       <artifactId>maven-assembly-plugin</artifactId>
       <version>3.1.1</version>
     </dependency>
-      <dependency>
-          <groupId>org.apache.maven</groupId>
-          <artifactId>maven-artifact</artifactId>
-          <version>3.6.0</version>
-      </dependency>
-
+    <dependency>
+      <groupId>org.apache.maven</groupId>
+      <artifactId>maven-artifact</artifactId>
+      <version>3.6.0</version>
+    </dependency>
   </dependencies>
   <build>
-    <pluginManagement>
-
-      <plugins>
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-compiler-plugin</artifactId>
-          <version>3.6.0</version>
-          <configuration>
-            <source>1.8</source>
-            <target>1.8</target>
-          </configuration>
-        </plugin>
-
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-plugin-plugin</artifactId>
-          <version>3.6.0</version>
-        </plugin>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.6.0</version>
+        <configuration>
+          <source>1.8</source>
+          <target>1.8</target>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-plugin-plugin</artifactId>
+        <version>3.6.0</version>
+      </plugin>
+      <!-- TODO the below plugin needs to be some how migrated and handled via the portal engine plugin -->
+      <plugin>
+        <artifactId>maven-assembly-plugin</artifactId>
+        <executions>
+          <execution>
+            <phase>package</phase>
+            <goals>
+              <goal>single</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <archive>
+            <manifest>
+              <mainClass>org.smyld.app.pe.active.PEGuiMainClass</mainClass>
+            </manifest>
+          </archive>
+          <descriptorRefs>
+            <descriptorRef>jar-with-dependencies</descriptorRef>
+          </descriptorRefs>
+          <finalName>executable</finalName>
+          <appendAssemblyId>false</appendAssemblyId>
+        </configuration>
+      </plugin>
       </plugins>
-    </pluginManagement>
   </build>
 
 </project>

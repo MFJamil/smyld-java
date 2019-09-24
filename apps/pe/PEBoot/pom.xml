@@ -1,66 +1,158 @@
 <?xml version="1.0"?>
 <project>
   <modelVersion>4.0.0</modelVersion>
-	<parent>
-		<groupId>org.smyld.app.pe</groupId>
-		<artifactId>smyld-app-pe</artifactId>
-		<version>${release.version}</version>
-	</parent>
-
   <groupId>org.smyld.app.pe.boot</groupId>
   <artifactId>pe-boot-dependencies</artifactId>
   <packaging>pom</packaging>
-  <version>${pe.version}</version>
+  <version>1.0.2</version>
   <name>SMYLD Portal Engine Boot Dependencies</name>
   <description>SMYLD Portal Engine Boot Dependencies</description>
-   <properties>
-	<pe.version>1.0.1</pe.version>
-	<jgoodies.version>2.7.0</jgoodies.version>
-	<jtattoo.version>1.6.10</jtattoo.version>
+  <url>https://github.com/MFJamil/smyld-java</url>
+  <organization>
+    <name>SMYLD</name>
+    <url>https://www.smyld.org</url>
+  </organization>
+  <issueManagement>
+    <system>GitHub</system>
+    <url>https://github.com/MFJamil/smyld-java/issues</url>
+  </issueManagement>
+  <licenses>
+    <license>
+      <name>Apache License 2.0</name>
+      <url>https://github.com/MFJamil/smyld-java/blob/master/LICENSE</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
+  <scm>
+    <url>https://github.com/MFJamil/smyld-java</url>
+    <connection>scm:git:git://github.com/MFJamil/smyld-java.git</connection>
+    <developerConnection>scm:git:ssh://git@github.com:MFJamil/smyld-java.git</developerConnection>
+  </scm>
+  <developers>
+    <developer>
+      <id>mjamil</id>
+      <email>mohammedfjameel@yahoo.com</email>
+      <name>Mohammed Jamil</name>
+      <organization>SMYLD</organization>
+      <roles>
+        <role>developer</role>
+      </roles>
+    </developer>
+  </developers>
+
+  <properties>
+    <jgoodies.version>2.7.0</jgoodies.version>
+    <jtattoo.version>1.6.10</jtattoo.version>
   </properties>
   <dependencies>
-	  <dependency>
-		  <groupId>org.junit.jupiter</groupId>
-		  <artifactId>junit-jupiter</artifactId>
-		  <version>5.5.2</version>
-		  <scope>test</scope>
-	  </dependency>
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter</artifactId>
+      <version>5.5.2</version>
+      <scope>test</scope>
+    </dependency>
   </dependencies>
-
-  <dependencyManagement>
-	</dependencyManagement>
-	<build>
-	<pluginManagement>
-		<plugins>
-			<plugin>
-				<groupId>org.smyld.app.pe.plugin</groupId>
-				<artifactId>smyld-pe-maven-plugin</artifactId>
-				<version>${release.version}</version>
-				<configuration>
-					<app>Application_gui.xml</app>
-				</configuration>
-				<executions><execution><goals><goal>generate</goal></goals></execution></executions>
-			</plugin>
-			<!-- TODO the below plugin needs to be some how migrated and handled via the portal engine plugin -->
-			<plugin>
-				<artifactId>maven-assembly-plugin</artifactId>
-				<executions>
-					<execution>
-						<phase>package</phase>
-						<goals>
-							<goal>single</goal>
-						</goals>
-					</execution>
-				</executions>
-				<configuration>
-					<archive><manifest><mainClass>org.smyld.app.pe.active.PEGuiMainClass</mainClass></manifest></archive>
-					<descriptorRefs><descriptorRef>jar-with-dependencies</descriptorRef></descriptorRefs>
-					<finalName>executable</finalName>
-					<appendAssemblyId>false</appendAssemblyId>
-				</configuration>
-			</plugin>
-		</plugins>
-	</pluginManagement>
-
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.smyld.app.pe</groupId>
+        <artifactId>smyld-pe-maven-plugin</artifactId>
+        <version>1.0.2</version>
+        <configuration>
+          <app>Application_gui.xml</app>
+        </configuration>
+        <executions>
+          <execution>
+            <goals>
+              <goal>generate</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <!-- TODO the below plugin needs to be some how migrated and handled via the portal engine plugin -->
+      <plugin>
+        <artifactId>maven-assembly-plugin</artifactId>
+        <executions>
+          <execution>
+            <phase>package</phase>
+            <goals>
+              <goal>single</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <archive>
+            <manifest>
+              <mainClass>org.smyld.app.pe.active.PEGuiMainClass</mainClass>
+            </manifest>
+          </archive>
+          <descriptorRefs>
+            <descriptorRef>jar-with-dependencies</descriptorRef>
+          </descriptorRefs>
+          <finalName>executable</finalName>
+          <appendAssemblyId>false</appendAssemblyId>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.sonatype.plugins</groupId>
+        <artifactId>nexus-staging-maven-plugin</artifactId>
+        <version>1.6.7</version>
+        <extensions>true</extensions>
+        <configuration>
+          <serverId>ossrh</serverId>
+          <nexusUrl>https://oss.sonatype.org/</nexusUrl>
+          <autoReleaseAfterClose>true</autoReleaseAfterClose>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-gpg-plugin</artifactId>
+        <version>1.5</version>
+        <executions>
+          <execution>
+            <id>sign-artifacts</id>
+            <phase>verify</phase>
+            <goals>
+              <goal>sign</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-source-plugin</artifactId>
+        <version>2.2.1</version>
+        <executions>
+          <execution>
+            <id>attach-sources</id>
+            <goals>
+              <goal>jar-no-fork</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-javadoc-plugin</artifactId>
+        <version>2.9.1</version>
+        <configuration>
+          <additionalparam>-Xdoclint:none</additionalparam>
+        </configuration>
+        <executions>
+          <execution>
+            <id>attach-javadocs</id>
+            <goals>
+              <goal>jar</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
   </build>
+  <distributionManagement>
+    <snapshotRepository>
+      <id>ossrh</id>
+      <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+    </snapshotRepository>
+  </distributionManagement>
 </project>
