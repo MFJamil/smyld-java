@@ -4,21 +4,21 @@
 	<parent>
 		<groupId>org.smyld.main</groupId>
 		<artifactId>smyld-main</artifactId>
-		<version>${release.version}</version>
+		<version>1.0.2-SNAPSHOT</version> 
 	</parent>
 
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.smyld.main</groupId>
 	<artifactId>smyld-main-gui</artifactId>
 	<packaging>jar</packaging>
-	<version>${release.version}</version>
+	<version>1.0.2-SNAPSHOT</version>
 	<name>smyld-gui</name>
 	<description>This projects contains SMYLD GUI</description>
 	<dependencies>
 		<dependency>
 			<groupId>org.smyld.main</groupId>
 			<artifactId>smyld-main-api</artifactId>
-			<version>${release.version}</version>
+			<version>1.0.2-SNAPSHOT</version>
 		</dependency>
 	</dependencies>
 

@@ -12,7 +12,7 @@ import java.io.InputStream;
 
 import static org.smyld.app.pe.model.Constants.*;
 
-public class PEAppXMLReader extends PEXmlFileReader implements ApplicationReader {
+public class  PEAppXMLReader extends PEXmlFileReader implements ApplicationReader {
     GUIToolkit toolkit;
 
     public PEAppXMLReader()  {
@@ -47,7 +47,8 @@ public class PEAppXMLReader extends PEXmlFileReader implements ApplicationReader
 
     private void readBuildSettings(Element buildEl){
         if (buildEl==null) return ;
-        this.toolkit =  GUIToolkit.valueOf(buildEl.getChildText(TAG_NAME_TOOLkit));
+        // Setting the default to swing
+        this.toolkit = buildEl.getChildText(TAG_NAME_TOOLkit)!=null? GUIToolkit.valueOf(buildEl.getChildText(TAG_NAME_TOOLkit)):GUIToolkit.swing;
 
     }
 

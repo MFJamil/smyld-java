@@ -2,35 +2,35 @@
 	<parent>
 		<groupId>org.smyld.app.ep</groupId>
 		<artifactId>smyld-app-ep</artifactId>
-		<version>${release.version}</version>
+		<version>1.0.2-SNAPSHOT</version> 
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.smyld.app.ep.EntityPlot</groupId>
 	<artifactId>smyld-app-entityplot</artifactId>
 	<packaging>jar</packaging>
-	<version>${release.version}</version>
+	<version>1.0.2-SNAPSHOT</version>
 	<name>EntityPlot</name>
 	<description>This is the Entity Plot APIs </description>
 	<dependencies>
 		<dependency>
 			<groupId>org.smyld.main</groupId>
 			<artifactId>smyld-main-api</artifactId>
-			<version>${release.version}</version>
+			<version>1.0.2-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>org.smyld.main</groupId>
 			<artifactId>smyld-main-gui</artifactId>
-			<version>${release.version}</version>
+			<version>1.0.2-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>org.smyld.main</groupId>
 			<artifactId>smyld-main-lang</artifactId>
-			<version>${release.version}</version>
+			<version>1.0.2-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>org.smyld.main</groupId>
 			<artifactId>smyld-main-db</artifactId>
-			<version>${release.version}</version>
+			<version>1.0.2-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>junit</groupId>

@@ -431,9 +431,9 @@ public interface Constants{
 	// Componenet Classes
 	public static final String CLASS_NAME_FP_SMYLD_PANEL      = "org.smyld.gui.SMYLDPanel";
 	public static final String CLASS_NAME_FP_PE_PANEL        = "org.smyld.gui.portal.engine.PEPanel";
-	public static final String CLASS_NAME_FP_USER_CONSTRAINT = "org.smyld.gui.portal.engine.user.UserConstraint";
-	public static final String CLASS_NAME_FP_PE_ACTION       = "org.smyld.gui.portal.engine.PEAction";
-	public static final String CLASS_NAME_FP_GUI_TABLE_COL   = "org.smyld.gui.portal.engine.GUITableColumn";
+	public static final String CLASS_NAME_FP_USER_CONSTRAINT = "org.smyld.app.pe.model.user.UserConstraint";
+	public static final String CLASS_NAME_FP_PE_ACTION       = "org.smyld.app.pe.model.gui.PEAction";
+	public static final String CLASS_NAME_FP_GUI_TABLE_COL   = "org.smyld.app.pe.model.gui.GUITableColumn";
 
 	public static final String CLASS_NAME_SMYLD_PANEL      = "SMYLDPanel";
 	public static final String CLASS_NAME_PE_PANEL        = "PEPanel";

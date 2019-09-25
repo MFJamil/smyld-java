@@ -2,9 +2,9 @@
 <project>
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
-		<groupId>org.smyld.app.pe.boot</groupId>
+		<groupId>org.smyld.app.pe</groupId>
 		<artifactId>pe-boot-dependencies</artifactId>
-		<version>1.0.2</version>
+		<version>1.0.2-SNAPSHOT</version> 
 	</parent>
 	<groupId>${groupId}</groupId>
 	<artifactId>${artifactId}</artifactId>
@@ -15,7 +15,7 @@
 	<build>
 	<plugins>
 		<plugin>
-			<groupId>org.smyld.app.pe.plugin</groupId>
+			<groupId>org.smyld.app.pe</groupId>
 			<artifactId>smyld-pe-maven-plugin</artifactId>
 		</plugin>
 		<plugin><artifactId>maven-assembly-plugin</artifactId></plugin>

@@ -1,17 +1,19 @@
 <?xml version="1.0"?>
 <project>
   <modelVersion>4.0.0</modelVersion>
-  <groupId>org.smyld.app.pe.boot</groupId>
+	<!--parent>
+		<groupId>org.smyld.app.pe</groupId>
+		<artifactId>smyld-app-pe</artifactId>
+		<version>1.0.2-SNAPSHOT</version> 
+	</parent-->
+
+  <groupId>org.smyld.app.pe</groupId>
   <artifactId>pe-boot-dependencies</artifactId>
   <packaging>pom</packaging>
-  <version>${pe.version}</version>
+  <version>1.0.2-SNAPSHOT</version>
   <name>SMYLD Portal Engine Boot Dependencies</name>
   <description>SMYLD Portal Engine Boot Dependencies</description>
   <url>https://github.com/MFJamil/smyld-java</url>
-  <properties>
-    <release.version>1.0.2-SNAPSHOT</release.version>
-    <pe.version>1.0.2-SNAPSHOT</pe.version>
-  </properties>
   <organization>
     <name>SMYLD</name>
     <url>https://www.smyld.org</url>
@@ -50,114 +52,57 @@
       <version>5.5.2</version>
       <scope>test</scope>
     </dependency>
+    <dependency>
+	  <groupId>org.smyld.app.pe</groupId>
+   	  <artifactId>smyld-app-portalengine</artifactId>
+      <version>1.0.2-SNAPSHOT</version>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.jgoodies</groupId>
+      <artifactId>jgoodies-looks</artifactId>
+      <version>2.7.0</version>
+    </dependency>
+    <dependency>
+      <groupId>com.jtattoo</groupId>
+      <artifactId>JTattoo</artifactId>
+      <version>1.6.10</version>
+    </dependency>
   </dependencies>
 
-  <build>
-    <plugins>
-      <plugin>
-        <groupId>org.smyld.app.pe</groupId>
-        <artifactId>smyld-pe-maven-plugin</artifactId>
-        <version>${pe.version}</version>
-        <configuration>
-          <app>Application_gui.xml</app>
-        </configuration>
-        <executions>
-          <execution>
-            <goals>
-              <goal>generate</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
-      <!-- TODO the below plugin needs to be some how migrated and handled via the portal engine plugin -->
-      <plugin>
-        <artifactId>maven-assembly-plugin</artifactId>
-        <executions>
-          <execution>
-            <phase>package</phase>
-            <goals>
-              <goal>single</goal>
-            </goals>
-          </execution>
-        </executions>
-        <configuration>
-          <archive>
-            <manifest>
-              <mainClass>org.smyld.app.pe.active.PEGuiMainClass</mainClass>
-            </manifest>
-          </archive>
-          <descriptorRefs>
-            <descriptorRef>jar-with-dependencies</descriptorRef>
-          </descriptorRefs>
-          <finalName>executable</finalName>
-          <appendAssemblyId>false</appendAssemblyId>
-        </configuration>
-      </plugin>
-
-      <plugin>
-        <groupId>org.sonatype.plugins</groupId>
-        <artifactId>nexus-staging-maven-plugin</artifactId>
-        <version>1.6.7</version>
-        <extensions>true</extensions>
-        <configuration>
-          <serverId>ossrh</serverId>
-          <nexusUrl>https://oss.sonatype.org/</nexusUrl>
-          <!--nexusUrl>https://oss.sonatype.org/service/local/staging/deploy/maven2</nexusUrl-->
-          <autoReleaseAfterClose>true</autoReleaseAfterClose>
-        </configuration>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-gpg-plugin</artifactId>
-        <version>1.5</version>
-        <executions>
-          <execution>
-            <id>sign-artifacts</id>
-            <phase>verify</phase>
-            <goals>
-              <goal>sign</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-source-plugin</artifactId>
-        <version>2.2.1</version>
-        <executions>
-          <execution>
-            <id>attach-sources</id>
-            <goals>
-              <goal>jar-no-fork</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-javadoc-plugin</artifactId>
-        <version>2.9.1</version>
-        <configuration>
-          <additionalparam>-Xdoclint:none</additionalparam>
-        </configuration>
-        <executions>
-          <execution>
-            <id>attach-javadocs</id>
-            <goals>
-              <goal>jar</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
-    </plugins>
-  </build>
-
-
-  <distributionManagement>
-    <snapshotRepository>
-      <id>ossrh</id>
-      <url>https://oss.sonatype.org/content/repositories/snapshots</url>
-    </snapshotRepository>
-  </distributionManagement>
-  
+	<build>
+	<pluginManagement>
+		<plugins>
+			<plugin>
+				<groupId>org.smyld.app.pe</groupId>
+				<artifactId>smyld-pe-maven-plugin</artifactId>
+				<version>1.0.2-SNAPSHOT</version>
+				<configuration>
+					<app>Application_gui.xml</app>
+				</configuration>
+				<executions><execution><goals><goal>generate</goal></goals></execution></executions>
+			</plugin>
+			<!-- TODO the below plugin needs to be some how migrated and handled via the portal engine plugin -->
+			<plugin>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<version>3.1.1</version>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>single</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<archive><manifest><mainClass>org.smyld.app.pe.active.PEGuiMainClass</mainClass></manifest></archive>
+					<descriptorRefs><descriptorRef>jar-with-dependencies</descriptorRef></descriptorRefs>
+					<finalName>executable</finalName>
+					<appendAssemblyId>false</appendAssemblyId>
+				</configuration>
+			</plugin>
+		</plugins>
+	</pluginManagement>
+	</build>
+   
 </project>

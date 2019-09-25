@@ -6,12 +6,12 @@
 	<parent>
 		<groupId>org.smyld</groupId>
 		<artifactId>smyld</artifactId>
-		<version>${release.version}</version>
+		<version>1.0.2-SNAPSHOT</version> 
 	</parent>
     <groupId>org.smyld.main</groupId>
     <artifactId>smyld-main</artifactId>
     <packaging>pom</packaging>
-    <version>${release.version}</version>
+    <version>1.0.2-SNAPSHOT</version>
     <name>Main SMYLD Package</name>
     <modules>
         <module>smyld</module>

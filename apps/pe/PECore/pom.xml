@@ -5,18 +5,16 @@
 	<parent>
 		<groupId>org.smyld.app.pe</groupId>
 		<artifactId>smyld-app-pe</artifactId>
-		<version>${release.version}</version>
+		<version>1.0.2-SNAPSHOT</version> 
 	</parent>
 	<groupId>org.smyld.app.pe</groupId>
 	<artifactId>PECore</artifactId>
-	<version>${release.version}</version>
+	<version>1.0.2-SNAPSHOT</version>
 	<name>SMYLD Portal Engine Core</name>
 	<description>Portal Engine Core APIs</description>
-
 	<properties>
 		<java.version>1.8</java.version>
 	</properties>
-
 	<dependencies>
 		<dependency>
 			<groupId>org.reflections</groupId>
@@ -26,12 +24,12 @@
 		<dependency>
 			<groupId>org.smyld.app.pe.model</groupId>
 			<artifactId>PEModel</artifactId>
-			<version>${release.version}</version>
+			<version>1.0.2-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>org.smyld.main</groupId>
 			<artifactId>smyld-main-api</artifactId>
-			<version>${release.version}</version>
+			<version>1.0.2-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>org.jdom</groupId>

@@ -4,7 +4,7 @@
   <groupId>org.smyld</groupId>
   <artifactId>smyld</artifactId>
   <packaging>pom</packaging>
-  <version>${release.version}</version>
+  <version>1.0.2-SNAPSHOT</version>
   <name>SMYLD Root</name>
   <description>SMYLD projects package</description>
   <url>https://github.com/MFJamil/smyld-java</url>
@@ -15,8 +15,6 @@
 	</parent-->
 
   <properties>
-    <release.version>1.0.2-SNAPSHOT</release.version>
-    <pe.version>1.0.2-SNAPSHOT</pe.version>
     <maven.compiler.target>1.8</maven.compiler.target>
     <maven.compiler.source>1.8</maven.compiler.source>
   </properties>

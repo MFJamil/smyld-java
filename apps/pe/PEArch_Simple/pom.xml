@@ -4,7 +4,7 @@
 	<parent>
 		<groupId>org.smyld.app.pe.boot</groupId>
 		<artifactId>pe-boot-dependencies</artifactId>
-		<version>1.0-SNAPSHOT</version>
+		<version>1.0.2-SNAPSHOT</version> 
 		<relativePath></relativePath>
 	</parent>
 	<groupId>org.smyld.app.pe.sample</groupId>

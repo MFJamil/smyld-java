@@ -5,14 +5,13 @@
 	<parent>
 		<groupId>org.smyld.app.pe</groupId>
 		<artifactId>smyld-app-pe</artifactId>
-		<version>${release.version}</version>
+		<version>1.0.2-SNAPSHOT</version> 
 	</parent>
 	<groupId>org.smyld.app.pe.model</groupId>
 	<artifactId>PEModel</artifactId>
-	<version>${release.version}</version>
+	<version>1.0.2-SNAPSHOT</version>
 	<name>SMYLD Portal Engine Model</name>
 	<description>Portal Engine Model</description>
-
 	<dependencies>
 		<dependency>
 			<groupId>org.reflections</groupId>
@@ -23,13 +22,13 @@
 		<dependency>
 			<groupId>org.smyld.main</groupId>
 			<artifactId>smyld-main-api</artifactId>
-			<version>${release.version}</version>
+			<version>1.0.2-SNAPSHOT</version>
 		</dependency>
 
 		<dependency>
 			<groupId>org.smyld.main</groupId>
 			<artifactId>smyld-main-gui</artifactId>
-			<version>${release.version}</version>
+			<version>1.0.2-SNAPSHOT</version>
 		</dependency>
 
 	</dependencies>

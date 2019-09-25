@@ -9,12 +9,10 @@
   </parent>
   <groupId>org.smyld.app.pe</groupId>
   <artifactId>SPortalEngine</artifactId>
-  <version>${pe.version}</version>
+  <version>1.0.2-SNAPSHOT</version>
   <name>Spring Boot SMYLD Portal Engine</name>
   <description>Spring Based SMYLD Portal Engine</description>
   <properties>
-    <release.version>1.0.2-SNAPSHOT</release.version>
-    <pe.version>1.0.2-SNAPSHOT</pe.version>
     <java.version>1.8</java.version>
   </properties>
 
@@ -31,12 +29,12 @@
     <dependency>
       <groupId>org.smyld.app.pe</groupId>
       <artifactId>PECore</artifactId>
-      <version>${pe.version}</version>
+      <version>1.0.2-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>org.smyld.app.pe</groupId>
       <artifactId>smyld-app-portalengine</artifactId>
-      <version>${pe.version}</version>
+      <version>1.0.2-SNAPSHOT</version>
     </dependency>
   </dependencies>
 

@@ -40,9 +40,9 @@ public interface AppConstants {
 	public static final String SETT_TYPE_XML = "xml";
 	public static final String SETT_TYPE_DB = "DB";
 
-	public static final String JAR_FOLDER_IMAGES = "org.smyld/resources/images/";
-	public static final String JAR_FOLDER_RESS = "org.smyld/resources/files/";
-	public static final String JAR_FOLDER_LANGS = "org.smyld/resources/lang/";
+	public static final String JAR_FOLDER_IMAGES = "org/smyld/resources/images/";
+	public static final String JAR_FOLDER_RESS = "org/smyld/resources/files/";
+	public static final String JAR_FOLDER_LANGS = "org/smyld/resources/lang/";
 	public static final String JAR_RES_CLASS = "org.smyld.resources.Resource";
 	public static final String JAR_RES_IMAGES = "images/";
 	public static final String JAR_RES_LANGS = "lang/";

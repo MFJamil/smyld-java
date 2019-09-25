@@ -67,7 +67,7 @@ public class PEMavenPlugin extends AbstractMojo {
             for (Object curRes:project.getResources()){
                 if (curRes instanceof Resource){
                    Resource mvnRes = (Resource)curRes;
-                   mvnRes.setTargetPath("org.smyld/resources");
+                   mvnRes.setTargetPath("org/smyld/resources");
                    getLog().info("Setting the resource directory  ");
                 }
             }
