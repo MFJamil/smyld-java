@@ -1,11 +1,11 @@
 <?xml version="1.0"?>
 <project>
   <modelVersion>4.0.0</modelVersion>
-	<!--parent>
+	<parent>
 		<groupId>org.smyld.app.pe</groupId>
 		<artifactId>smyld-app-pe</artifactId>
 		<version>1.0.2-SNAPSHOT</version> 
-	</parent-->
+	</parent>
 
   <groupId>org.smyld.app.pe</groupId>
   <artifactId>pe-boot-dependencies</artifactId>
@@ -13,38 +13,7 @@
   <version>1.0.2-SNAPSHOT</version>
   <name>SMYLD Portal Engine Boot Dependencies</name>
   <description>SMYLD Portal Engine Boot Dependencies</description>
-  <url>https://github.com/MFJamil/smyld-java</url>
-  <organization>
-    <name>SMYLD</name>
-    <url>https://www.smyld.org</url>
-  </organization>
-  <issueManagement>
-    <system>GitHub</system>
-    <url>https://github.com/MFJamil/smyld-java/issues</url>
-  </issueManagement>
-  <licenses>
-    <license>
-      <name>Apache License 2.0</name>
-      <url>https://github.com/MFJamil/smyld-java/blob/master/LICENSE</url>
-      <distribution>repo</distribution>
-    </license>
-  </licenses>
-  <scm>
-    <url>https://github.com/MFJamil/smyld-java</url>
-    <connection>scm:git:git://github.com/MFJamil/smyld-java.git</connection>
-    <developerConnection>scm:git:ssh://git@github.com:MFJamil/smyld-java.git</developerConnection>
-  </scm>
-  <developers>
-    <developer>
-      <id>mjamil</id>
-      <email>mohammedfjameel@yahoo.com</email>
-      <name>Mohammed Jamil</name>
-      <organization>SMYLD</organization>
-      <roles>
-        <role>developer</role>
-      </roles>
-    </developer>
-  </developers>
+  <!-- MavenRepoInfo -->
   <dependencies>
     <dependency>
       <groupId>org.junit.jupiter</groupId>
@@ -69,8 +38,7 @@
       <version>1.6.10</version>
     </dependency>
   </dependencies>
-
-	<build>
+ <build>
 	<pluginManagement>
 		<plugins>
 			<plugin>

@@ -13,6 +13,7 @@
     <packaging>pom</packaging>
     <version>1.0.2-SNAPSHOT</version>
     <name>Main SMYLD Package</name>
+    <!-- MavenRepoInfo -->
     <modules>
         <module>smyld</module>
         <module>smyld-db</module>

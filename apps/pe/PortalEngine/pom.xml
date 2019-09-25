@@ -11,7 +11,8 @@
 	<packaging>jar</packaging>
 	<version>1.0.2-SNAPSHOT</version>
 	<name>SMYLD Swing PortalEngine</name>
-	<description>This is the portal engine application for generating GUI layer </description>
+	<description>Portal Engine to generate Swing Based Components out of XML files</description>
+	<!-- MavenRepoInfo -->
 	<dependencies>
 		<dependency>
 			<groupId>org.smyld.main</groupId>

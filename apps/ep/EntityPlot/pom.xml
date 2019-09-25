@@ -10,7 +10,8 @@
 	<packaging>jar</packaging>
 	<version>1.0.2-SNAPSHOT</version>
 	<name>EntityPlot</name>
-	<description>This is the Entity Plot APIs </description>
+	Swing based Panel rendering raphical entites, can be used to draw flow charts, UML diagrams ..etc
+	<!-- MavenRepoInfo -->
 	<dependencies>
 		<dependency>
 			<groupId>org.smyld.main</groupId>

@@ -13,7 +13,8 @@
     <packaging>pom</packaging>
     <version>1.0.2-SNAPSHOT</version>
     <name>SMYLD Applications</name>
-
+    <description>SMYLD Open Source Projects</description>
+    <!-- MavenRepoInfo -->
     <modules>
         <module>ep</module>
         <module>pe</module>

@@ -5,20 +5,16 @@
   <artifactId>smyld</artifactId>
   <packaging>pom</packaging>
   <version>1.0.2-SNAPSHOT</version>
-  <name>SMYLD Root</name>
-  <description>SMYLD projects package</description>
-  <url>https://github.com/MFJamil/smyld-java</url>
 	<!--parent>
 		<groupId>org.sonatype.oss</groupId>
 		<artifactId>oss-parent</artifactId>
 		<version>9</version>
 	</parent-->
+  <name>SMYLD Root</name>
+  <description>SMYLD projects Root </description>
 
-  <properties>
-    <maven.compiler.target>1.8</maven.compiler.target>
-    <maven.compiler.source>1.8</maven.compiler.source>
-  </properties>
-
+  <!-- Maven Repository Project Information Package -->
+  <url>https://github.com/MFJamil/smyld-java</url>
   <organization>
     <name>SMYLD</name>
     <url>https://www.smyld.org</url>
@@ -28,7 +24,7 @@
     <url>https://github.com/MFJamil/smyld-java/issues</url>
   </issueManagement>
   <licenses>
-    <license>
+  <license>
       <name>Apache License 2.0</name>
       <url>https://github.com/MFJamil/smyld-java/blob/master/LICENSE</url>
       <distribution>repo</distribution>
@@ -50,10 +46,18 @@
       </roles>
     </developer>
   </developers>
+  <!--  ********** Project Info End ************** -->
+  
+  <properties>
+    <maven.compiler.target>1.8</maven.compiler.target>
+    <maven.compiler.source>1.8</maven.compiler.source>
+  </properties>
+  
   <modules>
     <module>main</module>
     <module>apps</module>
   </modules>
+
   <dependencyManagement>
     <dependencies>
       <dependency>

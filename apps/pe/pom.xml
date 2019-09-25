@@ -13,7 +13,8 @@
     <packaging>pom</packaging>
     <version>1.0.2-SNAPSHOT</version>
     <name>SMYLD Portal Engine Applications Group</name>
-
+    <description>Portal Engine to generate components out of XML files</description>
+	<!-- MavenRepoInfo -->
     <modules>
         <module>PEModel</module>
         <module>PECore</module>

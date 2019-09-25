@@ -12,6 +12,7 @@
 	<version>1.0.2-SNAPSHOT</version>
 	<name>SMYLD Portal Engine Model</name>
 	<description>Portal Engine Model</description>
+	<!-- MavenRepoInfo -->
 	<dependencies>
 		<dependency>
 			<groupId>org.reflections</groupId>

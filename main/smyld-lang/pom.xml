@@ -12,7 +12,8 @@
 	<packaging>jar</packaging>
 	<version>1.0.2-SNAPSHOT</version>
 	<name>smyld-lang</name>
-	<description>This projects contains SMYLD LANG</description>
+	<description>This project generates Programming Language files on the fly</description>
+	<!-- MavenRepoInfo -->
 	<dependencies>
 		<dependency>
 			<groupId>org.smyld.main</groupId>
