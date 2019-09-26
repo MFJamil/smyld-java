@@ -31,9 +31,6 @@
       </plugins>
     </pluginManagement>
   </build>
-
-  <description>SMYLD Portal Engine simple archetype</description>
-
   <developers>
     <developer>
       <id>mjamil</id>
