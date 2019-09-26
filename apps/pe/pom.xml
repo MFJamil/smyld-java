@@ -22,7 +22,7 @@
         <module>PEMavenPlugin</module>
         <module>SPortalEngine</module>
         <module>PEBoot</module>
-        <!--module>PEArch_Simple</module-->
+        <module>archetype_simple</module>
 
     </modules>
  </project>
