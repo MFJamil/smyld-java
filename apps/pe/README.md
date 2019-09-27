@@ -67,7 +67,43 @@ The Portal Engine will handle reading the file and generating the required compo
    ```shell
    mvn archetype:generate -DgroupId=com.mycompany.apps -DartifactId=ProcessController -DarchetypeGroupId=org.smyld.app.pe -DarchetypeArtifactId=PESample-archetype -DinteractiveMode=false 
    ```
-   
+   Maven will then build a folder "ProcessController" which will hold pom file and several files, as can be seen below:
+   ```mvn
+   mvn archetype:generate -DgroupId=com.mycompany.apps -DartifactId=ProcessController -DarchetypeGroupId=org.smyld.app.pe -DarchetypeArtifactId=PESample-archetype -DinteractiveMode=false 
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] ------------------< org.apache.maven:standalone-pom >-------------------
+[INFO] Building Maven Stub Project (No POM) 1
+[INFO] --------------------------------[ pom ]---------------------------------
+[INFO] 
+[INFO] >>> maven-archetype-plugin:3.0.1:generate (default-cli) > generate-sources @ standalone-pom >>>
+[INFO] 
+[INFO] <<< maven-archetype-plugin:3.0.1:generate (default-cli) < generate-sources @ standalone-pom <<<
+[INFO] 
+[INFO] 
+[INFO] --- maven-archetype-plugin:3.0.1:generate (default-cli) @ standalone-pom ---
+[INFO] Generating project in Batch mode
+[INFO] Archetype [org.smyld.app.pe:PESample-archetype:1.0.6] found in catalog local
+[INFO] ----------------------------------------------------------------------------
+[INFO] Using following parameters for creating project from Archetype: PESample-archetype:1.0.6
+[INFO] ----------------------------------------------------------------------------
+[INFO] Parameter: groupId, Value: com.mycompany.apps
+[INFO] Parameter: artifactId, Value: ProcessController
+[INFO] Parameter: version, Value: 1.0-SNAPSHOT
+[INFO] Parameter: package, Value: com.mycompany.apps
+[INFO] Parameter: packageInPathFormat, Value: com/mycompany/apps
+[INFO] Parameter: version, Value: 1.0-SNAPSHOT
+[INFO] Parameter: package, Value: com.mycompany.apps
+[INFO] Parameter: groupId, Value: com.mycompany.apps
+[INFO] Parameter: artifactId, Value: ProcessController
+[INFO] Project created from Archetype in dir: /home/mfjamil/Documents/temp/PE_test/ProcessController
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  11.827 s
+[INFO] Finished at: 2019-09-28T00:04:28+02:00
+[INFO] ------------------------------------------------------------------------
+```
    
    
    
