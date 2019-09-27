@@ -189,7 +189,12 @@ Running the java command to start it up will make you see the generated template
 java -jar target/executable.jar
 ```
 We will see the MDI window generated:
+
 ![Portal Engine MDI Page](../../docs/images/PE_TUT1_MDI_window.png)
+
+By clicking on the Functions menu, you will see a dockable panel, as can be seen below:
+
+![Dockable Panel](../../docs/images/PE_TUT1_Dockable_window.png)
 
    
    
