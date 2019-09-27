@@ -54,6 +54,15 @@ The Portal Engine will handle reading the file and generating the required compo
 ## Developing Portal Engine
    Sure we will be so happy if other developers will love to participate in this project and extend it to fullfill the concept mentioned above. The more collaborating developers with ultimate diligence to foster the Engine, the more prominence it will be. Any provision of a help will be highly appreciated.  
 
+## Current Portal Engine Features
+   The current available version of Portal Engine includes the following features:
+   * Dynamic Creation of Swing components.
+   * GUI interface defined in XML file.
+   * Multi-Lingual interface.
+   * User Based roles can be injected to show different interfaces.
+   * Dependency Injection via Annotations for interaction between the Business and the GUI Layer.
+   * Smooth startup via maven.
+
 ## Using Portal Engine
    The current version of Portal Engine can be used to generate Swing Applications and the GUI source format currently being supported is only XML. Recently, the Engine was partially updated to adop to the technology changes. Spring Boot in its simplicity was inspiring us to follow a similar approach. With a relatively small POM file, the engine will be ready to pick up the defined XML file by the developer and to generate the required components.
    **The current Portal Engine is already available on Maven Central Repository!**, below are some tutorials that can give a quick start:
@@ -67,7 +76,7 @@ The Portal Engine will handle reading the file and generating the required compo
    ```shell
    mvn archetype:generate -DgroupId=com.mycompany.apps -DartifactId=ProcessController -DarchetypeGroupId=org.smyld.app.pe -DarchetypeArtifactId=PESample-archetype -DinteractiveMode=false 
    ```
-   Maven will then build a folder "ProcessController" which will hold pom file and several files, as can be seen below:
+   Issuing the command will result in creating the project, see below:
    ```mvn
    mvn archetype:generate -DgroupId=com.mycompany.apps -DartifactId=ProcessController -DarchetypeGroupId=org.smyld.app.pe -DarchetypeArtifactId=PESample-archetype -DinteractiveMode=false 
 [INFO] Scanning for projects...
@@ -104,8 +113,73 @@ The Portal Engine will handle reading the file and generating the required compo
 [INFO] Finished at: 2019-09-28T00:04:28+02:00
 [INFO] ------------------------------------------------------------------------
 ```
-   
-   
+ The generated project Tree will look like below:
+ ```shell
+ ProcessController$ tree
+.
+├── InterfaceSettings.xml
+├── pom.xml
+└── src
+    ├── main
+    │   ├── java
+    │   │   └── com
+    │   │       └── mycompany
+    │   │           └── apps
+    │   └── resources
+    │       ├── Application_gui.xml
+    │       ├── images
+    │       │   ├── close_16.png
+    │       │   ├── functions.png
+    │       │   ├── help.png
+    │       │   ├── inbox.png
+    │       │   ├── monitor_16.png
+    │       │   ├── monitor.png
+    │       │   ├── object.gif
+    │       │   ├── process-stop.png
+    │       │   ├── schedule.png
+    │       │   ├── script.png
+    │       │   ├── sent.png
+    │       │   ├── settings_16.png
+    │       │   ├── trash.png
+    │       │   └── view-restore.png
+    │       └── lang
+    │           ├── English.xml
+    │           └── German.xml
+    └── test
+        └── java
+
+11 directories, 20 files
+```
+   Besides the pom file, a startup resources that includes the XML file as well as the images and language files will be generated.
+   The generated pom file is shown below:
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<project>
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>org.smyld.app.pe</groupId>
+		<artifactId>pe-boot-dependencies</artifactId>
+		<version>1.0.6</version> 
+	</parent>
+	<groupId>com.mycompany.apps</groupId>
+	<artifactId>ProcessController</artifactId>
+	<packaging>jar</packaging>
+	<version>1.0-SNAPSHOT</version>
+	<name>Portal Engine Sample</name>
+	<description>Portal Engine Sample</description>
+	<build>
+	<plugins>
+		<plugin>
+			<groupId>org.smyld.app.pe</groupId>
+			<artifactId>smyld-pe-maven-plugin</artifactId>
+		</plugin>
+		<plugin><artifactId>maven-assembly-plugin</artifactId></plugin>
+	</plugins>
+	</build>
+</project>
+
+```
+
    
    
    
