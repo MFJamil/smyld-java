@@ -58,7 +58,7 @@
     </window>
   </windows>
   <actions>
-    <action id="runGameSpider"   command="runApplication" label="Spider Soliter"      param  = "c:/windows/system32/spider"/>
+    <action id="runGameSpider"   command="runApplication" label="Spider Soliter"      param  = "c:/windows/system32/spider" icon="TestIcon"/>
     <action id="runGameFreeCell" command="runApplication" label="Free Cell"           param  = "c:/windows/system32/freecell"/>
     <action id="runGameMine"     command="runApplication" label="Mine Sweeper"        param  = "c:/windows/system32/winmine"/>
     <action id="runCalculator"   command="runApplication" label="Calculator"          param  = "c:/windows/system32/calc"/>

@@ -93,7 +93,7 @@ public class SMYLDActionsBuilder extends SMYLDSwingGUIBuilder {
 			if (newAction.getUserConstraint()!=null)
 				actionsCreateMethod.addCodeLine(createAddConstraintCodeLine(newAction.getUserConstraint()));
 			if (newAction.getIconText() != null) 
-				actionsCreateMethod.addCodeLine(newAction.getID()+ ".setIcon( " + APP_MAIN_CLASS_NAME + "." + APP_METH_GET_IMAGE + "(\"" + newAction.getIcon()+ "\"))");
+				actionsCreateMethod.addCodeLine(newAction.getID()+ ".setIcon( " + APP_MAIN_CLASS_NAME + "." + APP_METH_GET_IMAGE + "(\"" + newAction.getIconText()+ "\"))");
 
 			actionsCreateMethod.addCodeLine(ACT_FCTR_INSTANCE_ACTIONS + ".put(\"" + newAction.getID()  + "\"," + newAction.getID() + ")");
 							

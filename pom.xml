@@ -17,7 +17,7 @@
   <url>https://github.com/MFJamil/smyld-java</url>
   <organization>
     <name>SMYLD</name>
-    <url>https://www.smyld.org</url>
+    <url>http://www.smyld.org</url>
   </organization>
   <issueManagement>
     <system>GitHub</system>
@@ -38,7 +38,7 @@
   <developers>
     <developer>
       <id>mjamil</id>
-      <email>mohammedfjameel@yahoo.com</email>
+      <email>mohammed.jamil@smyld.org</email>
       <name>Mohammed Jamil</name>
       <organization>SMYLD</organization>
       <roles>

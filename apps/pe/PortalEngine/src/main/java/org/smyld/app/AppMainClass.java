@@ -82,7 +82,7 @@ public class AppMainClass extends SMYLDObject implements ActionHandler,
 
 
 	public void handleAction(String objectID,String actionID,Object objHandle){
-		System.out.println(String.format("APP MAIN CLASS :: HandleAction :: ojbID (%s) ActionID (%s)",objectID,actionID));
+		System.out.println(String.format("@PEBusinessAction(objectID = \"%s\",actionID = \"%s\")",objectID,actionID));
 		annotationsHandler.handlePEAction(objectID,actionID,objHandle);
 	}
 
