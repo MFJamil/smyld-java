@@ -189,7 +189,7 @@ Running the java command to start it up will make you see the generated template
 java -jar target/executable.jar
 ```
 We will see the MDI window generated:
-![Portal Engine MDI Page](../../docs/images/templateView1.png)
+![Portal Engine MDI Page](../docs/images/templateView1.png)
 
    
    
