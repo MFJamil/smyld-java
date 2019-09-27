@@ -64,6 +64,10 @@
 				<label id="timeLabel" icon="schedule.png" label="12:10:23 21-May-2005" bordertype="etched" />
 			</panel>
 		</panel>
+		<panel id="explorerPanel" layout="border" package="com.kfwbank.apps.gui.panels" >
+			<tree id="cmdApply" position="center" label="Apply.." icon="functions.png" />
+		</panel>
+
 	</panels>
 	<!--   **************************** Windows ******************************** -->
 	<windows>
@@ -79,6 +83,21 @@
 	</windows>
 	<!--   **************************** Menus ******************************** -->
 	<menus>
+		<menubar id="functions">
+			<menu id="mnu_inbox" icon="inbox.png">
+				<menu id="mnu_email_1" />
+				<menu id="mnu_email_2" />
+				<menu id="mnu_email_3" />
+			</menu>
+			<menu id="mnu_sent" icon="sent.png">
+				<menu id="mnu_sent_1" />
+				<menu id="mnu_sent_2" />
+			</menu>
+			<menu id="mnu_trash" icon="trash.png">
+				<menu id="mnu_trash_1" />
+			</menu>
+		</menubar>
+
 		<menubar id="bar_main">
 			<menu id="mnu_file">
 				<menu id="mnu_open_functions" action="openUserMenu"     icon="functions.png"   accelerator="Ctrl+O" />

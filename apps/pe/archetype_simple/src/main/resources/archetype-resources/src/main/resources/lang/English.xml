@@ -12,6 +12,18 @@
     <word module="menus"                 id="mnu_frm_edt_exit"       translate="Exit" />
     <word module="menus"                 id="mni_showhelpcont"       translate="Help" />
     <word module="menus"                 id="mnu_exit"               translate="Exit"/>
+    <word module="actions"               id="openUserMenu"           translate="EMails" />
+    <word module="menus"                 id="mnu_inbox"              translate="Inbox"/>
+    <word module="menus"                 id="mnu_email_1"            translate="Business E Mail"/>
+    <word module="menus"                 id="mnu_email_2"            translate="Presentation Today"/>
+    <word module="menus"                 id="mnu_email_3"            translate="Team meeting"/>
+    <word module="menus"                 id="mnu_sent"               translate="Sent"/>
+    <word module="menus"                 id="mnu_sent_1"             translate="Re: Team meeting"/>
+    <word module="menus"                 id="mnu_sent_2"             translate="Order Sent"/>
+    <word module="menus"                 id="mnu_trash"              translate="Trash"/>
+    <word module="menus"                 id="mnu_trash_1"            translate="Bonus of 5000"/>
+
+
     <word module="windows"               id="MdiWindow"              translate="SMYLD Portal Engine Application" />
     <word module="windows"               id="WdSettings"             translate="Settings" />
     <word module="SettingsPanel"         id="general"                translate="General" />
@@ -26,5 +38,6 @@
     <word module="toolbars_tp"           id="exitSystem"             translate="Exit"/>
     <word module="toolbars_tp"           id="mnu_bar_open_functions" translate="Show functions"/>
     <word module="toolbars_tp"           id="mnu_bar_open_settings"  translate="Settings"/>
+
   </language>
 </languages>
