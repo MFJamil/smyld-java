@@ -179,6 +179,16 @@ The Portal Engine will handle reading the file and generating the required compo
 </project>
 
 ```
+Now by issuing the maven command to install the application:
+```shell
+mvn clean install
+```
+The Portal Engine artifacts will be downloaded and the Plugin will start building the swing components. The assembly plugin will generate a complete Executable jar file called "executable.jar" that can be found under "target" folder.
+Running the java command to start it up will make you see the generated template:
+``` shell
+java -jar target/executable.jar
+```
+
 
    
    
