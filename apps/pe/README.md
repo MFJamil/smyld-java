@@ -268,7 +268,7 @@ Below are some of the different Look and Feels as well as different language set
 
 ![Interface L&F](../../docs/images/PE_TUT1_LAF_4.png)
 
-![Interface L&F](../../docs/images/PE_TUT1_LAF_5.png)
+![Interface L&F](../../docs/images/PE_TUT1_LAF_11.png)
 
 ![Interface L&F](../../docs/images/PE_TUT1_LAF_8.png)
 
