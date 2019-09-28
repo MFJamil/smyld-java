@@ -255,7 +255,24 @@ The settings file contents are shown below:
   
   Similar to how the languages section works, the list of available look and feels shows the different options and by updating the default, they can be changed.
   
-  
+
+Below are some of the different Look and Feels as well as different language setup:
+
+
+
+![Interface L&F](../../docs/images/PE_TUT1_LAF1.png)
+
+![Interface L&F](../../docs/images/PE_TUT1_LAF2.png)
+
+![Interface L&F](../../docs/images/PE_TUT1_LAF3.png)
+
+![Interface L&F](../../docs/images/PE_TUT1_LAF4.png)
+
+![Interface L&F](../../docs/images/PE_TUT1_LAF5.png)
+
+![Interface L&F](../../docs/images/PE_TUT1_LAF8.png)
+
+
 
 **Ok nice, now how can I use it?!**
 
