@@ -201,8 +201,62 @@ Wait a minute, Dockable?! there is no standard dockable component in Swing. Yes 
 The template that will be generated via this Archetype also contains a simple settings window. See below:
 
 ![Settings Panel](../../docs/images/PE_TUT1_Settings_window.png)
-   
-   
+
+**Changing the application settings**
+
+There are two files created on both the main path and under target path, holding the name "InterfaceSettings.xml". In order to allow for smooth startup, the file was copied in those two locations, so that once the command for running the executable file invoked, it will manage to find the settings file with the default name. For sure this can be changed via the execution command parameters (more on that will be explained later).
+The settings file contents are shown below:
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<applicationSettings>
+  <group>com.mycompany.apps</group>
+  <log>
+    <name />
+    <path />
+  </log>
+  <languages default="English">
+    <language name="English" src="English.xml" />
+    <language name="German" src="German.xml" />
+  </languages>
+  <lookandfeels default="Goodies Plastic 3D">
+    <lookandfeel name="Goodies Plastic 3D" class="com.jgoodies.looks.plastic.Plastic3DLookAndFeel" />
+    <lookandfeel name="Jtattoo Smart" class="com.jtattoo.plaf.smart.SmartLookAndFeel" />
+    <lookandfeel name="Goodies Plastic XP" class="com.jgoodies.looks.plastic.PlasticXPLookAndFeel" />
+    <lookandfeel name="Jtattoo HiFi" class="com.jtattoo.plaf.hifi.HiFiLookAndFeel" />
+    <lookandfeel name="Jtattoo McWin" class="com.jtattoo.plaf.mcwin.McWinLookAndFeel" />
+    <lookandfeel name="Jtattoo Aero" class="com.jtattoo.plaf.aero.AeroLookAndFeel" />
+    <lookandfeel name="Jtattoo Noire" class="com.jtattoo.plaf.noire.NoireLookAndFeel" />
+    <lookandfeel name="Jtattoo Bernstein" class="com.jtattoo.plaf.bernstein.BernsteinLookAndFeel" />
+    <lookandfeel name="Jtattoo Mint" class="com.jtattoo.plaf.mint.MintLookAndFeel" />
+    <lookandfeel name="Jtattoo Aluminium" class="com.jtattoo.plaf.aluminium.AluminiumLookAndFeel" />
+    <lookandfeel name="Jtattoo Luna" class="com.jtattoo.plaf.luna.LunaLookAndFeel" />
+    <lookandfeel name="Jtattoo Acryl" class="com.jtattoo.plaf.acryl.AcrylLookAndFeel" />
+    <lookandfeel name="Jtattoo Fast" class="com.jtattoo.plaf.fast.FastLookAndFeel" />
+  </lookandfeels>
+</applicationSettings>
+
+```
+ The main sections are explained as below:
+ 
+ **group**
+ 
+ As you can see that the group generated is the same one provided upon creating the project (the package name), this tag is important for the portal engine for DI (Dependency Injection) processing, so that it can pick up your annotated code (more on that will be explained later).
+ 
+ **log**
+
+  Will hold the path and file name that will hold the logging messages.
+  
+  **languages**
+  
+  In this section, you can extend it to hold any language and by updating the detault attribute, the language of the interface will be changed. For sure this kind of change requires a restart.
+  
+  **lookandfeels**
+  
+  Similar to how the languages section works, the list of available look and feels shows the different options and by updating the default, they can be changed.
+  
+  
+
 **Ok nice, now how can I use it?!**
 
 As a developer, you need to interact with the interface and write your code. First of all, you need to understand 
