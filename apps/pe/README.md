@@ -196,6 +196,11 @@ By clicking on the Functions menu, you will see a dockable panel, as can be seen
 
 ![Dockable Panel](../../docs/images/PE_TUT1_Dockable_window.png)
 
+Wait a minute, Dockable?! there is no standard dockable component in Swing. Yes you are right, this is one of the components that were developed within smyld-gui project (back in 2004) and is integrated into the Portal Engine.
+
+The template that will be generated via this Archetype also contains a simple settings window. See below:
+
+![Settings Panel](../../docs/images/PE_TUT1_Settings_window.png)
    
    
    
