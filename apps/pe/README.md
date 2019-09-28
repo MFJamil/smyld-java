@@ -260,17 +260,17 @@ Below are some of the different Look and Feels as well as different language set
 
 
 
-![Interface L&F](../../docs/images/PE_TUT1_LAF1.png)
+![Interface L&F](../../docs/images/PE_TUT1_LAF_1.png)
 
-![Interface L&F](../../docs/images/PE_TUT1_LAF2.png)
+![Interface L&F](../../docs/images/PE_TUT1_LAF_2.png)
 
-![Interface L&F](../../docs/images/PE_TUT1_LAF3.png)
+![Interface L&F](../../docs/images/PE_TUT1_LAF_3.png)
 
-![Interface L&F](../../docs/images/PE_TUT1_LAF4.png)
+![Interface L&F](../../docs/images/PE_TUT1_LAF_4.png)
 
-![Interface L&F](../../docs/images/PE_TUT1_LAF5.png)
+![Interface L&F](../../docs/images/PE_TUT1_LAF_5.png)
 
-![Interface L&F](../../docs/images/PE_TUT1_LAF8.png)
+![Interface L&F](../../docs/images/PE_TUT1_LAF_8.png)
 
 
 
