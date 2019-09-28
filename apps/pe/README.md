@@ -67,7 +67,7 @@ The Portal Engine will handle reading the file and generating the required compo
    The current version of Portal Engine can be used to generate Swing Applications and the GUI source format currently being supported is only XML. Recently, the Engine was partially updated to adop to the technology changes. Spring Boot in its simplicity was inspiring us to follow a similar approach. With a relatively small POM file, the engine will be ready to pick up the defined XML file by the developer and to generate the required components.
    **The current Portal Engine is already available on Maven Central Repository!**, below are some tutorials that can give a quick start:
  
-### using Maven Archetype
+### Using Maven Archetype
    Via issuing the command below, you can generate a complete maven project that holds a startup swing based maven project.
    ```shell
    mvn archetype:generate -DgroupId=[Your Group ID] -DartifactId=[Your Artifact ID] -DarchetypeGroupId=org.smyld.app.pe -DarchetypeArtifactId=PESample-archetype -DinteractiveMode=false 
