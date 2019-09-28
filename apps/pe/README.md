@@ -203,6 +203,10 @@ The template that will be generated via this Archetype also contains a simple se
 ![Settings Panel](../../docs/images/PE_TUT1_Settings_window.png)
    
    
+**Ok nice, now how can I use it?!**
+
+As a developer, you need to interact with the interface and write your code. First of all, you need to understand 
+   
    
 _More detailed description with tutorials on using the engine will follow_
 
