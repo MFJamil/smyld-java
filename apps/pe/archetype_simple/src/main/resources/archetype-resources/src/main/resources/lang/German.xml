@@ -11,7 +11,7 @@
     <word module="menus"                 id="mnu_frm_edt_exit"       translate="Beenden" />
     <word module="menus"                 id="mni_showhelpcont"       translate="Hilfe" />
     <word module="menus"                 id="mnu_exit"               translate="Schließen"/>
-    <word module="windows"               id="MdiWindow"              translate="SMYLD Portal Engine Anwendung" />
+    <word module="windows"               id="MdiWindow"              translate="${artifactId} Anwendung" />
     <word module="windows"               id="WdSettings"             translate="Einstellungen" />
     <word module="SettingsPanel"         id="general"                translate="Allgemein" />
     <word module="SettingsPanel"         id="cmdApply"               translate="Anwenden" />

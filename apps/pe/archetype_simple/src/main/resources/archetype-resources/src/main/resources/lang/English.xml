@@ -24,7 +24,7 @@
     <word module="menus"                 id="mnu_trash_1"            translate="Bonus of 5000"/>
 
 
-    <word module="windows"               id="MdiWindow"              translate="SMYLD Portal Engine Application" />
+    <word module="windows"               id="MdiWindow"              translate="${artifactId} Application" />
     <word module="windows"               id="WdSettings"             translate="Settings" />
     <word module="SettingsPanel"         id="general"                translate="General" />
     <word module="SettingsPanel"         id="cmdApply"               translate="Apply" />

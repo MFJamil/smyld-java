@@ -61,7 +61,7 @@
 			</panel>
 			<panel id="RightSide" layout="flow" align="left" position="Center" bordertype="lowered" />
 			<panel id="LeftSide" layout="flow" align="left" position="West" bordertype="lowered">
-				<label id="timeLabel" icon="schedule.png" label="12:10:23 21-May-2005" bordertype="etched" />
+				<label id="timeLabel" icon="schedule.png" label="12:10:23 29-Sep-2019" bordertype="etched" />
 			</panel>
 		</panel>
 		<panel id="explorerPanel" layout="border" package="com.kfwbank.apps.gui.panels" >
@@ -100,7 +100,7 @@
 
 		<menubar id="bar_main">
 			<menu id="mnu_file">
-				<menu id="mnu_open_functions" action="openUserMenu"     icon="functions.png"   accelerator="Ctrl+O" />
+				<menu id="mnu_open_functions" action="openUserMenu"     icon="object.gif"   accelerator="Ctrl+O" />
 				<menu id="mni_settings"       action="openUserSettings" icon="settings_16.png" accelerator="Ctrl+S" role="contractor" showrole="bchandler" />
 				<menu type="separator" />
 				<menu id="mnu_exit"           action="exitApp"          icon="close_16.png" accelerator="Ctrl+E" />
@@ -123,7 +123,7 @@
 	</toolbars>
 	<!--   **************************** Actions ******************************** -->
 	<actions>
-		<action id="openUserMenu"          command="addComponent"        target="MdiWindow" label="Funktionen" icon="functions.png" object="menu.functions.tree" param="side" />
+		<action id="openUserMenu"          command="addComponent"        target="MdiWindow" label="Funktionen" icon="object.gif" object="menu.functions.tree" param="side" />
 		<action id="openUserSettings"      command="openWindow"          target="WdSettings" />
 		<action id="exitApp"               command="closeApplication" />
 		<action id="openHelp"              command="openWindow"          target="WdHelp" />
