@@ -68,6 +68,15 @@ The Portal Engine will handle reading the file and generating the required compo
    **The current Portal Engine is already available on Maven Central Repository!**, below are some tutorials that can give a quick start:
  
 ### Using Maven Archetype
+
+#### Visual Tutorial
+ 
+[ >>>> Part 1 <<<< ](https://www.youtube.com/watch?v=cLuz07c0kiU)
+
+_More parts to follow_
+
+#### Documented Tutorial
+
    Via issuing the command below, you can generate a complete maven project that holds a startup swing based maven project.
    ```shell
    mvn archetype:generate -DgroupId=[Your Group ID] -DartifactId=[Your Artifact ID] -DarchetypeGroupId=org.smyld.app.pe -DarchetypeArtifactId=PESample-archetype -DinteractiveMode=false 
@@ -260,17 +269,17 @@ Below are some of the different Look and Feels as well as different language set
 
 
 
-![Interface L&F](../../docs/images/PE_TUT1_LAF1.png)
+![Interface L&F](../../docs/images/PE_TUT1_LAF_1.png)
 
-![Interface L&F](../../docs/images/PE_TUT1_LAF2.png)
+![Interface L&F](../../docs/images/PE_TUT1_LAF_2.png)
 
-![Interface L&F](../../docs/images/PE_TUT1_LAF3.png)
+![Interface L&F](../../docs/images/PE_TUT1_LAF_3.png)
 
-![Interface L&F](../../docs/images/PE_TUT1_LAF4.png)
+![Interface L&F](../../docs/images/PE_TUT1_LAF_4.png)
 
-![Interface L&F](../../docs/images/PE_TUT1_LAF5.png)
+![Interface L&F](../../docs/images/PE_TUT1_LAF_11.png)
 
-![Interface L&F](../../docs/images/PE_TUT1_LAF8.png)
+![Interface L&F](../../docs/images/PE_TUT1_LAF_8.png)
 
 
 
