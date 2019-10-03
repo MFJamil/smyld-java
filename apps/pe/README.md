@@ -285,7 +285,7 @@ Below are some of the different Look and Feels as well as different language set
 
 **Ok nice, now how can I use it?!**
 
-As a developer, you need to interact with the interface and write your code. First of all, you need to understand 
+As a developer, you need to interact with the interface and write your code. In order to learn how to use the portal engine, we do have two paths. One is to use the already created project out of the maven archetype as desribed above and the second path is to start creating the project step by step without the archetype. 
    
    
 _More detailed description with tutorials on using the engine will follow_
