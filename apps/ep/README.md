@@ -49,6 +49,11 @@ Also by ommitting the pictures, we will have a simpler chart as the one below:
 
 ![Flow Chart Diagram Sample](../../docs/images/flowChart_sample_1_empty.png)
 
+Also you might notice that the pictures are not similar to each other from the positioning of the elements perspective. That is due to the fact that the chart was manually arranged each time. To see how this chart looks like at runtime, see the video below:
+
+
+_**PE Simple Flow Chart Diagram in Action to follow**_
+
 
 
 
