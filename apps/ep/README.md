@@ -36,4 +36,27 @@ Will result in the chart below:
 ![Flow Chart Diagram Sample](../../docs/images/flowChart_sample_1.png)
 
 
+As can be seen from the XML, there are several attributes which will affect the appearance of the chart, like if we drop the shadow attribute, we will end up with the chart like the one below:
+
+![Flow Chart Diagram Sample](../../docs/images/flowChart_sample_1_noShadow.png)
+
+Also if we drop the reflection, we will have the following:
+
+![Flow Chart Diagram Sample](../../docs/images/flowChart_sample_1_noShadowNoReflect.png)
+
+Also by ommitting the pictures, we will have a simpler chart as the one below:
+
+
+![Flow Chart Diagram Sample](../../docs/images/flowChart_sample_1_empty.png)
+
+Also you might notice that the pictures are not similar to each other from the positioning of the elements perspective. That is due to the fact that the chart was manually arranged each time. To see how this chart looks like at runtime, see the video below:
+
+
+_**PE Simple Flow Chart Diagram in Action to follow**_
+
+
+
+
+
+
 _**Documentation to follow**_
