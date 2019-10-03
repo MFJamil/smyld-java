@@ -1,6 +1,8 @@
 package org.smyld.app.pe.flowchart;
 
 import java.awt.Color;
+import java.util.List;
+import java.util.Set;
 
 import javax.swing.JOptionPane;
 
@@ -10,12 +12,31 @@ import org.smyld.app.pe.EntityPlotter;
 import org.smyld.app.pe.GUIPlotter;
 import org.smyld.app.pe.OrthogonalEntityConnector;
 import org.smyld.app.pe.flowchart.EntityBasicFlowChart.ChartElement;
+import org.smyld.app.pe.flowchart.source.FlowChartReader;
 
 public class FlowChartPlotter extends GUIPlotter {
 
+	FlowChartReader charReader;
 	public FlowChartPlotter(){
 		super();
 	}
+
+
+	public FlowChartPlotter(FlowChartReader reader){
+		super();
+		this.charReader = reader;
+		initFromReader();
+	}
+
+
+
+	private void initFromReader(){
+		Set<EntityBasicFlowChart> entities = charReader.loadEntities();
+		entities.forEach(curItem -> addEntity(curItem));
+		List<EntityConnector> conns =  charReader.loadConnections(entities);
+		conns.forEach(curItem -> connectEntities(curItem));
+	}
+
 	protected EntityPlotLayoutManager createManager(){
 		return new FCEntityLayoutManager();
 		

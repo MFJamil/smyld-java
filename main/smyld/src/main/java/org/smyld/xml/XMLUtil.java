@@ -48,6 +48,15 @@ public class XMLUtil extends SMYLDObject {
 		return false;
 	}
 
+	public static int getIntAttribute(Element target,String attName) {
+		if (target!=null){
+			String value = target.getAttributeValue(attName);
+			if (value!=null)
+				return Integer.valueOf(value);
+		}
+		return 0;
+	}
+
 	public static String getElementValue(Element target) {
 		if (target != null)
 			return target.getText();

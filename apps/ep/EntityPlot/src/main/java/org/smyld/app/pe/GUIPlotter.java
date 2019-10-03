@@ -41,6 +41,7 @@ import javax.swing.SwingConstants;
 
 import org.apache.log4j.Logger;
 
+import org.smyld.app.pe.action.*;
 import org.smyld.app.pe.util.Three60TLogo;
 
 
@@ -148,7 +149,7 @@ public class GUIPlotter extends JPanel implements Scrollable{
 	}
 	
 	public void init(){
-		compLogo = new Three60TLogo();
+		//compLogo = new Three60TLogo();
 		//setAutoscrolls(true);
 		// Code needed for initializing the panel
 		super.addMouseListener(new MouseAdapter(){
@@ -244,15 +245,15 @@ public class GUIPlotter extends JPanel implements Scrollable{
 					ent.setVisible(true);
 					break;
 				case EntityPlotAction.TYPE_DELETE_CONNECTION:
-					EntityConnector connector = ((ActionDelConnection)curAction).connector;
+					EntityConnector connector = ((ActionDelConnection)curAction).getConnector();
 					connector.setDeactivated(false);
 					if (listener!=null) listener.entityConnected(connector.from, connector.to);
 					break;
 				case EntityPlotAction.TYPE_DRAG_ENTITY:
-					ent.setPosition(((ActionDragEntity)curAction).oldPosition);
+					ent.setPosition(((ActionDragEntity)curAction).getOldPosition());
 					break;
 				case EntityPlotAction.TYPE_ADD_CONNECTION:
-					connector = ((ActionAddConnection)curAction).connector;
+					connector = ((ActionAddConnection)curAction).getConnector();
 					connector.setDeactivated(true);
 					if (listener!=null) listener.entityDisconnected(connector.from, connector.to);
 
@@ -1220,9 +1221,10 @@ public class GUIPlotter extends JPanel implements Scrollable{
 		//g.fillRect(gRect.x, gRect.y, gRect.width,gRect.height);
 		g.fillRect(0, 0, curSize.width,curSize.height);
 		// Drawing the company logo 
+		/*
 		g.drawImage(compLogo.getReflectImg(), 20, 21 + compLogo.getHeight(), null );
         g.drawImage(compLogo.getLogoImg(), 20, 20, null );
-
+		*/
 		
 		
 	}
@@ -1361,6 +1363,10 @@ public class GUIPlotter extends JPanel implements Scrollable{
 
 	}
 
+	public void addEntity(EntityPlotter newEntity) {
+		this.addEntity(newEntity.getId(),newEntity);
+	}
+
 	public void addEntity(String id,EntityPlotter newEntity){
 		if (entities.containsKey(id)){
 //			LOG.info("Already exists - " + id);
@@ -1411,6 +1417,10 @@ public class GUIPlotter extends JPanel implements Scrollable{
 	}
 	private boolean onBut(Rectangle2D from,Rectangle2D to){
 		return ((from.getY())>(to.getY()+to.getHeight()));
+	}
+
+	public void connectEntities(EntityConnector entConn) {
+		connectEntities(entConn.from,entConn.to,entConn.getConColor(),entConn.getCommentText());
 	}
 	public void connectEntities(EntityPlotter from,EntityPlotter to ){
 		if (controller!=null){
@@ -1463,6 +1473,7 @@ public class GUIPlotter extends JPanel implements Scrollable{
 	// Need to create factory for it
 	protected EntityConnector createConnector(EntityPlotter from,EntityPlotter to ,Color conColor){
 		//return new EntityConnector(from,to,from.getConnectorSize(),conColor);
+		//TODO need to check the reason why the connector is picking the Orthogonal
 		return new OrthogonalEntityConnector(from,to,from.getConnectorSize(),conColor);
 	}
 	protected EntityConnector createConnector(EntityPlotter from,EntityPlotter to ,Color conColor,String commentText){

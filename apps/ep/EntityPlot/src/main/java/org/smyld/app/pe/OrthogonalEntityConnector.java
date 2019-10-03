@@ -14,6 +14,7 @@ import java.awt.geom.Rectangle2D;
 
 
 public class OrthogonalEntityConnector extends EntityConnector {
+	private static int defaultConSize = 8;
 
 	public OrthogonalEntityConnector(EntityPlotter from, EntityPlotter to,
 			int conSize, Color conColor, String commentText) {
@@ -32,7 +33,21 @@ public class OrthogonalEntityConnector extends EntityConnector {
 		super(from, to, conSize);
 		init();
 	}
-	
+
+	public OrthogonalEntityConnector(EntityPlotter from, EntityPlotter to,
+									  Color conColor, String commentText) {
+		this(from, to, defaultConSize, conColor, commentText);
+	}
+
+	public OrthogonalEntityConnector(EntityPlotter from, EntityPlotter to,
+									  Color conColor) {
+		this(from, to, defaultConSize, conColor);
+	}
+
+	public OrthogonalEntityConnector(EntityPlotter from, EntityPlotter to ) {
+		this(from, to, defaultConSize);
+	}
+
 	private void init(){
 		category = ConnectionCategory.Orthogonal;
 		//showArrow = false;
