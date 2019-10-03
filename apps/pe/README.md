@@ -22,9 +22,7 @@ Well you are right, many alternatives are available but do not forget some facts
 ## [Current Portal Engine Features](PESwing.md) 
 
 
-<script>
-  console.log("testing");
-</script>
+
    
 _More will follow_
 
