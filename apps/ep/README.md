@@ -3,7 +3,7 @@ The SMYLD entity plot project is a swing component that plots the entity diagram
 
 The diagram can be updated by the user on runtime, full animation of the object, maintaining the connections between them and update their contents as well.
 
-
+![Flow Chart Diagram Sample](../../docs/images/flowChart_sample_1.png)
 
 
 
