@@ -6,4 +6,4 @@ This is the main repostiroy for SMYLD java projects, the main two open source ja
 ## 2 - [Entity Plot](apps/pe)
 
 
-_To be Continued_
+_**To be Continued**_
