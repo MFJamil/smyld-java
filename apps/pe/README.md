@@ -22,7 +22,6 @@ Well you are right, many alternatives are available but do not forget some facts
 ## [Current Portal Engine Features](PESwing.md) 
 
 
-
    
 _More will follow_
 
