@@ -36,4 +36,22 @@ Will result in the chart below:
 ![Flow Chart Diagram Sample](../../docs/images/flowChart_sample_1.png)
 
 
+As can be seen from the XML, there are several attributes which will affect the appearance of the chart, like if we drop the shadow attribute, we will end up with the chat like the one below:
+
+![Flow Chart Diagram Sample](../../docs/images/flowChart_sample_1_noShadow.png)
+
+Also if we drop the reflection, we will have the following:
+
+![Flow Chart Diagram Sample](../../docs/images/flowChart_sample_1_noShadowNoReflect.png)
+
+Also by ommitting the pictures, we will have a simpler chart as the one below:
+
+
+![Flow Chart Diagram Sample](../../docs/images/flowChart_sample_1_empty.png)
+
+
+
+
+
+
 _**Documentation to follow**_
