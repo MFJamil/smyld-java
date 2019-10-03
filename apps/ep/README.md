@@ -36,7 +36,7 @@ Will result in the chart below:
 ![Flow Chart Diagram Sample](../../docs/images/flowChart_sample_1.png)
 
 
-As can be seen from the XML, there are several attributes which will affect the appearance of the chart, like if we drop the shadow attribute, we will end up with the chat like the one below:
+As can be seen from the XML, there are several attributes which will affect the appearance of the chart, like if we drop the shadow attribute, we will end up with the chart like the one below:
 
 ![Flow Chart Diagram Sample](../../docs/images/flowChart_sample_1_noShadow.png)
 
