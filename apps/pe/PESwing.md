@@ -1,4 +1,3 @@
-# SMYLD Portal Engine
 # Current Portal Engine Features
    The current available version of Portal Engine includes the following features:
    * Dynamic Creation of Swing components.
@@ -232,6 +231,11 @@ Below are some of the different Look and Feels as well as different language set
 
 As a developer, you need to interact with the interface and write your code. First of all, you need to understand 
    
-   
+
+
+
 _More detailed description with tutorials on using the engine will follow_
 
+
+
+[<<< Back to Main Page](README.me)
