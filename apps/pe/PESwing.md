@@ -1,6 +1,6 @@
-[![Maven Central](https://img.shields.io/maven-central/v/org.smyld.app.pe/smyld-app-portalengine?stype=plastic)](https://mvnrepository.com/artifact/org.smyld.app.pe/smyld-app-portalengine/1.0.8)
-![Sonatype Nexus (Releases)](https://img.shields.io/nexus/r/org.smyld.app.pe/smyld-app-portalengine?server=https%3A%2F%2Foss.sonatype.org&style=plastic)
-[![License](https://img.shields.io/badge/License-Apache%202.0-yellowgreen.svg?stype=plastic)](https://github.com/MFjamil/smyld-java/blob/master/LICENSE)
+[![Maven Central](https://img.shields.io/maven-central/v/org.smyld.app.pe/smyld-app-portalengine)](https://mvnrepository.com/artifact/org.smyld.app.pe/smyld-app-portalengine/1.0.8)
+![Sonatype Nexus (Releases)](https://img.shields.io/nexus/r/org.smyld.app.pe/smyld-app-portalengine?server=https%3A%2F%2Foss.sonatype.org)
+[![License](https://img.shields.io/badge/License-Apache%202.0-yellowgreen.svg)](https://github.com/MFjamil/smyld-java/blob/master/LICENSE)
 
 # Current Portal Engine Features
    The current available version of Portal Engine includes the following features:
