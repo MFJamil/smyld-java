@@ -1,4 +1,4 @@
-[![Maven Central](https://img.shields.io/maven-central/v/org.smyld.app.ep.EntityPlot/smyld-app-entityplot&style=plastic)](https://mvnrepository.com/artifact/org.smyld.app.ep.EntityPlot/smyld-app-entityplot/1.0.8)
+[![Maven Central](https://img.shields.io/maven-central/v/org.smyld.app.ep.EntityPlot/smyld-app-entityplot?style=plastic)](https://mvnrepository.com/artifact/org.smyld.app.ep.EntityPlot/smyld-app-entityplot/1.0.8)
 ![Sonatype Nexus (Releases)](https://img.shields.io/nexus/r/org.smyld.app.ep/smyld-app-ep?server=https%3A%2F%2Foss.sonatype.org&style=plastic)
 
 # SMYLD Entity Plot
