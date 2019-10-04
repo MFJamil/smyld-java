@@ -1,5 +1,5 @@
 [![Maven Central](https://img.shields.io/maven-central/v/org.smyld.app.pe/smyld-app-portalengine)](https://mvnrepository.com/artifact/org.smyld.app.pe/smyld-app-portalengine/1.0.8)
-
+![Sonatype Nexus (Releases)](https://img.shields.io/nexus/r/org.smyld.app.pe/smyld-app-portalengine?server=https%3A%2F%2Foss.sonatype.org)
 
 # Current Portal Engine Features
    The current available version of Portal Engine includes the following features:
