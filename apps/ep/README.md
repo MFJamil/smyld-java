@@ -1,3 +1,5 @@
+![Sonatype Nexus (Releases)](https://img.shields.io/nexus/r/org.smyld.app.ep/smyld-app-ep?server=https%3A%2F%2Foss.sonatype.org&style=plastic)
+
 # SMYLD Entity Plot
 The SMYLD entity plot project is a swing component that plots the entity diagrams, connects them together and they can interactively being updated and changed, one of the use cases is the flow chart. Soon will activate an open source UML project that is based on this library. 
 
