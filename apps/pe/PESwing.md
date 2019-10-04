@@ -233,9 +233,16 @@ Below are some of the different Look and Feels as well as different language set
 
 **Ok nice, now how can I use it?!**
 
-As a developer, you need to interact with the interface and write your code. First of all, you need to understand 
-   
+Before we learn how to use the Portal Engine, we need to know how it works first.
 
+_ToDo: Link on the basic usage of portal engine_
+
+Portal engine supports two ways of interaction between the GUI and the Business layers.
+
+   **Old APIs - Interfaces**
+      Upon invoking the Portal Engine and based on the configuration, the Engine will create Interfaces and will handle the GUI events and interactions based on the implementation of these interfaces. Although that creating these interfaces belongs to the old version of the Portal Engine, they are currently still active. The only draw back of this approach is that the developer will need to provide implementations for all the interfaces even if they are not fully required.
+   **New APIs - Annotations**   
+      The new APIs will process the annotations written by the developer. Based on any action or event in the configuration file, the engine will check if there is annotation for that particular action and will invoke it. The developer can in this case only writes the actions of his choice. 	
 
 
 _More detailed description with tutorials on using the engine will follow_
