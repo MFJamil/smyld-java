@@ -1,5 +1,7 @@
 [![Maven Central](https://img.shields.io/maven-central/v/org.smyld.app.pe/smyld-app-portalengine)](https://mvnrepository.com/artifact/org.smyld.app.pe/smyld-app-portalengine/1.0.8)
 
+![Hex.pm](https://img.shields.io/hexpm/l/org.smyld.app.pe/smyld-app-portalengine)
+
 # Current Portal Engine Features
    The current available version of Portal Engine includes the following features:
    * Dynamic Creation of Swing components.
