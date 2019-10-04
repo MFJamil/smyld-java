@@ -241,7 +241,7 @@ Portal engine supports two ways of interaction between the GUI and the Business 
 
    **Old APIs - Interfaces**
    
-      Upon invoking the Portal Engine and based on the configuration, the Engine will create Interfaces and will handle the GUI events and interactions based on the implementation of these interfaces. Although that creating these interfaces belongs to the old version of the Portal Engine, they are currently still active. The only draw back of this approach is that the developer will need to provide implementations for all the interfaces even if they are not fully required.
+   Upon invoking the Portal Engine and based on the configuration, the Engine will create Interfaces and will handle the GUI events and interactions based on the implementation of these interfaces. Although that creating these interfaces belongs to the old version of the Portal Engine, they are currently still active. The only draw back of this approach is that the developer will need to provide implementations for all the interfaces even if they are not fully required.
    
    _ToDo: Link on a tutorial for using the interfaces to follow_
    
