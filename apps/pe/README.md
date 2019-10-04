@@ -17,9 +17,9 @@ Well you are right, many alternatives are available but do not forget some facts
 
 
 
-## :small_blue_diamond: [Portal Engine Concept - Current and Future](PEConcept.md) 
+## [Portal Engine Concept - Current and Future](PEConcept.md) 
 
-## :small_blue_diamond: [Current Portal Engine Features](PESwing.md) 
+## [Current Portal Engine Features](PESwing.md) 
 
 
    
