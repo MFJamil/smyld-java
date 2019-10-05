@@ -1,9 +1,6 @@
 package org.smyld.app.pe;
 
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.Graphics2D;
-import java.awt.Point;
+import java.awt.*;
 import java.awt.geom.Rectangle2D;
 import java.util.HashMap;
 import java.util.Vector;
@@ -11,8 +8,13 @@ import java.util.Vector;
 
 
 public interface EntityPlotter extends PlotConstants {
+	public void                          setId(String itemID);
+	public void                          setBackgroundImage(Image backgroundImage);
 	public void                          plot(Graphics2D g);
 	public void                          calibrate(Graphics2D g);
+	public void                          activateConnectionTo(boolean activate);
+	public void                          activateConnectionFrom(boolean activate);
+
 	public Point                         getConnectionPoint(int position,boolean checkDisplacement);
 	public void                          paintConnectorOn(int position,Graphics2D g);
 	public boolean                       hitPoint(Point p);
@@ -78,7 +80,7 @@ public interface EntityPlotter extends PlotConstants {
 	public void                          setDropShadow(boolean dropShadow);
 	public boolean                       isDropReflection();
 	public void                          setDropReflection(boolean dropReflection);
-	
+	public void                          setShape(PlotShape shape);
 	public void                          setTitleDarkColor(Color titleDarkColor);
 	public Color                         getTitleDarkColor();
 	public void                          setTitleLightColor(Color titleLightColor);
@@ -97,8 +99,9 @@ public interface EntityPlotter extends PlotConstants {
 	public void                          setEntityTransperancy(float entityTransperancy);
 	public boolean                       isTransperant();	
 	public void                          setTransperant(boolean setTransperant);
-	
-	
+	public void                          setBorderColor(Color color);
+
+	public void                          setCornerCurve(int cornerCurve);
 	
 	
 	

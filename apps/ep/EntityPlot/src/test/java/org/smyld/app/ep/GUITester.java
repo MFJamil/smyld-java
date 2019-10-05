@@ -101,6 +101,7 @@ public class GUITester implements EntityPlotListener {
 		pnlProductPlot.addEntity("spot"      , prodSpot);
 		pnlProductPlot.addEntity("swap"      , prodSwap );
 		pnlProductPlot.addEntity("forward"   , prodForward );
+
 		pnlProductPlot.connectEntities(prodSpotSS  , valueCalc1);
 		pnlProductPlot.connectEntities(prodOption  , valueCalc1);
 		pnlProductPlot.connectEntities(prodOption  , valueCalc);

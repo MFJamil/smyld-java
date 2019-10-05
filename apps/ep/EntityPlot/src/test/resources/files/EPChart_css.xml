@@ -1,0 +1,34 @@
+<!--
+  ~ /*
+  ~  * Copyright smyld.org Authors.
+  ~  *
+  ~  * Licensed under the Apache License version 2.0, available at http://www.apache.org/licenses/LICENSE-2.0
+  ~  */
+  -->
+
+<epchart>
+    <images>apps/ep/EntityPlot/src/test/resources/images/</images>
+    <elements>
+        <!-- below is the new schema of elements, adding the style attribute -->
+        <element id="class5"    shape="RoundedRectangle"  title="Class Room"  style="x:80;y:100;width:200;height:100;to:true;from:false;bgColor:lightGray;borderColor:blue;curve:15">
+            City  = Mainz
+            Grade = Fifth
+        </element>
+        <element id="mjamil"  shape="RoundedRectangle"  title="Student"     style="x:550;y:50;width:120;height:50;to:false;from:true;bgColor:lightGray;borderColor:black">Mohammed Jamil</element>
+        <element id="sjamil"  shape="RoundedRectangle"  title="Student"     style="x:550;y:150;width:120;height:50;to:false;from:true;bgColor:lightGray;borderColor:black">Sarmad Jamil</element>
+        <element id="yahmad"  shape="RoundedRectangle"  title="Student"     style="x:550;y:150;width:120;height:50;to:false;from:true;bgColor:lightGray;borderColor:black">Yusra Ahmad</element>
+        <element id="ljamil"  shape="RoundedRectangle"  title="Student"     style="x:550;y:150;width:120;height:50;to:false;from:true;bgColor:lightGray;borderColor:black">Leena Jamil</element>
+        <element id="djamil"  shape="RoundedRectangle"  title="Student"     style="x:550;y:150;width:120;height:50;to:false;from:true;bgColor:lightGray;borderColor:black">Dina Jamil</element>
+        <element id="class4"  shape="RoundedRectangle"  title="Class Room"  style="x:80;y:100;width:200;height:100;to:true;from:false;bgColor:lightGray;borderColor:blue;curve:15">
+            City  = Mainz
+            Grade = Fourth
+        </element>
+    </elements>
+    <connections>
+        <connection from="sjamil"  to="class4" />
+        <connection from="djamil"  to="class4" />
+        <connection from="ljamil"  to="class4" />
+        <connection from="mjamil"  to="class5" />
+        <connection from="yahmad"  to="class5" />
+    </connections>
+</epchart>

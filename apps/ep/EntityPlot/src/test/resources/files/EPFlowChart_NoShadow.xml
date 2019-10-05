@@ -1,4 +1,4 @@
-<flowchart>
+<epflowchart>
     <images>apps/ep/EntityPlot/src/test/resources/images/</images>
     <elements>
         <element id="start" type="Start1"   x="80" y="100" width="80" height="20" connTo="false" connFrom="true">Start</element>
@@ -17,4 +17,4 @@
         <connection from="printBelowTemp"  to="end" color="BLACK" />
         <connection from="printAboveTemp"  to="end" color="BLACK" />
     </connections>
-</flowchart>
+</epflowchart>

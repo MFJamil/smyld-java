@@ -26,8 +26,12 @@ import java.awt.image.BufferedImage;
 import java.util.HashMap;
 import java.util.Vector;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.smyld.app.pe.util.GUIUtil;
 
+@Setter
+@Getter
 
 public class EntityPlotterImpl implements EntityPlotter {
 	
@@ -70,7 +74,7 @@ public class EntityPlotterImpl implements EntityPlotter {
 
 	public EntityPlotterImpl(int x,int y,int width,int height,PlotShape shape,Color contentBGColor){
 		this(x,y,width,height);
-		this.shape = shape;
+		setShape(shape);
 		this.contentBackground = contentBGColor;
 	}
 	public EntityPlotterImpl(int x,int y,int width,int height,PlotShape shape,Color contentBGColor,Color borderColor){
@@ -84,8 +88,8 @@ public class EntityPlotterImpl implements EntityPlotter {
 		this.title =title;
 		
 	}
-	
-	
+
+	public void setShape(PlotShape shape){this.shape = shape;}
 	public void highlight(boolean highlight){
 		doHighlight = highlight;
 	}
@@ -971,6 +975,7 @@ public class EntityPlotterImpl implements EntityPlotter {
 		if ((compare.getId()!=null)&&(id!=null)) return id.equals(compare.getId());
 		return false;
 	}
+
 	public void activateConnectionTo(boolean activate){connectTo=activate;}
 	public void activateConnectionFrom(boolean activate){connectFrom=activate;}
 	
@@ -1002,7 +1007,20 @@ public class EntityPlotterImpl implements EntityPlotter {
 		
 		
 	}
-	
+
+	public Vector<EntityConnector> getConnections() {
+		return connections;
+	}
+	protected void changeHeight(int height) {
+		changeImgSize    = true;
+		bounds.setSize(width, height);
+		this.height = height;
+	}
+
+
+
+   /*  ================================   Setters and Getters   ============================================*/
+
 	public EntityConnector  getConnectorForEntity(EntityPlotter entity){
 		if ((entity==null)||(!connectedEntities.containsValue(entity))) return null;
 		for(EntityConnector curConn:connections)
@@ -1020,21 +1038,21 @@ public class EntityPlotterImpl implements EntityPlotter {
 		this.draggable = draggable;
 	}
 
-	public void setShape(PlotShape shape){
-		this.shape = shape;
-	}
-	
+
 	
 	public int getX() {
 		return x;
 	}
+
 	public void setX(int x) {
 		this.x = x;
 		bounds.setLocation(x, y);
 	}
+
 	public int getY() {
 		return y;
 	}
+
 	public void setY(int y) {
 		bounds.setLocation(x, y);
 		this.y = y;
@@ -1042,11 +1060,12 @@ public class EntityPlotterImpl implements EntityPlotter {
 	public int getWidth() {
 		return width;
 	}
+
 	public void setWidth(int width) {
 		changeWidth(width);
-		
 		refreshBuffer();
 	}
+
 	protected void changeWidth(int width){
 		changeImgSize    = true;
 		bounds.setSize(width, height);
@@ -1058,15 +1077,10 @@ public class EntityPlotterImpl implements EntityPlotter {
 	}
 	public void setHeight(int height) {
 		changeHeight(height);
-		
 		refreshBuffer();
 	}
-	protected void changeHeight(int height) {
-		changeImgSize    = true;
-		bounds.setSize(width, height);
-		this.height = height;
-	}
-	
+
+
 	public Color getContentBackground() {
 		return contentBackground;
 	}
@@ -1302,19 +1316,16 @@ public class EntityPlotterImpl implements EntityPlotter {
 		this.backgroundImage = backgroundImage;
 		refreshBuffer();
 	}
-	
-	
-	
-	public Vector<EntityConnector> getConnections() {
-		return connections;
-	}
+
+
+
 
 	public void setBGImageTransperancy(float newValue){
 		if ((newValue>=0)&&(newValue<=1))
 			bgImageTransperancy = newValue;
 	}
 	
-	
+
 
 	/**
 	 * @return the entityTransperancy
@@ -1347,7 +1358,7 @@ public class EntityPlotterImpl implements EntityPlotter {
 	public void setTransperant(boolean setTransperant) {
 		this.setTransperant = setTransperant;
 	}
-	
+
 	/**
 	 * @return the dropShadow
 	 */
@@ -1375,11 +1386,6 @@ public class EntityPlotterImpl implements EntityPlotter {
 	public void setDropReflection(boolean dropReflection) {
 		this.dropReflection = dropReflection;
 	}
-
-
-
-
-
 
 
 	private static final String ENTITY_STATE_NORMAL      = "normal";

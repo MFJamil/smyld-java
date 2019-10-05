@@ -1,5 +1,9 @@
 package org.smyld.app.pe;
 
+import lombok.Getter;
+import lombok.Setter;
+import org.smyld.app.pe.util.Props;
+
 import static org.smyld.app.pe.PlotConstants.ALIGNMENT_BUTTOM;
 import static org.smyld.app.pe.PlotConstants.ALIGNMENT_CENTER;
 import static org.smyld.app.pe.PlotConstants.ALIGNMENT_MIDDLE;
@@ -12,6 +16,8 @@ import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.geom.GeneralPath;
 
+@Setter
+@Getter
 public class TextPlotter {
 	Font font = new Font("Newtimes Roman",Font.BOLD,10);
 	String text;
@@ -26,6 +32,7 @@ public class TextPlotter {
 	boolean autoExpand = true,drawBorder=true,drawConnectPoint=true,drawBackground=true;
 	BasicStroke borderStroke;
 	BasicStroke connectStroke;
+
 	public TextPlotter(String text) {
 		this.text = text;
 		init();
@@ -166,156 +173,5 @@ public class TextPlotter {
 		}
 	}
 
-	public Font getFont() {
-		return font;
-	}
-
-	public void setFont(Font font) {
-		this.font = font;
-	}
-
-	public String getText() {
-		return text;
-	}
-
-	public void setText(String text) {
-		this.text = text;
-	}
-
-	public Color getForeground() {
-		return foreground;
-	}
-
-	public void setForeground(Color foreground) {
-		this.foreground = foreground;
-	}
-
-	public Color getBackground() {
-		return background;
-	}
-
-	public void setBackground(Color background) {
-		this.background = background;
-	}
-
-	public int getVerticalAlignment() {
-		return verticalAlignment;
-	}
-
-	public void setVerticalAlignment(int verticalAlignment) {
-		this.verticalAlignment = verticalAlignment;
-	}
-
-	public int getHorizontalAlignment() {
-		return horizontalAlignment;
-	}
-
-	public void setHorizontalAlignment(int horizontalAlignment) {
-		this.horizontalAlignment = horizontalAlignment;
-	}
-
-	public int getX() {
-		return x;
-	}
-
-	public void setX(int x) {
-		this.x = x;
-	}
-
-	public int getY() {
-		return y;
-	}
-
-	public void setY(int y) {
-		this.y = y;
-	}
-
-	public int getTextRightMargin() {
-		return textRightMargin;
-	}
-
-	public void setTextRightMargin(int textRightMargin) {
-		this.textRightMargin = textRightMargin;
-	}
-
-	public int getTextLeftMargin() {
-		return textLeftMargin;
-	}
-
-	public void setTextLeftMargin(int textLeftMargin) {
-		this.textLeftMargin = textLeftMargin;
-	}
-
-	public int getTextButtomMargin() {
-		return textButtomMargin;
-	}
-
-	public void setTextButtomMargin(int textButtomMargin) {
-		this.textButtomMargin = textButtomMargin;
-	}
-
-	public int getWidth() {
-		return width;
-	}
-
-	public void setWidth(int width) {
-		this.width = width;
-	}
-
-	public int getBorderWidth() {
-		return borderWidth;
-	}
-
-	public void setBorderWidth(int borderWidth) {
-		this.borderWidth = borderWidth;
-	}
-
-	public int getTextTopMargin() {
-		return textTopMargin;
-	}
-
-	public void setTextTopMargin(int textTopMargin) {
-		this.textTopMargin = textTopMargin;
-	}
-
-	public int getTextLineMargin() {
-		return textLineMargin;
-	}
-
-	public void setTextLineMargin(int textLineMargin) {
-		this.textLineMargin = textLineMargin;
-	}
-
-	public int getSingleLineHeight() {
-		return singleLineHeight;
-	}
-
-	public void setSingleLineHeight(int singleLineHeight) {
-		this.singleLineHeight = singleLineHeight;
-	}
-
-	public int getHeight() {
-		return height;
-	}
-
-	public void setHeight(int height) {
-		this.height = height;
-	}
-
-	public double getTotalContentHeight() {
-		return totalContentHeight;
-	}
-
-	public void setTotalContentHeight(double totalContentHeight) {
-		this.totalContentHeight = totalContentHeight;
-	}
-
-	public boolean isAutoExpand() {
-		return autoExpand;
-	}
-
-	public void setAutoExpand(boolean autoExpand) {
-		this.autoExpand = autoExpand;
-	}
 
 }

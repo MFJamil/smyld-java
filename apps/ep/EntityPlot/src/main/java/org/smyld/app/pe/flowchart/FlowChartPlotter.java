@@ -12,29 +12,17 @@ import org.smyld.app.pe.EntityPlotter;
 import org.smyld.app.pe.GUIPlotter;
 import org.smyld.app.pe.OrthogonalEntityConnector;
 import org.smyld.app.pe.flowchart.EntityBasicFlowChart.ChartElement;
-import org.smyld.app.pe.flowchart.source.FlowChartReader;
+import org.smyld.app.pe.source.ChartReader;
 
 public class FlowChartPlotter extends GUIPlotter {
 
-	FlowChartReader charReader;
 	public FlowChartPlotter(){
 		super();
 	}
 
 
-	public FlowChartPlotter(FlowChartReader reader){
-		super();
-		this.charReader = reader;
-		initFromReader();
-	}
-
-
-
-	private void initFromReader(){
-		Set<EntityBasicFlowChart> entities = charReader.loadEntities();
-		entities.forEach(curItem -> addEntity(curItem));
-		List<EntityConnector> conns =  charReader.loadConnections(entities);
-		conns.forEach(curItem -> connectEntities(curItem));
+	public FlowChartPlotter(ChartReader reader){
+		super(reader);
 	}
 
 	protected EntityPlotLayoutManager createManager(){

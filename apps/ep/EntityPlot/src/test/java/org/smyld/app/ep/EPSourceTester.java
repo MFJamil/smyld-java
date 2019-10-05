@@ -3,6 +3,7 @@ package org.smyld.app.ep;
 import org.junit.Assert;
 import org.junit.Test;
 import org.smyld.app.pe.EntityConnector;
+import org.smyld.app.pe.EntityPlotter;
 import org.smyld.app.pe.flowchart.EntityBasicFlowChart;
 import org.smyld.app.pe.flowchart.source.EPFlowChartXmlReader;
 
@@ -15,7 +16,7 @@ public class EPSourceTester {
     @Test
     public void testPEFlowchartXmlReader()throws Exception{
         EPFlowChartXmlReader reader = new EPFlowChartXmlReader("src/test/resources/files/EPFlowChart.xml");
-        Set<EntityBasicFlowChart> entities = reader.loadEntities();
+        Set<EntityPlotter> entities = reader.loadEntities();
         entities.forEach(curItem -> System.out.println(curItem));
         Assert.assertEquals(6,entities.size());
         List<EntityConnector> conns =  reader.loadConnections(entities);

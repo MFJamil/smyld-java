@@ -25,10 +25,7 @@ import java.awt.print.PrinterException;
 import java.awt.print.PrinterJob;
 import java.io.File;
 import java.io.IOException;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.Vector;
+import java.util.*;
 
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
@@ -42,6 +39,8 @@ import javax.swing.SwingConstants;
 import org.apache.log4j.Logger;
 
 import org.smyld.app.pe.action.*;
+import org.smyld.app.pe.flowchart.EntityBasicFlowChart;
+import org.smyld.app.pe.source.ChartReader;
 import org.smyld.app.pe.util.Three60TLogo;
 
 
@@ -96,6 +95,7 @@ public class GUIPlotter extends JPanel implements Scrollable{
 	BufferedImage logo   ;
 	BufferedImage reflect;
 	UndoListener  undoListener;
+	ChartReader   chartReader;
     
 	public GUIPlotter(JScrollPane container,String presetLayout){
 		super();
@@ -111,14 +111,26 @@ public class GUIPlotter extends JPanel implements Scrollable{
 		init();
 		
 	}
+	public GUIPlotter(ChartReader chartReader){
+		this();
+		this.chartReader = chartReader;
+		initFromReader();
+	}
 
 	public GUIPlotter(){
 		super();
 		init();
 		
 	}
-	
-	
+
+	private void initFromReader(){
+		Set<EntityPlotter> entities = chartReader.loadEntities();
+		entities.forEach(curItem -> addEntity(curItem));
+		List<EntityConnector> conns =  chartReader.loadConnections(entities);
+		conns.forEach(curItem -> connectEntities(curItem));
+	}
+
+
 	public void addEntityPlotListener(EntityPlotListener newListener){
 		this.listener = newListener;
 		connPlotter.addEntityPlotListener(newListener);
