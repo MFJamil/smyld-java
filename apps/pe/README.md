@@ -1,3 +1,8 @@
+![svg](https://mfjamil.github.io/smyld-java/apps/pe/check.svg)
+
+
+![ww](https://img.shields.io/badge/License-Apache%202.0-yellowgreen.svg)
+
 # SMYLD Portal Engine
 Portal Engine is establishing a compelete segregation between GUI layer and other modules of the software, the target is to eleminate the boilerplate code and to alleviates dealing with GUI components. The framework was originally designed to deal with Swing Components back in 2004, was successfully used with many applications which saved considerable time.
 
