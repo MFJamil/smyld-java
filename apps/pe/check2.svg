@@ -5,7 +5,7 @@
     </defs>
   <text x="55" y="30" text-anchor="middle" 
         font-size="25" fill="black" font-family="Verdana">
-        - url(#a)<tref xlink:href="#paramText" />
+        - <tref xlink:href="url(#a)" />
       </text>
 <circle cx="50" cy="50" r="20" stroke="red" stroke-width="4" fill="white"/>
  
