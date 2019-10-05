@@ -3,7 +3,7 @@
     <defs>
       <ref id="paramText" param="text-label">button</ref>
     </defs>
-  <text x="55" y="30" text-anchor="middle" 
+  <text x="40" y="30" text-anchor="middle" 
         font-size="25" fill="black" font-family="Verdana">
         - <tref xlink:href="#label" />
       </text>
