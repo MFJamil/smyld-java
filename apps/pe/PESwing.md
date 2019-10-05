@@ -1,3 +1,7 @@
+[![Maven Central](https://img.shields.io/maven-central/v/org.smyld.app.pe/smyld-app-portalengine)](https://mvnrepository.com/artifact/org.smyld.app.pe/smyld-app-portalengine/1.0.8)
+![Sonatype Nexus (Releases)](https://img.shields.io/nexus/r/org.smyld.app.pe/smyld-app-portalengine?server=https%3A%2F%2Foss.sonatype.org)
+[![License](https://img.shields.io/badge/License-Apache%202.0-yellowgreen.svg)](https://github.com/MFjamil/smyld-java/blob/master/LICENSE)
+
 # Current Portal Engine Features
    The current available version of Portal Engine includes the following features:
    * Dynamic Creation of Swing components.
@@ -25,8 +29,7 @@ _More parts to follow_
    ```shell
    mvn archetype:generate -DgroupId=[Your Group ID] -DartifactId=[Your Artifact ID] -DarchetypeGroupId=org.smyld.app.pe -DarchetypeArtifactId=PESample-archetype -DarchetypeVersion=1.0.8 -DinteractiveMode=false 
    ```
-   [Copy To Clipboard](copyToCB.js)
-   The Group ID is usually the package name of your project, the Artifact ID will be the project name. Let us suppose that you will need a project to control some process, let us name it "ProcessController" and your package will be "com.mycompany.apps". You can issue it as follows:
+  The Group ID is usually the package name of your project, the Artifact ID will be the project name. Let us suppose that you will need a project to control some process, let us name it "ProcessController" and your package will be "com.mycompany.apps". You can issue it as follows:
    ```shell
    mvn archetype:generate -DgroupId=com.mycompany.apps -DartifactId=ProcessController -DarchetypeGroupId=org.smyld.app.pe -DarchetypeArtifactId=PESample-archetype -DarchetypeVersion=1.0.8 -DinteractiveMode=false 
    ```
@@ -230,9 +233,23 @@ Below are some of the different Look and Feels as well as different language set
 
 **Ok nice, now how can I use it?!**
 
-As a developer, you need to interact with the interface and write your code. First of all, you need to understand 
-   
+Before we learn how to use the Portal Engine, we need to know how it works first.
 
+_ToDo: Link on the basic usage of portal engine_
+
+Portal engine supports two ways of interaction between the GUI and the Business layers.
+
+   **Old APIs - Interfaces**
+   
+   Upon invoking the Portal Engine and based on the configuration, the Engine will create Interfaces and will handle the GUI events and interactions based on the implementation of these interfaces. Although that creating these interfaces belongs to the old version of the Portal Engine, they are currently still active. The only draw back of this approach is that the developer will need to provide implementations for all the interfaces even if they are not fully required.
+   
+   _ToDo: Link on a tutorial for using the interfaces to follow_
+   
+   **New APIs - Annotations**   
+   
+   The new APIs will process the annotations written by the developer. Based on any action or event in the configuration file, the engine will check if there is annotation for that particular action and will invoke it. The developer can in this case only writes the actions of his choice. 
+   
+   _ToDo: Link on a tutorial for using the interfaces to follow_
 
 
 _More detailed description with tutorials on using the engine will follow_
