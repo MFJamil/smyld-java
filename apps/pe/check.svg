@@ -1,4 +1,9 @@
 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="124" height="20">
+
+    <defs>
+      <ref id="paramText" param="label">button</ref>
+    </defs>
+
   <linearGradient id="b" x2="0" y2="100%">
     <stop offset="0" stop-color="#bbb" stop-opacity=".1"/>
     <stop offset="1" stop-opacity=".1"/>
@@ -15,6 +20,6 @@
     <text x="265" y="150" fill="#010101" fill-opacity=".3" transform="scale(.1)" textLength="410">License</text>
     <text x="265" y="140" transform="scale(.1)" textLength="410">License</text>
     <text x="865" y="150" fill="#010101" fill-opacity=".3" transform="scale(.1)" textLength="630">Apache 2.0</text>
-    <text x="865" y="140" transform="scale(.1)" textLength="630"><tref xlink:href="#label" />Apache 2.0</text>
+    <text id="button" x="865" y="140" transform="scale(.1)" textLength="630"><tref xlink:href="#paramText" />Apache 2.0</text>
   </g>
 </svg>
