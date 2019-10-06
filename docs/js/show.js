@@ -1,1 +1,1 @@
-console.log("From JS");
+document.output("Testttttt");
