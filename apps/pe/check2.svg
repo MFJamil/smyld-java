@@ -3,8 +3,8 @@
     <defs>
       <ref id="paramText" param="text-label">button</ref> 
     </defs>
-  <rect x="4" y="4" width="400" height="40" fill="none" stroke="blue" stroke-width="2" rx="4"/>
-  <text x="10" y="28" text-anchor="start" font-size="12" fill="black" font-family="Verdana">
-        - Sarmad <tref xlink:href="#label" />
+  <rect x="4" y="4" width="400" height="40" fill="none" stroke="red" stroke-width="2" rx="4"/>
+  <text x="204" y="28" text-anchor="middle" font-size="12" fill="red" font-family="Verdana">
+        -- To Be Continued --<tref xlink:href="#label" />
       </text>
 </svg>
