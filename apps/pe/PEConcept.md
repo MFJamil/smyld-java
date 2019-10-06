@@ -35,8 +35,10 @@ The Portal Engine will handle reading the file and generating the required compo
 ## Developing Portal Engine
    Sure we will be so happy if other developers will love to participate in this project and extend it to fullfill the concept mentioned above. The more collaborating developers with ultimate diligence to foster the Engine, the more prominence it will be. Any provision of a help will be highly appreciated.  
 
+
 _More will follow_
 
+![ToContinue](../../docs/svg/toContinue.svg)
 
 [<< Back to Main Page](.)
 
