@@ -3,10 +3,10 @@
     <defs>
       <ref id="paramText" param="text-label">button</ref> 
     </defs>
-  <text x="33" y="30" text-anchor="middle" 
+  <text x="33" y="25" text-anchor="middle" 
         font-size="12" fill="black" font-family="Verdana">
         - Sarmad <tref xlink:href="url(#a)" />
       </text>
-<circle cx="50" cy="50" r="20" stroke="red" stroke-width="4" fill="white"/>
+<circle cx="50" cy="50" r="10" stroke="red" stroke-width="4" fill="white"/>
  
 </svg>
