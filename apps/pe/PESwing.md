@@ -249,7 +249,8 @@ Portal engine supports two ways of interaction between the GUI and the Business 
    
    The new APIs will process the annotations written by the developer. Based on any action or event in the configuration file, the engine will check if there is annotation for that particular action and will invoke it. The developer can in this case only writes the actions of his choice. 
    
-   _ToDo: Link on a tutorial for using the interfaces to follow_
+   ![ToContinue](../../docs/svg/toContinue.svg)
+   _ToDo: Link on a tutorial for using the annotations to follow_
 
 
 _More detailed description with tutorials on using the engine will follow_
