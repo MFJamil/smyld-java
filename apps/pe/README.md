@@ -9,7 +9,7 @@ Portal Engine is a java based framework that facilitates the work with GUI inter
 
 ## History 
 
-The framework was originally designed to deal with Swing Components back in 2004, was successfully used with many applications which saved considerable time.
+The framework was originally designed to deal with Swing Components back in 2004, and it was successfully used with many applications which saved a considerable time. Unfortunately, it was not shared as an Open Source project at that time. Later on it was developed to coup with new technologies, like using Annotations instead of interfaces to interact with the business layer, being available on Maven Central Repository, re-structured to be easily used by other developers in a similar way as the case with Spring boot ..etc. 
 
 ### Swing! are you serious? in 2019!
 Well you are right, many alternatives are available but do not forget some facts:
