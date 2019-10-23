@@ -2,7 +2,14 @@
 ![ww](https://img.shields.io/badge/License-Apache%202.0-yellowgreen.svg)
 
 # SMYLD Portal Engine
-Portal Engine is establishing a compelete segregation between GUI layer and other modules of the software, the target is to eleminate the boilerplate code and to alleviates dealing with GUI components. The framework was originally designed to deal with Swing Components back in 2004, was successfully used with many applications which saved considerable time.
+
+## What is it?
+
+Portal Engine is a java based framework that facilitates the work with GUI interfaces via establishing a compelete segregation between GUI layer and other modules of the software, the target is to eleminate the boilerplate code and to alleviates dealing with GUI components.
+
+## History 
+
+The framework was originally designed to deal with Swing Components back in 2004, was successfully used with many applications which saved considerable time.
 
 ### Swing! are you serious? in 2019!
 Well you are right, many alternatives are available but do not forget some facts:
