@@ -703,6 +703,17 @@ public class PortalAppXMLSetReaderPESwing extends PEAppXMLReader implements
 		return resultPath;
 		//return buildApplication.getChild(TAG_NAME_HOME).getText();
 	}
+
+	@Override
+	public HashMap<String, String> getImages() {
+		return loadImages();
+	}
+
+	@Override
+	public HashMap<String, PEAction> getActions() {
+		return loadActions();
+	}
+
 	public static void main(String[] args){
 		try {
 			PortalAppXMLSetReaderPESwing reader = new PortalAppXMLSetReaderPESwing("/home/jamil/workspace/tools-billing-interface/sources/test_el.xml",null);
@@ -834,7 +845,12 @@ public class PortalAppXMLSetReaderPESwing extends PEAppXMLReader implements
 		return appSecurity;
 	}
 
-	public String getAppName() {
+	@Override
+	public String getIcon() {
+		return null;
+	}
+
+	public String getName() {
 		return appName;
 	}
 

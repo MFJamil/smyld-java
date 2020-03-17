@@ -56,14 +56,12 @@ public class EntityPlotterImpl implements EntityPlotter {
 	protected PlotShape shape;
 	protected TextPlotter textPlot = new TextPlotter();
 	protected Image         backgroundImage;
-	protected BufferedImage normalState;
-	protected HashMap<String,BufferedImage> imgBuffer         = new HashMap<String, BufferedImage>(); 
+	protected HashMap<String,BufferedImage> imgBuffer         = new HashMap<String, BufferedImage>();
 	protected HashMap<Integer,Integer>      connectionPoints  = new HashMap<Integer, Integer>();
 	protected HashMap<String,EntityPlotter> connectedEntities = new HashMap<String, EntityPlotter>();	
 	protected Vector<EntityConnector>       connections       = new Vector<EntityConnector>();
 	protected Shape bodyShape;
-	int imgSeq = 0;
-	
+
 	
 	
 	// Constructors

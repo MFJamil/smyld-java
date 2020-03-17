@@ -193,7 +193,7 @@ public class Application extends SMYLDObject {
 	public void setAppReader(PESwingApplicationReader appReader) {
 		this.appReader = appReader;
 		//TODO below is ugly spaghetti instances, need to be cleaned
-		this.setName(appReader.getAppName());
+		this.setName(appReader.getName());
 	}
 
 	public String getAppStartupClass() {

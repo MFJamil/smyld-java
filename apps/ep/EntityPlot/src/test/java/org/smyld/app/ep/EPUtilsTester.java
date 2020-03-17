@@ -43,7 +43,7 @@ public class EPUtilsTester {
         fields.entrySet()
                 .stream()
                 .sorted(Map.Entry.<String, Field>comparingByKey())
-                .map(curField -> curField.getKey())
+                .map(curField -> (curField.getKey() + "::" + curField.getValue().getType().getName()) )
                 .forEach(System.out::println);
     }
 }

@@ -37,6 +37,23 @@
       <artifactId>smyld-app-portalengine</artifactId>
       <version>1.0.2-SNAPSHOT</version>
     </dependency>
+    <dependency>
+      <groupId>org.smyld.app.pe.web</groupId>
+      <artifactId>PEWeb</artifactId>
+      <version>1.0.2-SNAPSHOT</version>
+      <exclusions>
+        <exclusion>
+          <groupId>org.slf4j</groupId>
+          <artifactId>slf4j-jdk14</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>org.projectlombok</groupId>
+      <artifactId>lombok</artifactId>
+      <version>1.18.12</version>
+      <scope>provided</scope>
+    </dependency>
   </dependencies>
 
   <build>

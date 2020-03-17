@@ -1,1 +1,2 @@
-console.log("From JS");
+var queryString = location.search;
+alert(queryString);

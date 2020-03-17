@@ -121,6 +121,10 @@ public interface Constants{
 
 	public static final String TAG_NAME_BUILD = "build";
 	public static final String TAG_NAME_TOOLkit = "toolkit";
+	public static final String TAG_NAME_APP_TYPE = "applicationType";
+	public static final String TAG_NAME_APP_NAME = "name";
+	public static final String TAG_NAME_APP_TITLE = "title";
+
 	public static final String TAG_NAME_ACTIONS = "actions";
 	public static final String TAG_NAME_ACTION = "action";
 	public static final String TAG_NAME_WINDOWS = "windows";
@@ -144,6 +148,8 @@ public interface Constants{
 	public static final String TAG_NAME_TARGET_JAR_NAME = "name";
 	public static final String TAG_NAME_TARGET_JAR_PATH = "path";
 	public static final String TAG_NAME_LINK = "link";
+	public static final String TAG_NAME_ICON= "icon";
+
 	public static final String TAG_NAME_APPLICATION = "application";
 	public static final String TAG_NAME_APP_MANAGER = "appmanager";
 
@@ -161,7 +167,6 @@ public interface Constants{
 	public static final String TAG_NAME_TITLE = "title";
 	public static final String TAG_NAME_TOOLTIP = "tooltip";
 	public static final String TAG_NAME_DESC = "desc";
-	public static final String TAG_NAME_ICON = "icon";
 	public static final String TAG_NAME_VENDOR = "vendor";
 	public static final String TAG_NAME_CODE_BASE = "codebase";
 	public static final String TAG_NAME_SHORTCUT = "shortcut";

@@ -421,9 +421,19 @@ public class Tester extends SMYLDObject implements PESwingApplicationReader {//W
 		return null;
 	}
 
-	public String getAppName() {
+	@Override
+	public String getIcon() {
+		return null;
+	}
+
+	public String getName() {
 		return null;
 
+	}
+
+	@Override
+	public String getTitle() {
+		return null;
 	}
 
 	public String getAppType() {
@@ -583,5 +593,15 @@ public class Tester extends SMYLDObject implements PESwingApplicationReader {//W
 	@Override
 	public LayoutType getLayout() {
 		return LayoutType.XML;
+	}
+
+	@Override
+	public HashMap<String, String> getImages() {
+		return null;
+	}
+
+	@Override
+	public HashMap<String, PEAction> getActions() {
+		return null;
 	}
 }

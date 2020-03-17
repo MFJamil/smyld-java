@@ -6,6 +6,7 @@ import java.util.Vector;
 
 import org.smyld.app.pe.logging.LogFile;
 import org.smyld.app.pe.model.ApplicationReader;
+import org.smyld.app.pe.model.PEApplication;
 import org.smyld.app.pe.model.gui.GUIToolbar;
 import org.smyld.app.pe.projectbuilder.ProjectBuilder;
 import org.smyld.app.pe.security.AppSecurity;
@@ -25,7 +26,7 @@ import org.smyld.util.multilang.LangSource;
  * @see
  * @since
  */
-public interface PESwingApplicationReader extends ApplicationReader {
+public interface PESwingApplicationReader extends PEApplication {
 	public HashMap<String, String>              loadLibraries();
 	public HashMap<String, Element>             loadWindows();
 	public HashMap<String, Element>             loadPanels();
@@ -40,7 +41,6 @@ public interface PESwingApplicationReader extends ApplicationReader {
 	public Vector<DeploymentDescriptor>         loadDeployments();
 	
 	public String getAppStartupClass();
-	public String getAppName();
 	public String getMainClassPackage();
 	public String getGroup();
 	public String getHomePath();

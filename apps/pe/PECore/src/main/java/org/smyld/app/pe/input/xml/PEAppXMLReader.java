@@ -1,9 +1,6 @@
 package org.smyld.app.pe.input.xml;
 
-import org.smyld.app.pe.model.ApplicationReader;
-import org.smyld.app.pe.model.ApplicationType;
-import org.smyld.app.pe.model.GUIToolkit;
-import org.smyld.app.pe.model.LayoutType;
+import org.smyld.app.pe.model.*;
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
 
@@ -12,8 +9,11 @@ import java.io.InputStream;
 
 import static org.smyld.app.pe.model.Constants.*;
 
-public class  PEAppXMLReader extends PEXmlFileReader implements ApplicationReader {
+public class  PEAppXMLReader extends PEXmlFileReader implements ApplicationReader{
     GUIToolkit toolkit;
+    ApplicationType applicationType;
+    String appName;
+    String appTitle;
 
     public PEAppXMLReader()  {
         super();
@@ -49,6 +49,9 @@ public class  PEAppXMLReader extends PEXmlFileReader implements ApplicationReade
         if (buildEl==null) return ;
         // Setting the default to swing
         this.toolkit = buildEl.getChildText(TAG_NAME_TOOLkit)!=null? GUIToolkit.valueOf(buildEl.getChildText(TAG_NAME_TOOLkit)):GUIToolkit.swing;
+        this.applicationType = buildEl.getChildText(TAG_NAME_APP_TYPE)!=null? ApplicationType.valueOf(buildEl.getChildText(TAG_NAME_APP_TYPE)):ApplicationType.Desktop;
+        appName  = buildEl.getChildText(TAG_NAME_APP_NAME);
+        appTitle  = buildEl.getChildText(TAG_NAME_APP_TITLE);
 
     }
 
@@ -57,6 +60,18 @@ public class  PEAppXMLReader extends PEXmlFileReader implements ApplicationReade
     }
 
 
+    public String getName() {
+        return appName;
+    }
+
+    public String getTitle() {
+        return appTitle;
+    }
+
+    public String getHomePath() {
+        return null;
+    }
+
     @Override
     public GUIToolkit getGUIToolkit() {
         return this.toolkit;
@@ -64,6 +79,6 @@ public class  PEAppXMLReader extends PEXmlFileReader implements ApplicationReade
 
     @Override
     public ApplicationType getType() {
-        return null;
+        return applicationType;
     }
 }

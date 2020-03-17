@@ -31,7 +31,7 @@ public class PortalAppXMLSetWriter extends XMLFileWriter implements Constants {
 		// Code for creating the file
 		rootElement = new Element(TAG_NAME_APPLICATION);
 		Element appName = new Element(TAG_NAME_NAME);
-		appName.setText(reader.getAppName());
+		appName.setText(reader.getName());
 		rootElement.addContent(appName);
 		rootElement.setAttribute(TAG_ATT_TYPE, reader.getAppType());
 		addLog(reader.getLogFile());

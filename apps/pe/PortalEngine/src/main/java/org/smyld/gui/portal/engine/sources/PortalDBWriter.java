@@ -66,7 +66,7 @@ public class PortalDBWriter extends SMYLDDataBaseHandler implements
 			st = dbConnection.prepareStatement(INS_NEW_APP);
 			st.setString(1, appID);
 			st.setString(2, reader.getHomePath());
-			st.setString(3, reader.getAppName());
+			st.setString(3, reader.getName());
 			st.setString(4, reader.getAppType());
 			st.setString(5, reader.getSourcePath());
 			st.setString(6, reader.getClassPath());

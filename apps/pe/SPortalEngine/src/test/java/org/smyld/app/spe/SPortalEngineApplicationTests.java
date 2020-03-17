@@ -1,5 +1,7 @@
 package org.smyld.app.spe;
 
+import lombok.extern.slf4j.Slf4j;
+import org.junit.Before;
 import org.smyld.app.spe.factory.SPEFactory;
 import org.smyld.app.spe.service.PEManagerService;
 import org.smyld.app.spe.util.PEConstants;
@@ -16,8 +18,16 @@ import java.io.PrintStream;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
+@Slf4j
 public class SPortalEngineApplicationTests {
 
+
+
+	@Before
+	public void init(){
+
+
+	}
 	@Test
 	public void contextLoads() {
 
@@ -53,5 +63,13 @@ public class SPortalEngineApplicationTests {
 
 	}
 
+	@Test
+	public void testWebToolkitDetection(){
+		String[] appArgs = {"--app=src/test/resources/apps/web/app1/WebApplication.xml"};
+		SPortalEngineApplication.main(appArgs);
+		log.info( " Created toolkit is: "  + 	SPortalEngineApplication.getInstance().peManagerService.getPeGUIBuilder().getAnnotatedClass().getName());
+
+
+	}
 
 }

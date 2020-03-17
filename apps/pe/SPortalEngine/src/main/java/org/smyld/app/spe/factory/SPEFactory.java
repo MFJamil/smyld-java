@@ -2,6 +2,7 @@ package org.smyld.app.spe.factory;
 
 import org.smyld.app.pe.annotations.PELayoutHandler;
 import org.smyld.app.pe.annotations.PEGUIBuilder;
+import org.smyld.app.pe.model.ApplicationType;
 import org.smyld.app.pe.model.GUIToolkit;
 import org.smyld.app.pe.model.LayoutType;
 import org.smyld.reflections.AnnotatedType;
@@ -56,6 +57,14 @@ public class SPEFactory implements AbstractFactory {
     }
 
 
+
+    public AnnotatedType<PEGUIBuilder> getGUIBuilder(GUIToolkit toolkit, ApplicationType appType) {
+        if (appType==null) return getGUIBuilder(toolkit);
+        Optional<AnnotatedType<PEGUIBuilder>> result = this.guiBuilders.stream().filter(curBuilder ->
+                ((curBuilder.getAnnotation().guiToolkit() == toolkit)&&
+                        (curBuilder.getAnnotation().applicationType() == appType))).findFirst();
+        return result.get();
+    }
 
 
 

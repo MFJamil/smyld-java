@@ -1,5 +1,6 @@
 package org.smyld.gui.portal.engine.gui.builders.swing;
 
+import lombok.extern.slf4j.Slf4j;
 import org.smyld.app.pe.model.gui.*;
 import org.smyld.gui.GUIConstants;
 import org.smyld.gui.portal.engine.ApplicationGenerator;
@@ -17,6 +18,7 @@ import static org.smyld.app.AppConstants.ACTION_COM_ASSIGN_APP;
  * @see
  * @since
  */
+@Slf4j
 public class SMYLDSwingToolbarBuilder extends SMYLDSwingGUIBuilder {
 	/**
 	 * 
@@ -81,9 +83,15 @@ public class SMYLDSwingToolbarBuilder extends SMYLDSwingGUIBuilder {
 				+ "." + APP_METH_GET_APP_ORIENT + "())");
 
 		for (GUIComponent curGUIComp : toolBarItem.getChildren()) {
-			if (curGUIComp.getUserConstraint()!=null) 
+
+			if (curGUIComp.getUserConstraint()!=null)
 				tlbMeth.addCodeLine(createAddConstraintCodeLine(curGUIComp.getUserConstraint()));
 			ActionHolderItem curItem = (ActionHolderItem) curGUIComp;
+			if (!isValid(curItem)){
+				log.warn("Skipping invalid item : " + curGUIComp);
+				continue;
+			}
+
 			// buildSingleMenuBar(curItem,newMenuMethod);
 			tlbFactoryClass.addImport(GUIConstants.CLASS_NAME_FP_SMYLD_BUTN);
 			MenuType curMType = MenuType.parse(curItem.getType());
@@ -140,6 +148,9 @@ public class SMYLDSwingToolbarBuilder extends SMYLDSwingGUIBuilder {
 		}
 		tlbMeth.addCodeLine("return " + toolBarVariable);
 		tlbFactoryClass.addMethod(tlbMeth);
+	}
+	private boolean isValid(ActionHolderItem item){
+		return ((item!=null)&&(item.getID()!=null));
 	}
 
 	public static String createMethodNameToolBar(String toolbarID) {

@@ -378,5 +378,5 @@ public class FileSystem {
 	}
 
 	public static final String NEW_LINE = System.getProperty("line.separator");
-	private static final String IMG_TYPES = "jpg,gif,png,bmp";
+	private static final String IMG_TYPES = "jpg,gif,png,bmp,svg,ico";
 }

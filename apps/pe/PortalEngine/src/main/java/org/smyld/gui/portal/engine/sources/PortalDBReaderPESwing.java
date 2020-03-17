@@ -464,9 +464,19 @@ public class PortalDBReaderPESwing extends SMYLDDataBaseHandler implements
 		return SETT_TYPE_XML;
 	}
 
-	public String getAppName() {
+	@Override
+	public String getIcon() {
+		return null;
+	}
+
+	public String getName() {
 		return appName;
 
+	}
+
+	@Override
+	public String getTitle() {
+		return null;
 	}
 
 	public String getAppType() {
@@ -535,5 +545,15 @@ public class PortalDBReaderPESwing extends SMYLDDataBaseHandler implements
 	@Override
 	public LayoutType getLayout() {
 		return LayoutType.DB;
+	}
+
+	@Override
+	public HashMap<String, String> getImages() {
+		return loadImages();
+	}
+
+	@Override
+	public HashMap<String, PEAction> getActions() {
+		return loadActions();
 	}
 }
