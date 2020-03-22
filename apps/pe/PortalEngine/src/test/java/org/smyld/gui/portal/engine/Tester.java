@@ -39,6 +39,7 @@ import org.smyld.app.pe.model.ApplicationType;
 import org.smyld.app.pe.model.GUIToolkit;
 import org.smyld.app.pe.model.LayoutType;
 import org.smyld.app.pe.model.gui.GUIToolbar;
+import org.smyld.app.pe.model.gui.GUIWindow;
 import org.smyld.app.pe.model.gui.MenuItem;
 import org.smyld.app.pe.model.gui.PEAction;
 import org.smyld.app.pe.projectbuilder.ProjectBuilder;
@@ -422,6 +423,11 @@ public class Tester extends SMYLDObject implements PESwingApplicationReader {//W
 	}
 
 	@Override
+	public String getLogo() {
+		return null;
+	}
+
+	@Override
 	public String getIcon() {
 		return null;
 	}
@@ -602,6 +608,21 @@ public class Tester extends SMYLDObject implements PESwingApplicationReader {//W
 
 	@Override
 	public HashMap<String, PEAction> getActions() {
+		return null;
+	}
+
+	@Override
+	public HashMap<String, GUIToolbar> getToolbars() {
+		return null;
+	}
+
+	@Override
+	public HashMap<String, MenuItem> getMenus() {
+		return null;
+	}
+
+	@Override
+	public HashMap<String, GUIWindow> getWindows() {
 		return null;
 	}
 }

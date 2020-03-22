@@ -69,7 +69,6 @@ public class SPortalEngineApplicationTests {
 		SPortalEngineApplication.main(appArgs);
 		log.info( " Created toolkit is: "  + 	SPortalEngineApplication.getInstance().peManagerService.getPeGUIBuilder().getAnnotatedClass().getName());
 
-
 	}
 
 }

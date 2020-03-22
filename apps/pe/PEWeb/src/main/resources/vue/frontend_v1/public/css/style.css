@@ -1,0 +1,19 @@
+:root{
+    --mainColor: red;
+}
+.app_toolbar_blue{
+    background: linear-gradient(180deg, rgba(31,70,101,1) 0%, rgba(52,101,139,1) 100%);
+  }
+
+ .app_toolbar_grey{
+   background: linear-gradient(180deg, rgba(198,202,205,1) 0%, rgba(243,243,243,1) 100%);
+ }
+
+ .app_grad_blue_middle{
+  background: linear-gradient(180deg, rgb(106, 162, 207) 0%, rgb(59, 114, 156) 100%);
+  
+ }
+
+ body{
+    background: white;
+  }

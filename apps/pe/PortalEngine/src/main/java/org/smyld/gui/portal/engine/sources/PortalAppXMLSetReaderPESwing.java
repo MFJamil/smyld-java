@@ -714,6 +714,21 @@ public class PortalAppXMLSetReaderPESwing extends PEAppXMLReader implements
 		return loadActions();
 	}
 
+	@Override
+	public HashMap<String, GUIToolbar> getToolbars() {
+		return loadToolbars();
+	}
+
+	@Override
+	public HashMap<String, MenuItem> getMenus() {
+		return loadMenus();
+	}
+
+	@Override
+	public HashMap<String, GUIWindow> getWindows() {
+		return null;
+	}
+
 	public static void main(String[] args){
 		try {
 			PortalAppXMLSetReaderPESwing reader = new PortalAppXMLSetReaderPESwing("/home/jamil/workspace/tools-billing-interface/sources/test_el.xml",null);
@@ -843,6 +858,11 @@ public class PortalAppXMLSetReaderPESwing extends PEAppXMLReader implements
 
 	public AppSecurity getAppSecurity() {
 		return appSecurity;
+	}
+
+	@Override
+	public String getLogo() {
+		return null;
 	}
 
 	@Override

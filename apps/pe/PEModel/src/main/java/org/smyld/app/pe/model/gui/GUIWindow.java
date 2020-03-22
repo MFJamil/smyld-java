@@ -1,6 +1,13 @@
 package org.smyld.app.pe.model.gui;
 
 
+import lombok.Getter;
+import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
+import org.smyld.app.pe.model.gui.holders.GUIToolbarHolder;
+
+import java.util.HashMap;
+
 /**
  * 
  * @author
@@ -8,24 +15,28 @@ package org.smyld.app.pe.model.gui;
  * @see
  * @since
  */
+@Setter
+@Getter
+@Slf4j
 public class GUIWindow extends GUIComponent {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	String menuBarID;
+	HashMap<String, GUIToolbarHolder> toolbars;
+	WindowType windowType = WindowType.unknown;
 	String lableID;
 	String body;
 	String bodyType;
 	String bodyID;
 	String startUpMethod;
 	String bodyListenerTarget;
-	String menuBarID;
 	String menuHandler;
 	String resizable;
 	String toolbarID;
 	String startup;
 	String statusBar;
-
 	/**
 	 * 
 	 * @see
@@ -34,106 +45,46 @@ public class GUIWindow extends GUIComponent {
 	public GUIWindow() {
 	}
 
-	public String getLableID() {
-		return lableID;
+	public void addToolbar(GUIToolbarHolder newToolbar){
+		if (toolbars==null) toolbars = new HashMap<>();
+		toolbars.put(newToolbar.getToolbar().getID(),newToolbar);
 	}
 
-	public void setLableID(String lableID) {
-		if (lableID != null) {
-			this.lableID = lableID;
+	private void addToObjectInfo(String label,String value,StringBuffer sb){
+		if (value!=null) {
+			sb.append(label);
+			sb.append(" : ");
+			sb.append(value);
+			sb.append("\n");
 		}
 	}
 
-	public String getBody() {
-		return body;
-	}
 
-	public void setBody(String body) {
-		if (body != null) {
-			this.body = body;
+
+	public String toString(){
+		StringBuffer sb = new StringBuffer();
+		addToObjectInfo("ID        ", getID(),sb);
+		addToObjectInfo("Type      ", getWindowType().name(),sb);
+
+		addToObjectInfo("Menu Bar  ", getMenuBarID(),sb);
+		addToObjectInfo("Body      ", getBody(),sb);
+		addToObjectInfo("Resizable ", getResizable(),sb);
+		addToObjectInfo("Startup   ", getStartup(),sb);
+		if ((getToolbars()!=null) && (getToolbars().size()>0)){
+			StringBuffer sbuff = new StringBuffer();
+			getToolbars().forEach((id,el)->{
+				sbuff.append("id : ");
+				sbuff.append(id);
+				sbuff.append(",");
+			});
+			addToObjectInfo("Toolbars", sbuff.toString(),sb);
 		}
+		return sb.toString();
 	}
 
-	public String getBodyType() {
-		return bodyType;
-	}
 
-	public void setBodyType(String bodyType) {
-		if (bodyType != null) {
-			this.bodyType = bodyType;
-		}
-	}
 
-	public String getBodyID() {
-		return bodyID;
-	}
 
-	public void setBodyID(String bodyID) {
-		this.bodyID = bodyID;
-	}
 
-	public String getStartUpMethod() {
-		return startUpMethod;
-	}
-
-	public void setStartUpMethod(String startUpMethod) {
-		this.startUpMethod = startUpMethod;
-	}
-
-	public String getBodyListenerTarget() {
-		return bodyListenerTarget;
-	}
-
-	public void setBodyListenerTarget(String bodyListenerTarget) {
-		this.bodyListenerTarget = bodyListenerTarget;
-	}
-
-	public String getMenuBarID() {
-		return menuBarID;
-	}
-
-	public void setMenuBarID(String menuBarID) {
-		this.menuBarID = menuBarID;
-	}
-
-	public String getMenuHandler() {
-		return menuHandler;
-	}
-
-	public void setMenuHandler(String menuHandler) {
-		this.menuHandler = menuHandler;
-	}
-
-	public String getResizable() {
-		return resizable;
-	}
-
-	public void setResizable(String resizable) {
-		this.resizable = resizable;
-	}
-
-	public String getToolbarID() {
-		return toolbarID;
-	}
-
-	public void setToolbarID(String toolbarID) {
-		this.toolbarID = toolbarID;
-	}
-
-	public String getStartup() {
-		return startup;
-	}
-
-	public void setStartup(String startup) {
-		this.startup = startup;
-	}
-
-	public String getStatusBar() {
-		return statusBar;
-	}
-
-	public void setStatusBar(String statusBar) {
-		this.statusBar = statusBar;
-	}
 
 }

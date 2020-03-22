@@ -1,5 +1,9 @@
 package org.smyld.app.pe.model.gui;
 
+import lombok.Getter;
+import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
+
 import java.util.ArrayList;
 
 /**
@@ -9,6 +13,9 @@ import java.util.ArrayList;
  * @see
  * @since
  */
+@Slf4j
+@Getter
+@Setter
 public class MenuItem extends ItemsHolder {
 	/**
 	 * 
@@ -34,37 +41,6 @@ public class MenuItem extends ItemsHolder {
 		children.add(newChild);
 	}
 
-	public String getAccelerator() {
-		return accelerator;
-	}
 
-	public void setAccelerator(String accelerator) {
-		this.accelerator = accelerator;
-	}
-
-	public String getPopupMenu() {
-		return popupMenu;
-	}
-
-	public void setPopupMenu(String popupMenu) {
-		this.popupMenu = popupMenu;
-	}
-
-	public int getUsage() {
-		return usage;
-	}
-
-	public void setUsage(int usage) {
-		this.usage = usage;
-	}
-
-	public MenuType getMenuType() {
-		return menuType;
-	}
-
-	public void setMenuType(MenuType menuType) {
-		this.menuType = menuType;
-	}
-	
 
 }

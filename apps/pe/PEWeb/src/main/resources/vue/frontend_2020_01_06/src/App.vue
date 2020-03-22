@@ -17,7 +17,7 @@
           alt="KFW Logo"
           class="shrink mr-2"
           contain
-          src="./assets/kfw_logo_80_reveal.png"
+          src="${app_logo}"
           transition="scale-transition"
           width="100"
         />

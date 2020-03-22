@@ -13,7 +13,7 @@ import org.smyld.app.pe.model.ApplicationType;
 import org.smyld.app.pe.model.Constants;
 import org.smyld.app.pe.model.GUIToolkit;
 import org.smyld.app.pe.model.LayoutType;
-import org.smyld.app.pe.model.gui.GUIToolbar;
+import org.smyld.app.pe.model.gui.*;
 import org.smyld.app.pe.projectbuilder.ProjectBuilder;
 import org.smyld.app.pe.security.AppSecurity;
 import org.jdom2.Element;
@@ -24,9 +24,6 @@ import org.smyld.db.DBErrorHandler;
 import org.smyld.db.SMYLDDataBaseHandler;
 import org.smyld.deploy.DeploymentDescriptor;
 import org.smyld.gui.GUIAction;
-import org.smyld.app.pe.model.gui.ActionHolderItem;
-import org.smyld.app.pe.model.gui.MenuItem;
-import org.smyld.app.pe.model.gui.PEAction;
 import org.smyld.io.FileSystem;
 import org.smyld.resources.FileInfo;
 import org.smyld.resources.LookAndFeelResource;
@@ -465,6 +462,11 @@ public class PortalDBReaderPESwing extends SMYLDDataBaseHandler implements
 	}
 
 	@Override
+	public String getLogo() {
+		return null;
+	}
+
+	@Override
 	public String getIcon() {
 		return null;
 	}
@@ -555,5 +557,20 @@ public class PortalDBReaderPESwing extends SMYLDDataBaseHandler implements
 	@Override
 	public HashMap<String, PEAction> getActions() {
 		return loadActions();
+	}
+
+	@Override
+	public HashMap<String, GUIToolbar> getToolbars() {
+		return null;
+	}
+
+	@Override
+	public HashMap<String, MenuItem> getMenus() {
+		return null;
+	}
+
+	@Override
+	public HashMap<String, GUIWindow> getWindows() {
+		return null;
 	}
 }

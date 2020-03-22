@@ -149,6 +149,7 @@ public interface Constants{
 	public static final String TAG_NAME_TARGET_JAR_PATH = "path";
 	public static final String TAG_NAME_LINK = "link";
 	public static final String TAG_NAME_ICON= "icon";
+	public static final String TAG_NAME_LOGO = "logo";
 
 	public static final String TAG_NAME_APPLICATION = "application";
 	public static final String TAG_NAME_APP_MANAGER = "appmanager";

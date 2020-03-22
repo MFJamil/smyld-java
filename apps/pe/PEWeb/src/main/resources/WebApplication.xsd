@@ -99,6 +99,7 @@
       <xs:element type="xs:string" name="name"/>
       <xs:element type="xs:string" name="title"/>
       <xs:element type="xs:string" name="icon"/>
+      <xs:element type="xs:string" name="logo"/>
       <xs:element type="xs:string" name="source"/>
       <xs:element type="xs:string" name="classes"/>
       <xs:element type="xs:string" name="mainClass"/>
@@ -121,10 +122,11 @@
     <xs:attribute type="xs:string" name="linkhandler" use="optional"/>
   </xs:complexType>
   <xs:complexType name="windowType" mixed="true">
-    <xs:sequence>
+    <xs:all>
       <xs:element type="menubarType" name="menubar" minOccurs="0"/>
       <xs:element type="bodyType" name="body" minOccurs="0"/>
-    </xs:sequence>
+      <xs:element type="toolbarsType" name="toolbars" minOccurs="0"/>
+    </xs:all>
     <xs:attribute type="xs:string" name="onstartup" use="optional"/>
     <xs:attribute type="xs:string" name="id" use="optional"/>
     <xs:attribute type="xs:string" name="type" use="optional"/>
@@ -185,10 +187,11 @@
       <xs:element type="menuType" name="menu" maxOccurs="unbounded" minOccurs="0"/>
     </xs:sequence>
     <xs:attribute type="xs:string" name="id"/>
+    <xs:attribute type="xs:string" name="align"/>
   </xs:complexType>
   <xs:complexType name="toolbarsType">
     <xs:sequence>
-      <xs:element type="toolbarType" name="toolbar"/>
+      <xs:element type="toolbarType" name="toolbar" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="textFieldType">

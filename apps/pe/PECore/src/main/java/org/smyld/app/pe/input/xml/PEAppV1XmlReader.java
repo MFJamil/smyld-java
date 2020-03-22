@@ -10,15 +10,18 @@ package org.smyld.app.pe.input.xml;
 
 import static org.smyld.app.pe.input.xml.AppConstants.*;
 import static org.smyld.app.pe.model.Constants.*;
+import static org.smyld.gui.GUIConstants.CLASS_NAME_DOCKABLE_DESKTOP;
 
 import java.io.File;
 import java.io.InputStream;
 import java.util.*;
 
+import lombok.extern.slf4j.Slf4j;
 import org.smyld.app.pe.exceptions.PortalFatal;
 import org.smyld.app.pe.logging.LogFile;
 import org.smyld.app.pe.model.PEApplication;
 import org.smyld.app.pe.model.gui.*;
+import org.smyld.app.pe.model.gui.holders.GUIToolbarHolder;
 import org.smyld.app.pe.model.user.UserConstraint;
 import org.smyld.app.pe.projectbuilder.MavenProjectBuilder;
 import org.smyld.app.pe.projectbuilder.ProjectBuildSource;
@@ -49,6 +52,7 @@ import org.smyld.xml.XMLUtil;
  * @see
  * @since
  */
+@Slf4j
 public class PEAppV1XmlReader extends PEAppXMLReader implements PEApplication {
     /**
      *
@@ -66,6 +70,7 @@ public class PEAppV1XmlReader extends PEAppXMLReader implements PEApplication {
     HashMap<String, LangSource>           languages;
     HashMap<String, String>               images;
     HashMap<String, GUIToolbar>           toolbars;
+    HashMap<String, GUIWindow>            windows;
     HashMap<String, String>               sourceImages;
     HashMap<String, MenuItem>             menus;
     HashMap<String, LookAndFeelResource>  lafs;
@@ -79,6 +84,7 @@ public class PEAppV1XmlReader extends PEAppXMLReader implements PEApplication {
     String      appName;
     String      appType;
     String      appIcon;
+    String      appLogo;
     InputStream sourceStream;
     Optional<ProjectBuilder> projectBuilder = Optional.empty();
 
@@ -119,6 +125,7 @@ public class PEAppV1XmlReader extends PEAppXMLReader implements PEApplication {
         appSetFile = new FileInfo();
         addFileInfo(appSetFile, appSetNode);
         appIcon = buildApplication.getChildText(TAG_NAME_ICON);
+        appLogo = buildApplication.getChildText(TAG_NAME_LOGO);
         appName = XMLUtil.getChildValue(application, TAG_NAME_NAME,"Unknown");
         appType = application.getAttributeValue(TAG_ATT_TYPE);
         // loading the languages
@@ -126,6 +133,7 @@ public class PEAppV1XmlReader extends PEAppXMLReader implements PEApplication {
         doLoadMenus();
         doLoadToolbars();
         doLoadLangs();
+        doLoadWindows();
         doLoadLafs();
         doLoadResources();
         doLoadAppSecurity();
@@ -538,6 +546,10 @@ public class PEAppV1XmlReader extends PEAppXMLReader implements PEApplication {
                 MenuItem currentMenuItem = new MenuItem();
                 currentMenuItem.setID(currentMenuBar
                         .getAttributeValue(TAG_COMP_ATT_ID));
+                currentMenuItem.setLabel(currentMenuBar
+                        .getAttributeValue(TAG_COMP_ATT_LABEL));
+
+
                 buildMenu(currentMenuItem, currentMenuBar);
                 menus.put(currentMenuItem.getID(), currentMenuItem);
             }
@@ -676,6 +688,11 @@ public class PEAppV1XmlReader extends PEAppXMLReader implements PEApplication {
     }
 
     @Override
+    public String getLogo() {
+        return appLogo;
+    }
+
+    @Override
     public String getIcon() {
         return appIcon;
     }
@@ -698,6 +715,111 @@ public class PEAppV1XmlReader extends PEAppXMLReader implements PEApplication {
     public HashMap<String, PEAction> getActions() {
         return loadActions();
     }
+
+    @Override
+    public HashMap<String, GUIToolbar> getToolbars() {
+        return toolbars;
+    }
+
+    @Override
+    public HashMap<String, MenuItem> getMenus() {
+        return menus;
+    }
+    private void doLoadWindows(){
+        HashMap<String,Element> windowsEl = loadWindows();
+        if (windowsEl.size()==0) return;
+        windows = new HashMap<>();
+        windowsEl.forEach((id,el) ->{
+            // Code for populating the windows elements
+            GUIWindow newWindow = new GUIWindow();
+            newWindow.setID(el.getAttributeValue(TAG_ATT_ID));
+            if (el.getAttributeValue(TAG_ATT_TYPE)!=null)
+                newWindow.setWindowType(WindowType.valueOf(el.getAttributeValue(TAG_ATT_TYPE)));
+            newWindow.setWidth(el.getAttributeValue(TAG_COMP_ATT_WIDTH));
+            newWindow.setHeight(el.getAttributeValue(TAG_COMP_ATT_HEIGHT));
+            processWindowNode(el,newWindow);
+            windows.put(newWindow.getID(),newWindow);
+
+        });
+
+
+
+    }
+    @Override
+    public HashMap<String, GUIWindow> getWindows() {
+        return windows;
+
+    }
+
+    private void processWindowNode(Element windowNode, GUIWindow newWindow) {
+        List nodesList = windowNode.getChildren();
+        Iterator itr = nodesList.iterator();
+        while (itr.hasNext()) {
+            Element currentElement = (Element) itr.next();
+            if (currentElement.getName().equals(TAG_NAME_BODY)) {
+                processBodyTag(currentElement, newWindow);
+            } else if (currentElement.getName().equals(TAG_NAME_MENUBAR)) {
+                processMenuBarTag(currentElement, newWindow);
+            } else if (currentElement.getName().equals(TAG_NAME_TLB)) {
+                processToolbarTag(currentElement, newWindow);
+            } else if (currentElement.getName().equals(TAG_NAME_STATUS_BAR)) {
+                processStatusbarTag(currentElement, newWindow);
+            } else if (currentElement.getName().equals(TAG_NAME_TLBS)) {
+                processWindowToolbarsTag(currentElement, newWindow);
+
+
+            }
+        }
+    }
+    private void processBodyTag(Element bodyNode, GUIWindow newWindow) {
+        newWindow.setBodyType(bodyNode.getAttributeValue(TAG_COMP_ATT_TYPE));
+        newWindow.setBodyID(bodyNode.getAttributeValue(TAG_COMP_ATT_ID));
+        if ((newWindow.getBodyType() != null)
+                && (newWindow.getBodyType()
+                .equals(TAG_COMP_CONT_DOCKABLE_DESKTOP))) {
+            newWindow.setBody(CLASS_NAME_DOCKABLE_DESKTOP);
+        } else {
+            newWindow.setBody(bodyNode.getText());
+        }
+        newWindow.setBodyListenerTarget(bodyNode
+                .getAttributeValue(TAG_COMP_ATT_LINK_LISTNR));
+    }
+
+    private void processWindowToolbarsTag(Element tlbrsNode, GUIWindow newWindow) {
+        if ((tlbrsNode==null)||(tlbrsNode.getChildren().size()==0)) return;
+        for (Element tlbrEl : tlbrsNode.getChildren()){
+            String tlbrId = tlbrEl.getAttributeValue(TAG_ATT_ID);
+            if (toolbars.containsKey(tlbrId)){
+                GUIToolbar curToolbar = toolbars.get(tlbrId);
+                GUIToolbarHolder toolbarHolder = new GUIToolbarHolder();
+                toolbarHolder.setToolbar(curToolbar);
+                toolbarHolder.setAlign(tlbrEl.getAttributeValue(TAG_COMP_ATT_ALIGN));
+                newWindow.addToolbar(toolbarHolder);
+            }else{
+                log.warn(String.format("Toolbar with id '%s' referenced in '%s' window is not defined!",tlbrId,newWindow.getID()) );
+            }
+        }
+
+    }
+
+    private void processMenuBarTag(Element menuNode, GUIWindow newWindow) {
+        newWindow.setMenuBarID(menuNode.getAttributeValue(TAG_COMP_ATT_ID));
+        newWindow.setMenuHandler(menuNode
+                .getAttributeValue(TAG_COMP_ATT_LINK_HANDLER));
+    }
+
+    private void processToolbarTag(Element tlbNode, GUIWindow newWindow) {
+        newWindow.setToolbarID(tlbNode.getAttributeValue(TAG_COMP_ATT_ID));
+        // Adding code for linking the listener to the window and the related
+        // object
+    }
+
+    private void processStatusbarTag(Element tlbNode, GUIWindow newWindow) {
+        newWindow.setStatusBar(tlbNode.getAttributeValue(TAG_COMP_ATT_ID));
+        // Adding code for linking the listener to the window and the related
+        // object
+    }
+
 
     // This implementation need to be removed later
     public String processEL(String value){
