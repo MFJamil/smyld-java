@@ -787,11 +787,13 @@ public class PEAppV1XmlReader extends PEAppXMLReader implements PEApplication {
 
     private void processWindowToolbarsTag(Element tlbrsNode, GUIWindow newWindow) {
         if ((tlbrsNode==null)||(tlbrsNode.getChildren().size()==0)) return;
+        int order = 0;
         for (Element tlbrEl : tlbrsNode.getChildren()){
             String tlbrId = tlbrEl.getAttributeValue(TAG_ATT_ID);
             if (toolbars.containsKey(tlbrId)){
                 GUIToolbar curToolbar = toolbars.get(tlbrId);
                 GUIToolbarHolder toolbarHolder = new GUIToolbarHolder();
+                toolbarHolder.setOrder(order++);
                 toolbarHolder.setToolbar(curToolbar);
                 toolbarHolder.setAlign(tlbrEl.getAttributeValue(TAG_COMP_ATT_ALIGN));
                 newWindow.addToolbar(toolbarHolder);

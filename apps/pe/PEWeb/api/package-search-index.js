@@ -1,1 +1,1 @@
-packageSearchIndex = [{"l":"org.smyld.app.pe.web"},{"l":"org.smyld.app.pe.web.vue"}]
+packageSearchIndex = [{"l":"org.smyld.app.pe.web"},{"l":"org.smyld.app.pe.web.gui.builder"},{"l":"org.smyld.app.pe.web.vue.builder"},{"l":"org.smyld.app.pe.web.vue.vuetify"},{"l":"org.smyld.app.pe.web.vue.vuetify.builder"}]

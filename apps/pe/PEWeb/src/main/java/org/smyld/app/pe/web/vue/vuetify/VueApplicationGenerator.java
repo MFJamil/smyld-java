@@ -6,7 +6,7 @@
  *
  */
 
-package org.smyld.app.pe.web.vue;
+package org.smyld.app.pe.web.vue.vuetify;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FileUtils;
@@ -14,12 +14,9 @@ import org.smyld.app.pe.annotations.PEApplicationReader;
 import org.smyld.app.pe.annotations.PEGUIBuilder;
 import org.smyld.app.pe.annotations.PEGenerateApplication;
 import org.smyld.app.pe.annotations.PEPreCompiledApplication;
-import org.smyld.app.pe.model.ApplicationReader;
-import org.smyld.app.pe.model.ApplicationType;
-import org.smyld.app.pe.model.GUIToolkit;
-import org.smyld.app.pe.model.PEApplication;
-import org.smyld.app.pe.model.gui.GUIWindow;
-import org.smyld.app.pe.model.gui.PEAction;
+import org.smyld.app.pe.model.*;
+import org.smyld.app.pe.model.gui.*;
+import org.smyld.app.pe.model.gui.holders.GUIToolbarHolder;
 
 import java.io.File;
 import java.io.IOException;
@@ -31,7 +28,7 @@ import java.util.stream.Stream;
 
 
 @Slf4j
-@PEGUIBuilder(name = "PE WEB Builder",applicationType = ApplicationType.Web,guiToolkit = GUIToolkit.vue)
+@PEGUIBuilder(name = "PE WEB Builder",applicationType = ApplicationType.Web,guiToolkit = GUIToolkit.vue,guiWidget = GUIWidget.Vuetify)
 public class VueApplicationGenerator {
     //String templateSource = "vue/frontend_2020_01_06";
     String templateSource = "vue/frontend_v1";
@@ -76,9 +73,130 @@ public class VueApplicationGenerator {
     }
 
     private void handleWindows(PEApplication peApp){
+        if (peApp.getWindows().values().stream().filter(w -> w.getWindowType()== WindowType.mdi).count()>1)
+            throw new RuntimeException("Application can only have one MDI window !!");
         peApp.getWindows().forEach((id,win) ->{
-            log.info(win.toString());
+            if (win.getWindowType()== WindowType.mdi){
+                log.info("Detected Main Window : " + win.toString());
+                processMainWindow(peApp,win);
+            }
+
         });
+    }
+
+    private void processMainWindow(PEApplication peApp,GUIWindow mainWindow){
+        // Processing the main menu
+        if (mainWindow.getMenuBarID()!=null){
+            MenuItem mainMenubar = peApp.getMenus().get(mainWindow.getMenuBarID());
+            if (mainMenubar==null)
+                log.warn("Main menu %s that is referenced in main window %s is not defined ",mainWindow.getMenuBarID(),mainWindow.getID());
+            if ((mainMenubar.getChildren()!=null)||(mainMenubar.getChildren().size()>0))
+                handleMainMenu(mainMenubar);
+       }
+        if ((mainWindow.getToolbars()!=null) && (mainWindow.getToolbars().size()>0)) {
+            handleAppToolbars(mainWindow.getToolbars());
+        }
+
+    }
+
+    private void handleMainMenu(MenuItem mainMenu){
+        log.info("Main Application menu " + mainMenu.toString());
+        StringBuffer sb  = new StringBuffer();
+        //ToDo the below code should be updated to adopt n-th level menus in the future
+        mainMenu.getChildren().forEach(comp ->{
+            /*
+          { id: 'menu1',
+            title: 'Dateie',
+            subMenu: [
+              {title: 'Öffnen'},
+              {title: 'Speicher'},
+              {title: 'Theme', action:'changeTheme'},
+              {title: 'Beenden'},
+            ]
+          },
+           */
+            MenuItem curMenu = (MenuItem) comp;
+            String space = "            ";
+            //ToDo below should be replaced with a professional JSON writer
+            sb.append(space);sb.append("{\n");
+            sb.append(space); sb.append(" id: '"); sb.append(curMenu.getID());sb.append("',\n");
+            sb.append(space); sb.append(" title: '"); sb.append(handleItemLabel(curMenu));sb.append("',\n");
+            //ToDo here we do have only 1 level menu navigation, this needs to be updated later
+            if (curMenu.hasChildren()){
+                sb.append(space);sb.append(" subMenu: [\n");
+                curMenu.getChildren().forEach(sub ->{
+                    MenuItem curSub = (MenuItem) sub;
+                    sb.append(space);sb.append("  {title: '"); sb.append(handleItemLabel(curSub));sb.append("'");
+                    if (curSub.getAction()!=null) {
+                        sb.append(",action: '");
+                        sb.append(curSub.getAction().getID());
+                        sb.append("'");
+                    }
+                    sb.append("},\n");
+                });
+
+                sb.append(space);sb.append(" ]\n");
+            }
+            sb.append(space);sb.append("},\n");
+        });
+        vars.put("main_menu",sb.toString());
+
+    }
+
+    private void handleAppToolbars(HashMap<String, GUIToolbarHolder> toolbars){
+        log.info("Main Application toolbars " + toolbars.toString());
+        StringBuffer sb  = new StringBuffer();
+        toolbars.values().stream()
+                .sorted((tlb1,tlb2)->tlb1.getOrder()-tlb2.getOrder()).forEach(toolbarHolder->{
+            /*
+        { id: 'toolbar1',
+            align:'left',
+            items: [
+                {icon: 'mdi-close-circle-outline'},
+                {icon: 'mdi-undo-variant'},
+                {icon: 'mdi-pause', action:'editDocument'},
+                {icon: 'mdi-file-document-edit-outline'},
+                    ]
+        },
+           */
+            GUIToolbar toolbar = toolbarHolder.getToolbar();
+            String space = "            ";
+            //ToDo below should be replaced with a professional JSON writer
+            sb.append(space);sb.append("{\n");
+            sb.append(space); sb.append(" id: '"); sb.append(toolbar.getID());sb.append("',\n");
+            if (toolbarHolder.getAlign()!=null) {
+                sb.append(space);
+                sb.append(" align: '");
+                sb.append(toolbarHolder.getAlign());
+                sb.append("',\n");
+            }
+                //ToDo here we do have only 1 level menu navigation, this needs to be updated later
+            if (toolbar.hasChildren()){
+                sb.append(space);sb.append(" items: [\n");
+                toolbar.getChildren().forEach(sub ->{
+                    MenuItem curSub = (MenuItem) sub;
+                    sb.append(space);sb.append("  {icon: '"); sb.append(curSub.getIcon());sb.append("'");
+                    if (curSub.getAction()!=null) {
+                        sb.append(",action: '");
+                        sb.append(curSub.getAction().getID());
+                        sb.append("'");
+                    }
+                    sb.append("},\n");
+                });
+
+                sb.append(space);sb.append(" ]\n");
+            }
+            sb.append(space);sb.append("},\n");
+        });
+        vars.put("app_toolbars",sb.toString());
+
+    }
+
+
+    private String handleItemLabel(GUIComponent comp){
+        //ToDo this should be updated with the multi-lang call in the future
+
+        return comp.getLabel()!=null?comp.getLabel():comp.getID();
     }
 
     private void addParams(PEApplication peApp){

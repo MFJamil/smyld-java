@@ -50,17 +50,9 @@ public class GUIWindow extends GUIComponent {
 		toolbars.put(newToolbar.getToolbar().getID(),newToolbar);
 	}
 
-	private void addToObjectInfo(String label,String value,StringBuffer sb){
-		if (value!=null) {
-			sb.append(label);
-			sb.append(" : ");
-			sb.append(value);
-			sb.append("\n");
-		}
-	}
 
 
-
+	@Override
 	public String toString(){
 		StringBuffer sb = new StringBuffer();
 		addToObjectInfo("ID        ", getID(),sb);

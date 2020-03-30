@@ -1,2 +1,5 @@
 org.smyld.app.pe.web
-org.smyld.app.pe.web.vue
+org.smyld.app.pe.web.gui.builder
+org.smyld.app.pe.web.vue.builder
+org.smyld.app.pe.web.vue.vuetify
+org.smyld.app.pe.web.vue.vuetify.builder

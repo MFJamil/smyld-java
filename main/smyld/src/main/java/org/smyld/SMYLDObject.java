@@ -33,6 +33,15 @@ public class SMYLDObject implements Serializable {
 		return classInstancesValue.toString();
 	}
 
+	protected void addToObjectInfo(String label,String value,StringBuffer sb){
+		if (value!=null) {
+			sb.append(label);
+			sb.append(" : ");
+			sb.append(value);
+			sb.append("\n");
+		}
+	}
+
 	/**
 	 * Print the current instance values in order to use it with toString()
 	 * method

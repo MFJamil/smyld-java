@@ -66,8 +66,10 @@
     <action id="^/KfwRest"      target="http://localhost:8099/" />
     <action id="^/VueServlet"   target="http://localhost:9080/Recherche/" />
     <action id="^/rech"         target="http://localhost:9080/Recherche/KfwFormularServer?APPLICATIONOBJEKT=Recherche&amp;CLIENT_ACTION=InitRecherche&amp;SC_RECHERCHE_TYPE=HauptGeschaeftspartner&amp;SC_HGPNAME_VALUE=Test&amp;SC_RETURN_MODE=ReturnFromModalDialog&amp;SC_MISC" />
-
-    <!--
+    <!-- Below are method Based actions, which needs to be -->
+    <action id="changeTheme"    target="changeTheme" />
+    <action id="openSettings"   command="openWindow"    target = "SettingsWindow"/>
+     <!--
 
     <action id="runGameSpider"   command="runApplication" label="Spider Soliter"      param  = "c:/windows/system32/spider"/>
     <action id="runGameFreeCell" command="runApplication" label="Free Cell"           param  = "c:/windows/system32/freecell"/>
@@ -96,6 +98,7 @@
         <menu id="menuOpen"   label="Open"         action="openFile" />
         <menu id="menuSave"   label="Save"         action="saveFile" />
         <menu id="menuTheme"  label="Change Theme" action="changeTheme" />
+
         <menu id="exitSystem" label="Exit"         action="exitWindows" />
       </menu>
       <menu id="editing" label="Editing">
@@ -105,7 +108,9 @@
       </menu>
       <menu id="help" label="Help">
         <menu id="portalEngine"  label="Portal Engine" action="openPortalEngine" />
-        <menu id="menuAbout"     label="About"        action="about" />x
+        <menu id="menuSettings"  label="Settings"     action="openSettings" />
+        <menu id="menuAbout"     label="About"        action="about" />
+
       </menu>
     </menubar>
   </menus>
@@ -141,7 +146,7 @@
     </window>
     <window id="AboutWindow" width="200" height="100" package="com.rs2.app.bw.mgui.windows">
     </window>
-    <window id="yusraWindow" type="internal" width="500" height="300" package="com.rs2.app.bw.mgui.windows" label="Hello there can you see me ?">
+    <window id="SettingsWindow" type="internal" width="500" height="300" package="com.rs2.app.bw.mgui.windows" label="Settings">
     </window>
   </windows>
 

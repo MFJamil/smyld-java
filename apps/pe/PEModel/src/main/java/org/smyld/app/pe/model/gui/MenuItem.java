@@ -42,5 +42,24 @@ public class MenuItem extends ItemsHolder {
 	}
 
 
+	@Override
+	public String toString(){
+		// TODO we need to recursively navigate through the menus in the future
+		StringBuffer sb = new StringBuffer();
+		addToObjectInfo("Menu ID        ", getID(),sb);
+		addToObjectInfo("Menu Label     ", getLabel(),sb);
+		addToObjectInfo("Menu Icon      ", getIcon(),sb);
+		if (getAction()!=null)
+			addToObjectInfo("Menu Action    ", getAction().getID(),sb);
+		if (hasChildren()){
+			getChildren().forEach(comp ->{
+				addToObjectInfo("Menu ID        ", comp.getID(),sb);
+				addToObjectInfo("Menu Label     ", comp.getLabel(),sb);
+				addToObjectInfo("Menu Icon      ", comp.getIcon(),sb);
+			});
+		}
 
+
+		return sb.toString();
+	}
 }

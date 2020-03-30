@@ -4,10 +4,7 @@ import org.smyld.SMYLDObject;
 import org.smyld.app.pe.annotations.PEApplicationReader;
 import org.smyld.app.pe.annotations.PEGUIBuilder;
 import org.smyld.app.pe.annotations.PEGenerateApplication;
-import org.smyld.app.pe.model.ApplicationReader;
-import org.smyld.app.pe.model.ApplicationType;
-import org.smyld.app.pe.model.Constants;
-import org.smyld.app.pe.model.GUIToolkit;
+import org.smyld.app.pe.model.*;
 import org.smyld.app.pe.model.gui.GUISplash;
 import org.smyld.app.pe.model.gui.GUIToolbar;
 import org.smyld.app.pe.model.gui.GUIWindow;
@@ -59,7 +56,7 @@ import static org.smyld.app.AppConstants.*;
  * @since
  */
 
-@PEGUIBuilder(name = "PE Swing Builder",applicationType = ApplicationType.Desktop,guiToolkit = GUIToolkit.swing)
+@PEGUIBuilder(name = "PE Swing Builder",applicationType = ApplicationType.Desktop,guiToolkit = GUIToolkit.swing,guiWidget = GUIWidget.Swing)
 public class ApplicationGenerator extends SMYLDObject implements Constants,
 		GUIConstants {
 	/**

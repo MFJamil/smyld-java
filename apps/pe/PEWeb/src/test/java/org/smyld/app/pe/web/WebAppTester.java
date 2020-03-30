@@ -10,6 +10,9 @@ package org.smyld.app.pe.web;
 
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
+import org.smyld.app.pe.model.gui.GUIWindow;
+import org.smyld.app.pe.web.gui.builder.WebBuilder;
+import org.smyld.app.pe.web.vue.vuetify.builder.MenuBuilder;
 import org.xml.sax.SAXException;
 
 import static  org.junit.jupiter.api.Assertions.assertThrows;
@@ -29,4 +32,24 @@ public class WebAppTester {
         assertTrue(expectedException.getMessage().contains("Attribute 'id' must appear on element 'menu'"));
 
     }
+
+    @Test
+    public void testMenuBuilder(){
+        MenuBuilder menuBuilder = new MenuBuilder();
+        log.info(menuBuilder.buildGeneralMenu());
+
+    }
+
+    @Test
+    public void testWebBuilder(){
+        WebBuilder webBuilder = new WebBuilder();
+        GUIWindow guiWindow =  new GUIWindow();
+        guiWindow.setLabel("My Test Window");
+        guiWindow.setWidth("600px");
+        guiWindow.setHeight("400px");
+        webBuilder.addComponent(new GUIWindow());
+
+    }
+
+
 }

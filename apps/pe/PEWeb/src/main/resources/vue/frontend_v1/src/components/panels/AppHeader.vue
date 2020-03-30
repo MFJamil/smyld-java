@@ -92,52 +92,11 @@
         public themeDark! :boolean;
 
         public menus=[
-          { id: 'menu1',
-            title: 'Dateie',
-            subMenu: [
-              {title: 'Öffnen'},
-              {title: 'Speicher'},
-              {title: 'Theme', action:'changeTheme'},
-              {title: 'Beenden'},
-            ]
-          },
-          { id: 'menu2',
-            title: 'Bearbeiten',
-            subMenu: [
-              {title: 'Edit'},
-              {title: 'Copy'},
-              {title: 'Einfugen'},
-            ]
-          },
-          { id: 'menu3',
-            title: 'Hilfe',
-            subMenu: [
-              {title: 'Portal Engine'},
-              {title: 'About'},
-            ]
-          },
+          ${main_menu}
         ];
 
         public toolbar=[
-          { id: 'toolbar1',
-            align:'left',
-            items: [
-              {icon: 'mdi-close-circle-outline'},
-              {icon: 'mdi-undo-variant'},
-              {icon: 'mdi-pause', action:'editDocument'},
-              {icon: 'mdi-file-document-edit-outline'},
-            ]
-          },
-          { id: 'toolbar2',
-            align:'right',
-            items: [
-              {icon: 'mdi-compare', action: 'changeTheme'},
-              {icon: 'mdi-help-circle-outline'},
-              {icon: 'mdi-printer'},
-              {icon: 'mdi-exit-to-app', action:'logOut'},
-
-            ]
-          },
+          ${app_toolbars}
         ];
 
         handleToolbar(action:string):void{

@@ -16,15 +16,15 @@ import lombok.extern.slf4j.Slf4j;
 import org.smyld.app.pe.model.gui.GUIToolbar;
 
 @Slf4j
+@Getter
+@Setter
 @RequiredArgsConstructor
 public class GUIToolbarHolder {
 
-    @Getter
-    @Setter
     private String align;
 
-    @Getter
-    @Setter
+    private int order;
+
     private GUIToolbar toolbar;
 
 
