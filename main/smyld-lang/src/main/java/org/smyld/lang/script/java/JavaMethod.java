@@ -4,7 +4,9 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Vector;
 
-import org.smyld.lang.script.util.Method;
+import org.smyld.lang.script.core.LangContants;
+import org.smyld.lang.script.core.Method;
+import org.smyld.lang.script.util.CodeUtils;
 import org.smyld.text.TextUtil;
 
 public class JavaMethod extends Method {
@@ -14,16 +16,16 @@ public class JavaMethod extends Method {
 	private static final long serialVersionUID = 1L;
 	HashMap<String,String> exceptions;
 	boolean withBody;
-	boolean isConstructor = false;
+
 
 	public JavaMethod(String Name, String Scope, String ReturnType) {
 		super(Name, Scope, ReturnType);
 	}
 
 	public JavaMethod(String Name, String Scope, String ReturnType,
-			boolean Construtor) {
+			boolean isConstrutor) {
 		this(Name, Scope, ReturnType);
-		isConstructor = Construtor;
+		setConstructor(isConstrutor);
 	}
 
 	@Override
@@ -47,18 +49,14 @@ public class JavaMethod extends Method {
 
 	@Override
 	public String print(int tabSeq) {
-		String margin = null;
-		if (tabSeq > 0) {
-			margin = TextUtil.createWord("\t", tabSeq);
-		}
-
+		String margin = CodeUtils.getTabsIndent(tabSeq);
 		body.setLength(0);
 		// Printing the method header
 		body.append(margin + scope + " ");
 		fillInModifiers();
-		if (!isConstructor) {
+		if (!isConstructor()) {
 			if (returnType == null) {
-				returnType = RETURN_TYPE_VOID;
+				returnType = LangContants.RETURN_TYPE_VOID;
 			}
 			body.append(returnType + " ");
 		}
@@ -109,102 +107,12 @@ public class JavaMethod extends Method {
 		return body.toString();
 	}
 
-	private int getLongestEquation() {
-		int equalIndex = 0;
-		for (String currentLineCode : codeLines) {
-			if (currentLineCode != null) {
-				if (equalIndex < currentLineCode.indexOf("=")) {
-					equalIndex = currentLineCode.indexOf("=");
-				}
-			}
-		}
-		return equalIndex;
-	}
 
-	private int getLongestNew() {
-		int newIndex = 0;
-		int bracketIndex = 0;
-		for (String currentLineCode : codeLines) {
-			newIndex = currentLineCode.indexOf("new ");
-			if (newIndex != -1) {
-				if (bracketIndex < currentLineCode.indexOf("(")) {
-					bracketIndex = currentLineCode.indexOf("(");
-				}
-			}
-		}
-		return bracketIndex;
-	}
 
-	private void adjustCodeLines() {
-		// Adjusting equal sign
-		Vector<String> bufferLines = new Vector<String>(codeLines.size());
-		String currentLineCode = null;
 
-		int longestCode = getLongestEquation();
-		for (int i = 0; i < codeLines.size(); i++) {
-			currentLineCode = (String) codeLines.get(i);
-			if (isAdjustable(currentLineCode)) {
-				currentLineCode = allignCodeLine(currentLineCode, longestCode,
-						"=");
-			}
-			bufferLines.add(i, currentLineCode);
-		}
-		codeLines = bufferLines;
-		bufferLines = new Vector<String>(codeLines.size());
-		// adjust new instances lines
-		int longestNew = getLongestNew();
-		// System.out.println("longestNew : " + longestNew);
-		for (int i = 0; i < codeLines.size(); i++) {
-			currentLineCode = (String) codeLines.get(i);
-			if (isAdjustable(currentLineCode)) {
-				currentLineCode = allignCodeLine(currentLineCode, longestNew,
-						"(");
-			}
-			bufferLines.add(i, currentLineCode);
-		}
-		codeLines = bufferLines;
-	}
 
-	private boolean isAdjustable(String codeLine) {
-		return ((codeLine.indexOf("=") != -1) && (codeLine.indexOf("new ") != -1));
-	}
 
-	private String allignCodeLine(String codeLine, int longIndex,
-			String offsetText) {
-		StringBuffer buffer = new StringBuffer();
-		int currentIndex = codeLine.indexOf(offsetText);
-		if (currentIndex != -1) {
-			if (longIndex > currentIndex) {
-				buffer.append(codeLine.substring(0, currentIndex));
-				buffer.append(TextUtil
-						.createWord(' ', longIndex - currentIndex));
-				buffer.append(offsetText);
-				buffer.append(codeLine.substring(currentIndex + 1));
-				codeLine = buffer.toString();
-			}
-		}
-		return codeLine;
-	}
 
-	private boolean isLineEnd(String lineCode) {
-		if (!lineCode.endsWith("}")) {
-			if (!lineCode.endsWith("{")) {
-				if (!lineCode.endsWith(":")) {
-					return true;
-				}
-			}
-		}
-		return false;
-	}
 
-	private boolean isBlockStart(String lineCode) {
-		return (lineCode.endsWith("{"));
-	}
-
-	private boolean isBlockEnd(String lineCode) {
-		return ((lineCode.endsWith("}")) || (lineCode.endsWith("})")));
-	}
-
-	public static final String RETURN_TYPE_VOID = "void";
 
 }

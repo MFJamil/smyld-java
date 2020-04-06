@@ -14,4 +14,6 @@ public class CodeWriter extends BufferedWriter {
 		super(new StringWriter());
 	}
 
+
+
 }

@@ -1,6 +1,6 @@
 package org.smyld.lang.script.vb;
 
-import org.smyld.lang.script.util.Method;
+import org.smyld.lang.script.core.Method;
 
 public class VBMethod extends Method implements VBConstants {
 	/**

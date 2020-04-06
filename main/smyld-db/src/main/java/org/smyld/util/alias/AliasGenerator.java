@@ -5,7 +5,7 @@ import java.util.HashMap;
 import org.smyld.SMYLDObject;
 import org.smyld.lang.script.java.JavaConstants;
 import org.smyld.lang.script.java.JavaVariable;
-import org.smyld.lang.script.util.Variable;
+import org.smyld.lang.script.core.Variable;
 import org.smyld.text.TextTokenizer;
 
 public class AliasGenerator extends SMYLDObject implements XMLAliasConstants {

@@ -15,7 +15,7 @@ import org.smyld.gui.portal.engine.sources.PESwingApplicationReader;
 import org.smyld.lang.script.java.JavaClassBody;
 import org.smyld.lang.script.java.JavaInterface;
 import org.smyld.lang.script.java.JavaMethod;
-import org.smyld.lang.script.util.Variable;
+import org.smyld.lang.script.core.Variable;
 
 import javax.inject.Inject;
 

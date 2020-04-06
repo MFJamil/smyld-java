@@ -1,6 +1,6 @@
 package org.smyld.lang.script.vb;
 
-import org.smyld.lang.script.util.BooleanExpression;
+import org.smyld.lang.script.core.BooleanExpression;
 
 public class VBBooleanExp extends BooleanExpression {
 

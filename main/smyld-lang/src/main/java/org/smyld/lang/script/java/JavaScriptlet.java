@@ -1,6 +1,6 @@
 package org.smyld.lang.script.java;
 
-import org.smyld.lang.script.util.Scriptlet;
+import org.smyld.lang.script.core.Scriptlet;
 
 public class JavaScriptlet extends Scriptlet {
 	/**

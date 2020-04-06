@@ -6,7 +6,7 @@ import org.smyld.gui.GUIConstants;
 import org.smyld.gui.portal.engine.ApplicationGenerator;
 import org.smyld.lang.script.java.JavaClassBody;
 import org.smyld.lang.script.java.JavaMethod;
-import org.smyld.lang.script.util.Variable;
+import org.smyld.lang.script.core.Variable;
 import org.smyld.text.TextUtil;
 
 import static org.smyld.app.AppConstants.ACTION_COM_ASSIGN_APP;

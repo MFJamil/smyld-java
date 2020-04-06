@@ -6,8 +6,8 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Vector;
 
-import org.smyld.lang.script.util.ClassBody;
-import org.smyld.lang.script.util.Variable;
+import org.smyld.lang.script.core.ClassBody;
+import org.smyld.lang.script.core.Variable;
 import org.smyld.text.TextUtil;
 
 public class JavaClassBody extends ClassBody {

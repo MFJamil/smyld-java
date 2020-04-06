@@ -6,7 +6,7 @@ import java.io.IOException;
 import org.smyld.SMYLDObject;
 import org.smyld.lang.script.util.CodeReader;
 import org.smyld.lang.script.util.CodeWriter;
-import org.smyld.lang.script.util.Scriptlet;
+import org.smyld.lang.script.core.Scriptlet;
 
 public abstract class Converter extends SMYLDObject {
 	Scriptlet sourceScriptlet;

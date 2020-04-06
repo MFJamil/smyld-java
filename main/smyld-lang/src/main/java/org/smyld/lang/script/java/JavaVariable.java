@@ -1,8 +1,8 @@
 package org.smyld.lang.script.java;
 
 import org.smyld.lang.script.converter.VBtoJavaConverter;
-import org.smyld.lang.script.util.LangsConstants;
-import org.smyld.lang.script.util.Variable;
+import org.smyld.lang.script.core.Langs;
+import org.smyld.lang.script.core.Variable;
 
 public class JavaVariable extends Variable implements JavaConstants {
 
@@ -12,7 +12,7 @@ public class JavaVariable extends Variable implements JavaConstants {
 	private static final long serialVersionUID = -2537531745427683934L;
 
 	public JavaVariable(String Name) {
-		super(Name, LangsConstants.SRC_LANG_JAVA);
+		super(Name, Langs.Java);
 	}
 
 	public JavaVariable(String Name, String Scope) {
@@ -45,13 +45,13 @@ public class JavaVariable extends Variable implements JavaConstants {
 	@Override
 	public void importVariable(Variable srcVariable) {
 		super.importVariable(srcVariable);
-		if (srcVariable.getSrcLang() == SRC_LANG_VB6) {
+		if (srcVariable.getSrcLang() == Langs.VB6) {
 			modifiers = VBtoJavaConverter.convertModifiers(srcVariable
 					.getModifiers());
 			type = VBtoJavaConverter.convertType(srcVariable.getType());
 			if (type.equals(JAVA_PRIMITIVE_BOOLEAN)) {
-				if (DefaultValue != null) {
-					DefaultValue = DefaultValue.toLowerCase();
+				if (defaultValue != null) {
+					defaultValue = defaultValue.toLowerCase();
 				}
 			}
 		}

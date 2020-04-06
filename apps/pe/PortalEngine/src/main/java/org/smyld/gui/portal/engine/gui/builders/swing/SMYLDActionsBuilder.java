@@ -5,7 +5,7 @@ import org.smyld.gui.Actions;
 import org.smyld.gui.portal.engine.ApplicationGenerator;
 import org.smyld.lang.script.java.JavaClassBody;
 import org.smyld.lang.script.java.JavaMethod;
-import org.smyld.lang.script.util.Variable;
+import org.smyld.lang.script.core.Variable;
 
 /**
  * 

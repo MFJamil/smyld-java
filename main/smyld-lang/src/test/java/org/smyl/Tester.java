@@ -10,12 +10,13 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 
+import org.junit.jupiter.api.Test;
 import org.smyld.lang.script.converter.VBtoJavaConverter;
 import org.smyld.lang.script.java.JavaClassBody;
 import org.smyld.lang.script.java.JavaInterface;
 import org.smyld.lang.script.java.JavaMethod;
 import org.smyld.lang.script.java.JavaVariable;
-import org.smyld.lang.script.util.Scriptlet;
+import org.smyld.lang.script.core.Scriptlet;
 import org.smyld.lang.script.vb.VBBooleanExp;
 import org.smyld.lang.script.vb.VBCodeReader;
 import org.smyld.lang.script.vb.VBConstants;
@@ -172,8 +173,8 @@ public class Tester {
 		}
 	}
 
-	@SuppressWarnings("unused")
-	private void testQutations() {
+	@Test
+	public void testQuotations() {
 		System.out.println(test_vb_qute_2);
 		VBScriptlet test = new VBScriptlet();
 		HashMap<String, String> results = test

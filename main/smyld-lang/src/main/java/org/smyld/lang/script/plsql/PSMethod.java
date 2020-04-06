@@ -1,6 +1,6 @@
 package org.smyld.lang.script.plsql;
 
-import org.smyld.lang.script.util.Method;
+import org.smyld.lang.script.core.Method;
 
 public class PSMethod extends Method {
 	/**

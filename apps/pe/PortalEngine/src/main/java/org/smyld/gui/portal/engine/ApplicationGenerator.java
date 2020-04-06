@@ -22,7 +22,7 @@ import org.smyld.app.pe.projectbuilder.ProjectBuilder;
 import org.smyld.gui.portal.engine.sources.PESwingApplicationReader;
 import org.smyld.io.FileSystem;
 import org.smyld.lang.script.java.*;
-import org.smyld.lang.script.util.Variable;
+import org.smyld.lang.script.core.Variable;
 import org.smyld.resources.FileInfo;
 import org.smyld.resources.LookAndFeelResource;
 import org.smyld.security.SMYLDKey;
@@ -34,7 +34,6 @@ import org.smyld.util.jar.SMYLDJARWriter;
 import org.smyld.util.multilang.LangSource;
 import org.jdom2.Element;
 
-import javax.annotation.Nonnull;
 import java.io.File;
 import java.io.FileFilter;
 import java.io.FileOutputStream;

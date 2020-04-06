@@ -16,7 +16,7 @@ import org.smyld.lang.script.java.JavaClassBody;
 import org.smyld.lang.script.java.JavaInterface;
 import org.smyld.lang.script.java.JavaMethod;
 import org.smyld.lang.script.java.JavaVariable;
-import org.smyld.lang.script.util.Variable;
+import org.smyld.lang.script.core.Variable;
 
 /**
  * 

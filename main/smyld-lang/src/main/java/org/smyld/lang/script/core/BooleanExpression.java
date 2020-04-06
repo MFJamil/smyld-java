@@ -1,8 +1,17 @@
-package org.smyld.lang.script.util;
+/*
+ *
+ *  * Copyright smyld.org Authors.
+ *  *
+ *  * Licensed under the Apache License version 2.0, available at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ */
+
+package org.smyld.lang.script.core;
 
 import java.util.Vector;
 
 import org.smyld.SMYLDObject;
+import org.smyld.lang.script.core.Expression;
 import org.smyld.text.MultiTextPatternTockenizer;
 
 public abstract class BooleanExpression extends SMYLDObject {

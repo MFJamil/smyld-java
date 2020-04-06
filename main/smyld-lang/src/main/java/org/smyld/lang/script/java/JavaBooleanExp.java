@@ -1,6 +1,6 @@
 package org.smyld.lang.script.java;
 
-import org.smyld.lang.script.util.BooleanExpression;
+import org.smyld.lang.script.core.BooleanExpression;
 
 public class JavaBooleanExp extends BooleanExpression {
 	/**

@@ -1,8 +1,8 @@
 package org.smyld.lang.script.vb;
 
-import org.smyld.lang.script.util.LangsConstants;
-import org.smyld.lang.script.util.Scriptlet;
-import org.smyld.lang.script.util.Variable;
+import org.smyld.lang.script.core.Langs;
+import org.smyld.lang.script.core.Scriptlet;
+import org.smyld.lang.script.core.Variable;
 
 public class VBVariable extends Variable implements VBConstants {
 	/**
@@ -11,7 +11,7 @@ public class VBVariable extends Variable implements VBConstants {
 	private static final long serialVersionUID = 1L;
 
 	public VBVariable() {
-		super(LangsConstants.SRC_LANG_VB6);
+		super(Langs.VB6);
 	}
 
 	public VBVariable(String codeLine) {

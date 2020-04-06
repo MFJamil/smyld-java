@@ -2,8 +2,8 @@ package org.smyld.lang.script.vb;
 
 import java.util.HashMap;
 
-import org.smyld.lang.script.util.BooleanExpression;
-import org.smyld.lang.script.util.Scriptlet;
+import org.smyld.lang.script.core.BooleanExpression;
+import org.smyld.lang.script.core.Scriptlet;
 
 public class VBScriptlet extends Scriptlet implements VBConstants {
 

@@ -1,6 +1,6 @@
 package org.smyld.lang.script.plsql;
 
-import org.smyld.lang.script.util.ClassBody;
+import org.smyld.lang.script.core.ClassBody;
 
 public class PSClassBody extends ClassBody {
 

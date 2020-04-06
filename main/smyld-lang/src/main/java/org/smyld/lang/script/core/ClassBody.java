@@ -1,4 +1,12 @@
-package org.smyld.lang.script.util;
+/*
+ *
+ *  * Copyright smyld.org Authors.
+ *  *
+ *  * Licensed under the Apache License version 2.0, available at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ */
+
+package org.smyld.lang.script.core;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -8,19 +16,24 @@ import java.util.HashMap;
 import java.util.StringTokenizer;
 import java.util.Vector;
 
+import lombok.*;
 import org.smyld.SMYLDObject;
 import org.smyld.io.FileSystem;
 import org.smyld.text.TextUtil;
 
+@Setter @Getter
+@RequiredArgsConstructor
+@NoArgsConstructor
 public abstract class ClassBody extends SMYLDObject {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	protected StringBuffer mainBody = new StringBuffer();
+	protected StringBuffer 	mainBody = new StringBuffer();
+	@NonNull
 	protected String name;
 	protected String packageName;
-	protected Vector<Method> methodes = new Vector<Method>();
+	protected Vector<Method> methods = new Vector<Method>();
 	protected HashMap<String,Variable> variables = new HashMap<String,Variable>();
 	protected Vector<Variable> sortVariables = new Vector<Variable>();
 
@@ -31,17 +44,13 @@ public abstract class ClassBody extends SMYLDObject {
 	protected String extension;
 	boolean createNeededFolders;
 	boolean sortVariablesAlphabet = false;
+	boolean alignVariables = false;
 	protected int alignCounter = DEFAULT_ALLIGN_COUNTER;
 
-	public ClassBody() {
-	}
 
-	public ClassBody(String Name) {
-		name = Name;
-	}
 
-	public Vector<Method> listMethodes() {
-		return methodes;
+	public Vector<Method> listMethods() {
+		return methods;
 	}
 
 	public HashMap<String,Variable> listVariables() {
@@ -57,7 +66,7 @@ public abstract class ClassBody extends SMYLDObject {
 	 * parameters
 	 */
 	public Method getMethod(String methodName) {
-		for (Method currentMethod : methodes) {
+		for (Method currentMethod : methods) {
 			if (currentMethod.getName().equals(methodName)) {
 				return currentMethod;
 			}
@@ -87,8 +96,7 @@ public abstract class ClassBody extends SMYLDObject {
 			// Vector sortingVariables = new Vector(variables.size());
 			// sortingVariables.addAll(variables.values());
 			if (sortVariablesAlphabet) {
-				Collections.sort(sortVariables, new Comparator<Object>() {
-					public int compare(Object obj1, Object obj2) {
+				Collections.sort(sortVariables, (obj1,obj2) ->{
 						Variable var1 = (Variable) obj1;
 						Variable var2 = (Variable) obj2;
 						int typeCompare = var1.getType().compareToIgnoreCase(
@@ -100,13 +108,20 @@ public abstract class ClassBody extends SMYLDObject {
 									var2.getName());
 						}
 						return typeCompare;
-					}
 				});
 			}
-			int[] allignValues = calculateAllignVariables(alignCounter);
-			for (Variable currentLine : sortVariables) {
-				printVariable(currentLine, allignValues);
+			if (alignVariables) {
+				int[] allignValues = calculateAllignVariables(alignCounter);
+				for (Variable currentLine : sortVariables) {
+					printVariable(currentLine, allignValues);
+				}
+			} else {
+				for (Variable curVar : sortVariables) {
+					//ToDo: handling the indent
+					mainBody.append(curVar.print("\t\t")).append("\n");
+				}
 			}
+			//printVariable(currentLine, allignValues);
 			mainBody.append("\n");
 		}
 	}
@@ -120,8 +135,9 @@ public abstract class ClassBody extends SMYLDObject {
 	protected int[] calculateAllignVariables(int alignCount) {
 		int[] longTexts = new int[alignCount];
 		for (Variable currentVariable : variables.values()) {
-			StringTokenizer tocken = new StringTokenizer(currentVariable
-					.print());
+			String curVariableText = currentVariable.print();
+			if (curVariableText.startsWith("@")) continue;
+			StringTokenizer tocken = new StringTokenizer(curVariableText);
 			String currentTocken = null;
 			int max = alignCount;
 			if (alignCount > tocken.countTokens()) {
@@ -142,9 +158,21 @@ public abstract class ClassBody extends SMYLDObject {
 
 	private String allignVariable(int[] lengths, Variable currentVariable) {
 		String currentTocken = null;
-		String variableText = currentVariable.print();
-		StringTokenizer tocken = new StringTokenizer(variableText);
 		StringBuffer buffer = new StringBuffer();
+		String variableText = currentVariable.print();
+		String[] codeLines = variableText.split("\n");
+		if (codeLines.length>1){
+			for (String curLine:codeLines){
+				if (curLine.indexOf("@")!=-1){
+					buffer.append(curLine).append("\n");
+				}else{
+					variableText = curLine;
+					break;
+				}
+			}
+		}
+		StringTokenizer tocken = new StringTokenizer(variableText);
+
 		int max = lengths.length;
 		if (lengths.length > tocken.countTokens()) {
 			max = tocken.countTokens();
@@ -172,8 +200,8 @@ public abstract class ClassBody extends SMYLDObject {
 
 	public void fillInMethods(int tabSeq) {
 
-		if (methodes.size() > 0) {
-			for (Method currentMethode : methodes) {
+		if (methods.size() > 0) {
+			for (Method currentMethode : methods) {
 				mainBody.append(currentMethode.print(tabSeq));
 				mainBody.append("\n");
 			}
@@ -182,12 +210,12 @@ public abstract class ClassBody extends SMYLDObject {
 	}
 
 	public void addMethod(Method newMethod) {
-		methodes.add(newMethod);
+		methods.add(newMethod);
 		addToSequence(newMethod);
 	}
 
 	public void addMethodes(Vector<Method> newMethodes) {
-		methodes.addAll(newMethodes);
+		methods.addAll(newMethodes);
 		// CHG:sequence.addAll(newMethodes);
 	}
 
