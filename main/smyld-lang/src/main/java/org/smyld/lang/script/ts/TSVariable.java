@@ -45,6 +45,7 @@ public class TSVariable extends Variable {
             body.append(scope).append(" ");
         fillInModifiers();
         body.append(name);
+        if (getDefaultValue()==null) body.append("!");
         if (type!=null)
             body.append(" : ").append(type);
         if (getDefaultValue()!=null){

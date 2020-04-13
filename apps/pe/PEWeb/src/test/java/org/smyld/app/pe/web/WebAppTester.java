@@ -12,7 +12,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.smyld.app.pe.model.gui.GUIWindow;
 import org.smyld.app.pe.web.gui.builder.WebBuilder;
-import org.smyld.app.pe.web.vue.vuetify.builder.MenuBuilder;
+import org.smyld.app.pe.web.vue.vuetify.VtfXmlReader;
+import org.smyld.app.pe.web.vue.vuetify.builder.VtfMenuBuilder;
 import org.xml.sax.SAXException;
 
 import static  org.junit.jupiter.api.Assertions.assertThrows;
@@ -25,7 +26,7 @@ public class WebAppTester {
     public void testMissingID() throws Exception {
          SAXException expectedException = assertThrows(SAXException.class,() ->{
             String xmlFile = ClassLoader.getSystemClassLoader().getResource("Missing_ID.xml").getPath();
-            PEWebXmlReader reader = new PEWebXmlReader();
+            VtfXmlReader reader = new VtfXmlReader();
             reader.readApplicationFile(xmlFile);
 
         });
@@ -35,8 +36,8 @@ public class WebAppTester {
 
     @Test
     public void testMenuBuilder(){
-        MenuBuilder menuBuilder = new MenuBuilder();
-        log.info(menuBuilder.buildGeneralMenu());
+        VtfMenuBuilder menuBuilder = new VtfMenuBuilder(null);
+        //log.info(menuBuilder.buildGeneralMenu());
 
     }
 

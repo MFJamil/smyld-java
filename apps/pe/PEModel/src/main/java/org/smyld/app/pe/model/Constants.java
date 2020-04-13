@@ -350,11 +350,20 @@ public interface Constants{
 	public static final String TAG_ATT_TITLE = "title";
 	public static final String TAG_ATT_TYPE = "type";
 	public static final String TAG_ATT_NAME = "name";
+	public static final String TAG_ATT_STYLE = "style";
 	public static final String TAG_ATT_PASS = "password";
 	public static final String TAG_ATT_ID = "id";
 	public static final String TAG_ATT_CLASS = "class";
 	public static final String TAG_ATT_DOCKABLE = "dockable";
 	public static final String TAG_ATT_DRAGABLE = "dragable";
+	public static final String STYLE_PROP_MAX  = "max";
+	public static final String STYLE_PROP_MIN  = "min";
+	public static final String STYLE_PROP_CLOSE = "close";
+	public static final String STYLE_PROP_BAR_COLOR = "barColor";
+
+
+
+
 
 	public static final String TAG_ATT_PANEL_TEMP_DOCKABLE = "TemplateDockable";
 

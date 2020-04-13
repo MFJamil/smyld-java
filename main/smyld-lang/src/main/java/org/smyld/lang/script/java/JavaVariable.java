@@ -45,7 +45,7 @@ public class JavaVariable extends Variable implements JavaConstants {
 	@Override
 	public void importVariable(Variable srcVariable) {
 		super.importVariable(srcVariable);
-		if (srcVariable.getSrcLang() == Langs.VB6) {
+		if (srcVariable.getSrcLang() == Langs.VisualBasic6) {
 			modifiers = VBtoJavaConverter.convertModifiers(srcVariable
 					.getModifiers());
 			type = VBtoJavaConverter.convertType(srcVariable.getType());

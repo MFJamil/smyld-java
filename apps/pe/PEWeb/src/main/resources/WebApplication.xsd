@@ -135,6 +135,8 @@
     <xs:attribute type="xs:string" name="height" use="optional"/>
     <xs:attribute type="xs:string" name="package" use="optional"/>
     <xs:attribute type="xs:string" name="label" use="optional"/>
+    <xs:attribute type="xs:string" name="style" use="optional"/>
+
   </xs:complexType>
   <xs:complexType name="bodyType">
     <xs:simpleContent>
@@ -142,6 +144,7 @@
         <xs:attribute type="xs:string" name="id"/>
         <xs:attribute type="xs:string" name="type"/>
         <xs:attribute type="xs:string" name="linklistenerto"/>
+        <xs:attribute type="xs:string" name="src"/>
       </xs:extension>
     </xs:simpleContent>
   </xs:complexType>

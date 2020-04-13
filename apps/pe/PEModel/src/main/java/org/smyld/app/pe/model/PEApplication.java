@@ -23,6 +23,8 @@ public interface PEApplication {
     public String          getName();
     public String          getTitle();
     public String          getHomePath();
+    public String          getMainClass();
+
     public GUIToolkit      getGUIToolkit();
     public ApplicationType getType();
     public LayoutType      getLayout();

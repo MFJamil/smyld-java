@@ -342,6 +342,11 @@ public class Tester extends SMYLDObject implements PESwingApplicationReader {//W
 		return "d:\\temp\\projects\\bankworks";
 	}
 
+	@Override
+	public String getMainClass() {
+		return null;
+	}
+
 	public String getSourcePath() {
 		return "d:\\temp\\projects\\bankworks\\src";
 	}

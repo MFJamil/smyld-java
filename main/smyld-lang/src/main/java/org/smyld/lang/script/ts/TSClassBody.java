@@ -21,7 +21,6 @@ import java.util.*;
 public class TSClassBody extends ClassBody {
 
     private TSClassType type;
-    //private List<TSImport> imports = new ArrayList<>();
     private String parentClassName;
     private TSClassBody parentClass;
     private Set<TSClassBody> interfaces = new HashSet<>();
@@ -47,37 +46,6 @@ public class TSClassBody extends ClassBody {
         return this;
     }
 
-    /*
-    public TSClassBody addImport(String library, String className){
-        TSImport newImport = new TSImport(library);
-        newImport.addClass(className);
-        addImport(newImport);
-        return this;
-
-    }
-
-    private boolean containsImport(String library){
-        return getImport(library)!=null;
-    }
-
-    private boolean containsImport(TSImport newImport){
-        return getImport(newImport.getLibrary())!=null;
-    }
-    private TSImport getImport(String library){
-        for (TSImport curImp:imports)
-            if (curImp.getLibrary().equals(library)) return curImp;
-        return null;
-    }
-
-    public TSClassBody addImport(TSImport newImport){
-        TSImport existingImp = getImport(newImport.getLibrary());
-        if (existingImp!=null)
-            if (existingImp.addImport(newImport))
-                return this;
-        imports.add(newImport);
-        return this;
-    }
-*/
     public TSClassBody addAnnotation(TSAnnotation newAnnotation){
         if (annotations.contains(newAnnotation)) return this;
         annotations.add(newAnnotation);
@@ -86,14 +54,6 @@ public class TSClassBody extends ClassBody {
     }
     private void handleAnnotationLibrary(TSAnnotation newAnnotation){
         importsHandler.addImport(newAnnotation.getLibrary(),newAnnotation.getName());
-        /*
-        if ( containsImport(newAnnotation.getLibrary())){
-            getImport(newAnnotation.getLibrary()).addClass(newAnnotation.getName());
-        }else{
-            addImport(newAnnotation.getLibrary(), newAnnotation.getName());
-        }*/
-
-
     }
 
     private Set<String> getInterfaceNamesList(){

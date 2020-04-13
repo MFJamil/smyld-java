@@ -24,12 +24,15 @@ public class GUIWindow extends GUIComponent {
 	 */
 	private static final long serialVersionUID = 1L;
 	String menuBarID;
-	HashMap<String, GUIToolbarHolder> toolbars;
+	MenuItem mainMenu;
+	HashMap<String, GUIToolbarHolder> toolbars = new HashMap<>();
 	WindowType windowType = WindowType.unknown;
 	String lableID;
 	String body;
 	String bodyType;
 	String bodyID;
+	String bodySrc;
+
 	String startUpMethod;
 	String bodyListenerTarget;
 	String menuHandler;

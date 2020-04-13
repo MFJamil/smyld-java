@@ -11,7 +11,7 @@ public class VBVariable extends Variable implements VBConstants {
 	private static final long serialVersionUID = 1L;
 
 	public VBVariable() {
-		super(Langs.VB6);
+		super(Langs.VisualBasic6);
 	}
 
 	public VBVariable(String codeLine) {

@@ -543,7 +543,7 @@ public class PEAppV1XmlReader extends PEAppXMLReader implements PEApplication {
         if ((menusEls != null) && (menusEls.size() > 0)) {
             menus = new HashMap<String, MenuItem>();
             for (Element currentMenuBar : menusEls.values()) {
-                MenuItem currentMenuItem = new MenuItem();
+                MenuItem currentMenuItem = createMenuItem();
                 currentMenuItem.setID(currentMenuBar
                         .getAttributeValue(TAG_COMP_ATT_ID));
                 currentMenuItem.setLabel(currentMenuBar
@@ -555,6 +555,9 @@ public class PEAppV1XmlReader extends PEAppXMLReader implements PEApplication {
             }
         }
 
+    }
+    protected MenuItem createMenuItem(){
+        return new MenuItem();
     }
 
     @SuppressWarnings("unchecked")
@@ -678,13 +681,16 @@ public class PEAppV1XmlReader extends PEAppXMLReader implements PEApplication {
     }
 
 
-    public String getMainClassPackage() {
+    public String getMainClassPackageOrig() {
         return APP_MAIN_CLASS_PACKAGE;
 		/* TODO We need to change the design of hardcoding the location of the main gui class
 		if(projectBuilder.getSource()==ProjectBuildSource.Maven)
 			return ((MavenProjectBuilder)projectBuilder).getGroup();
 		return buildApplication.getChild(TAG_NAME_MAINCLASS).getText();
 		*/
+    }
+    public String getMainClassPackage() {
+		return buildApplication.getChild(TAG_NAME_MAINCLASS).getText();
     }
 
     @Override
@@ -704,6 +710,11 @@ public class PEAppV1XmlReader extends PEAppXMLReader implements PEApplication {
             resultPath = System.getProperty("user.dir");
         return resultPath;
         //return buildApplication.getChild(TAG_NAME_HOME).getText();
+    }
+
+    @Override
+    public String getMainClass() {
+        return getMainClassPackage();
     }
 
     @Override
@@ -731,12 +742,7 @@ public class PEAppV1XmlReader extends PEAppXMLReader implements PEApplication {
         windows = new HashMap<>();
         windowsEl.forEach((id,el) ->{
             // Code for populating the windows elements
-            GUIWindow newWindow = new GUIWindow();
-            newWindow.setID(el.getAttributeValue(TAG_ATT_ID));
-            if (el.getAttributeValue(TAG_ATT_TYPE)!=null)
-                newWindow.setWindowType(WindowType.valueOf(el.getAttributeValue(TAG_ATT_TYPE)));
-            newWindow.setWidth(el.getAttributeValue(TAG_COMP_ATT_WIDTH));
-            newWindow.setHeight(el.getAttributeValue(TAG_COMP_ATT_HEIGHT));
+            GUIWindow newWindow = handleSingleWindow(id,el);
             processWindowNode(el,newWindow);
             windows.put(newWindow.getID(),newWindow);
 
@@ -745,6 +751,21 @@ public class PEAppV1XmlReader extends PEAppXMLReader implements PEApplication {
 
 
     }
+    protected GUIWindow handleSingleWindow(String id, Element el){
+        GUIWindow newWindow = createWindow();
+        newWindow.setID(el.getAttributeValue(TAG_ATT_ID));
+        if (el.getAttributeValue(TAG_ATT_TYPE)!=null)
+            newWindow.setWindowType(WindowType.valueOf(el.getAttributeValue(TAG_ATT_TYPE)));
+        newWindow.setWidth(el.getAttributeValue(TAG_COMP_ATT_WIDTH));
+        newWindow.setHeight(el.getAttributeValue(TAG_COMP_ATT_HEIGHT));
+        newWindow.setIcon(el.getAttributeValue(TAG_COMP_ATT_ICON));
+        newWindow.setLabel(el.getAttributeValue(TAG_COMP_ATT_LABEL));
+
+        return newWindow;
+
+    }
+
+    protected GUIWindow createWindow(){return new GUIWindow();}
     @Override
     public HashMap<String, GUIWindow> getWindows() {
         return windows;
@@ -774,6 +795,7 @@ public class PEAppV1XmlReader extends PEAppXMLReader implements PEApplication {
     private void processBodyTag(Element bodyNode, GUIWindow newWindow) {
         newWindow.setBodyType(bodyNode.getAttributeValue(TAG_COMP_ATT_TYPE));
         newWindow.setBodyID(bodyNode.getAttributeValue(TAG_COMP_ATT_ID));
+        newWindow.setBodySrc(bodyNode.getAttributeValue(TAG_COMP_ATT_SOURCE));
         if ((newWindow.getBodyType() != null)
                 && (newWindow.getBodyType()
                 .equals(TAG_COMP_CONT_DOCKABLE_DESKTOP))) {
@@ -808,6 +830,9 @@ public class PEAppV1XmlReader extends PEAppXMLReader implements PEApplication {
         newWindow.setMenuBarID(menuNode.getAttributeValue(TAG_COMP_ATT_ID));
         newWindow.setMenuHandler(menuNode
                 .getAttributeValue(TAG_COMP_ATT_LINK_HANDLER));
+        if (newWindow.getMenuBarID()!=null){
+            newWindow.setMainMenu(getMenus().get(newWindow.getMenuBarID()));
+        }
     }
 
     private void processToolbarTag(Element tlbNode, GUIWindow newWindow) {

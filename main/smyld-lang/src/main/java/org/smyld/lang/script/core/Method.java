@@ -9,6 +9,7 @@
 package org.smyld.lang.script.core;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -23,7 +24,7 @@ public abstract class Method extends Variable {
 	protected String returnType;
 	boolean constructor = false;
 	HashMap<String,String> parametersKeys;// new HashMap();
-	Vector<Parameter> parameters;
+	List<Parameter> parameters;
 	protected List<String> codeLines = new ArrayList<String>();
 
 	public Method() {
@@ -82,7 +83,7 @@ public abstract class Method extends Variable {
 	}
 	protected void adjustCodeLines() {
 		// Adjusting equal sign
-		Vector<String> bufferLines = new Vector<String>(codeLines.size());
+		List<String> bufferLines = new ArrayList<>(codeLines.size());
 		String currentLineCode = null;
 
 		int longestCode = getLongestEquation();
@@ -179,20 +180,17 @@ public abstract class Method extends Variable {
 
 
 	public void fillInParameters() {
-		if (parameters != null) {
-			if (parameters.size() > 0) {
-				
-				Iterator<Parameter> parms = parameters.iterator();
-				while (parms.hasNext()) {
-					Parameter currentParameter = parms.next();
-					String paramName = currentParameter.getName();
-					String paramType = currentParameter.getType();
-					body.append(fillParameter(paramName, paramType));
-					if (parms.hasNext())
-						body.append(",");
-				}
-			}
-		}
+		if ((parameters != null) && (parameters.size() > 0))
+			body.append(composeParams());
+
+	}
+
+	private String composeParams(){
+		if ((parameters==null)||(parameters.size()==0)) return null;
+		StringBuffer sb = new StringBuffer();
+		List<String> declarations =  parameters.stream().map(param ->
+						fillParameter(param.getName(),param.getType())).collect(Collectors.toList());
+		return String.join(",",declarations);
 	}
 
 	public String fillParameter(String name, String type) {
@@ -208,6 +206,14 @@ public abstract class Method extends Variable {
 			parametersKeys.put(parameterName, parameterName);
 			parameters.add(new Parameter(parameterName, parameterType));
 		}
+	}
+
+	public boolean equals(Object object){
+		if (!(object instanceof Method)) return false;
+		Method obMeth = (Method) object;
+		return ((obMeth.getName().equals(getName()))&&
+				(obMeth.getReturnType().equals(getReturnType()))&&
+				(obMeth.composeParams().equals(composeParams())));
 	}
 
 	@Override

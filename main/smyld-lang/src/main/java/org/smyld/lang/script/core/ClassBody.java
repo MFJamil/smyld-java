@@ -10,11 +10,7 @@ package org.smyld.lang.script.core;
 
 import java.io.File;
 import java.io.FileOutputStream;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.StringTokenizer;
-import java.util.Vector;
+import java.util.*;
 
 import lombok.*;
 import org.smyld.SMYLDObject;
@@ -33,12 +29,12 @@ public abstract class ClassBody extends SMYLDObject {
 	@NonNull
 	protected String name;
 	protected String packageName;
-	protected Vector<Method> methods = new Vector<Method>();
+	protected List<Method> methods = new ArrayList<>();
 	protected HashMap<String,Variable> variables = new HashMap<String,Variable>();
-	protected Vector<Variable> sortVariables = new Vector<Variable>();
+	protected List<Variable> sortVariables = new ArrayList<Variable>();
 
-	protected Vector<String> commentLines = new Vector<String>();
-	protected Vector<Object> sequence = new Vector<Object>();
+	protected List<String> commentLines = new ArrayList<String>();
+	protected List<Object> sequence = new ArrayList<Object>();
 	protected HashMap<String,String> sequenceTest = new HashMap<String,String>();
 
 	protected String extension;
@@ -49,8 +45,15 @@ public abstract class ClassBody extends SMYLDObject {
 
 
 
-	public Vector<Method> listMethods() {
+	public List<Method> listMethods() {
 		return methods;
+	}
+
+	public boolean containsMethod(Method method){
+		for (Method curMethod:methods){
+			if (curMethod.equals(method)) return true;
+		}
+		return false;
 	}
 
 	public HashMap<String,Variable> listVariables() {

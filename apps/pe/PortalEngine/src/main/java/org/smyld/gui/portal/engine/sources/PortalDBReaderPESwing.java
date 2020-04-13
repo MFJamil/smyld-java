@@ -409,6 +409,11 @@ public class PortalDBReaderPESwing extends SMYLDDataBaseHandler implements
 		return appHome;
 	}
 
+	@Override
+	public String getMainClass() {
+		return null;
+	}
+
 	public String getSourcePath() {
 		return appSource;
 	}

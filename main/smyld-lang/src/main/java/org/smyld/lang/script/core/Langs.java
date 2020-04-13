@@ -8,7 +8,21 @@
 
 package org.smyld.lang.script.core;
 
+import lombok.Getter;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
+
+@Getter
+@RequiredArgsConstructor
 public enum Langs {
-	Java,VB6,PLSQL,TS,Unknown;
+	Java("java"),
+	VisualBasic6("vb6"),
+	PLSQL("plsql"),
+	TypeScript("ts"),
+	JavaScript("js"),
+	Unknown("NA");
+
+	@NonNull
+	private String shortName;
 
 }

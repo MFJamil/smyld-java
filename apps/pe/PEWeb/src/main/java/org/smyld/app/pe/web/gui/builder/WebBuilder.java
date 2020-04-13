@@ -12,14 +12,16 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.smyld.app.pe.model.gui.GUIComponent;
+import org.smyld.lang.script.core.CodeFileWriter;
 
 import javax.inject.Inject;
+import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j @Getter @Setter
 public class WebBuilder {
-    List<WUIBuilder> wuiBuilders;
-    @Inject
+    List<WUIBuilder> wuiBuilders = new ArrayList<>();
+
     WUIBuilderFactory wuiBuilderFactory;
 
     public void addComponent(GUIComponent guiComponent){
@@ -34,4 +36,23 @@ public class WebBuilder {
         }
         return sb.toString();
     }
+
+    public String build1(CodeFileWriter codeFileWriter){
+        int tabsNo = 1;
+        StringBuffer sb = new StringBuffer();
+        for (WUIBuilder wuiBuilder:wuiBuilders){
+            tabsNo = wuiBuilder.build(codeFileWriter, sb,tabsNo);
+        }
+        return sb.toString();
+    }
+
+    public String build(CodeFileWriter codeFileWriter){
+        int tabsNo = 1;
+        StringBuffer sb = new StringBuffer();
+        for (WUIBuilder wuiBuilder:wuiBuilders){
+            tabsNo = wuiBuilder.build(wuiBuilderFactory,codeFileWriter, sb,tabsNo);
+        }
+        return sb.toString();
+    }
+
 }

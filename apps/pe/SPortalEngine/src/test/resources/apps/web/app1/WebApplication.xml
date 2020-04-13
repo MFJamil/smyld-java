@@ -21,7 +21,7 @@
   <build>
     <source>target/generated-sources/pe/</source>
     <classes>target/classes/pe/</classes>
-    <mainClass>com.smyld.app.sample</mainClass>
+    <mainClass>de.kfw.apps.ratinganzeige.HauptKlass</mainClass>
     <!-- ========================================= Start of Active tags  ====================================================== -->
     <home>/media/mfjamil/Ubuntu_second/work/FullStack/temp/PE_Test</home>
     <toolkit>vue</toolkit>
@@ -59,8 +59,8 @@
   <!-- ========================================= Start of Active tags  ====================================================== -->
   <actions>
 
-    <action id="mainApp"        target="/"       object="KfwApp" />
-    <action id="login"          target="/login"  object="KfwLogin" />
+    <action id="mainApp"        object="KfwApp"    target="/"        />
+    <action id="login"          object="KfwLogin"  target="/login" />
     <action id="^/authenticate" target="http://localhost:8099" />
     <action id="^/KfwRest1"     target="http://localhost:9080/guide-rest-intro/System/" />
     <action id="^/KfwRest"      target="http://localhost:8099/" />
@@ -69,6 +69,8 @@
     <!-- Below are method Based actions, which needs to be -->
     <action id="changeTheme"    target="changeTheme" />
     <action id="openSettings"   command="openWindow"    target = "SettingsWindow"/>
+    <action id="openFile"       target="openFile" />
+
      <!--
 
     <action id="runGameSpider"   command="runApplication" label="Spider Soliter"      param  = "c:/windows/system32/spider"/>

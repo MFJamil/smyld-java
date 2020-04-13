@@ -705,6 +705,11 @@ public class PortalAppXMLSetReaderPESwing extends PEAppXMLReader implements
 	}
 
 	@Override
+	public String getMainClass() {
+		return null;
+	}
+
+	@Override
 	public HashMap<String, String> getImages() {
 		return loadImages();
 	}
