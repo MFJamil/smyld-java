@@ -1,4 +1,4 @@
-[![Maven Central](https://img.shields.io/maven-central/v/org.smyld.app.pe/smyld-app-portalengine)](https://mvnrepository.com/artifact/org.smyld.app.pe/smyld-app-portalengine/1.0.8)
+[![Maven Central](https://img.shields.io/maven-central/v/org.smyld.app.pe/smyld-app-portalengine)](https://mvnrepository.com/artifact/org.smyld.app.pe/smyld-app-portalengine/1.0.9)
 ![Sonatype Nexus (Releases)](https://img.shields.io/nexus/r/org.smyld.app.pe/smyld-app-portalengine?server=https%3A%2F%2Foss.sonatype.org)
 [![License](https://img.shields.io/badge/License-Apache%202.0-yellowgreen.svg)](https://github.com/MFjamil/smyld-java/blob/master/LICENSE)
 
