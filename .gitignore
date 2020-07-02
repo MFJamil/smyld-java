@@ -45,3 +45,6 @@
 **/.DS_Store
 **/Thumbs.db
 
+**/SPortalEngine/api/**
+
+
