@@ -45,6 +45,9 @@
 **/.DS_Store
 **/Thumbs.db
 
-**/SPortalEngine/api/**
+/SportalEngine/api
+/PEWeb/api
+/PEModel/api
+/PECore/api
 
 
