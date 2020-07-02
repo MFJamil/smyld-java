@@ -18,10 +18,14 @@ public class EntityPlotTester {
     }
 
     private static void testCharts(){
-        String filesPath = "/media/mfjamil/Ubuntu_second/work/java/smyld-java/apps/ep/EntityPlot/src/test/resources/files/";
+        String filesPath = System.getenv().get("GIT_SMYLD") + "/apps/ep/EntityPlot/src/test/resources/files/";
         String[] testFiles = {
-                "EPChart_css.xml"
+                "EPFlowChart_css.xml"
+
+
       /*        ,"EPFlowChart_css.xml"
+                ,"EPFlowChart.xml"
+                ,"EPChart_css.xml"
                 ,"EPFlowChart.xml"
                 ,"EPFlowChart_NoShadow.xml"
                 ,"EPFlowChart_NoShadow_NoReflect.xml"
