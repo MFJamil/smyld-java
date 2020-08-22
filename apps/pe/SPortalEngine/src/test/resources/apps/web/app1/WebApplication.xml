@@ -24,7 +24,7 @@
     <mainClass>de.kfw.apps.ratinganzeige.HauptKlass</mainClass>
     <!-- ========================================= Start of Active tags  ====================================================== -->
     <!--<home>/media/mfjamil/Ubuntu_second/work/FullStack/temp/PE_Test</home>-->
-    <home>C:\tmp</home>
+    <home>/media/mfjamil/Ubuntu_Third/pe_test</home>
     <toolkit>vue</toolkit>
     <applicationType>Web</applicationType>
     <name>BackupRating</name>
@@ -34,7 +34,7 @@
       <image src="D:/temp/myphoto.jpg"/>
     </images>
     <icon>kfw_logo_80.ico</icon>
-    <logo>kfw_logo_80_reveal.png</logo>
+    <logo>smyld.png</logo>
     <languages srctype="xml">
       <language name="German"  src="D:/portal/Projects/sources/testproject/English.xml" targetName="English.xml"/>
       <language name="English" src="D:/portal/Projects/sources/testproject/English.xml" targetName="English.xml"/>
@@ -133,7 +133,7 @@
   </toolbars>
 
   <windows>
-    <window onstartup="init" id="MdiWindow" type="mdi" icon="logo.gif" width="600" height="400" package="com.rs2.app.bw.mgui.windows" label="Accountancy">
+    <window onstartup="init" id="MdiWindow" type="mdi" icon="smyld.png" width="600" height="400" package="com.rs2.app.bw.mgui.windows" label="Accountancy">
       <menubar id="mainMenu" type="classic"/>
       <toolbars>
         <toolbar id="tlbrProcess"     align="left" />

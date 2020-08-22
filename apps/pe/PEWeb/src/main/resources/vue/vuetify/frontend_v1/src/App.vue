@@ -13,9 +13,9 @@
      
      />
 
-    <v-content>
+    <v-main>
       <router-view ref="mainRouter" @loginRequest="handleLogin"/>
-    </v-content>
+    </v-main>
 
     <AppFooter       
           :theme="theme"
