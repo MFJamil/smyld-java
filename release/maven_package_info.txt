@@ -1,0 +1,32 @@
+  <url>http://www.smyld.org</url>
+  <organization>
+    <name>SMYLD</name>
+    <url>http://www.smyld.org</url>
+  </organization>
+  <issueManagement>
+    <system>GitHub</system>
+    <url>https://github.com/MFJamil/smyld-java/issues</url>
+  </issueManagement>
+  <licenses>
+  <license>
+      <name>Apache License 2.0</name>
+      <url>https://github.com/MFJamil/smyld-java/blob/master/LICENSE</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
+  <scm>
+    <url>https://github.com/MFJamil/smyld-java</url>
+    <connection>scm:git:git://github.com/MFJamil/smyld-java.git</connection>
+    <developerConnection>scm:git:ssh://git@github.com:MFJamil/smyld-java.git</developerConnection>
+  </scm>
+  <developers>
+    <developer>
+      <id>mjamil</id>
+      <email>mohammed.jamil@smyld.org</email>
+      <name>Mohammed Jamil</name>
+      <organization>SMYLD</organization>
+      <roles>
+        <role>developer</role>
+      </roles>
+    </developer>
+  </developers>
